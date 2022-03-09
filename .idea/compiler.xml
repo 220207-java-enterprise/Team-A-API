@@ -6,16 +6,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Team-A-API" />
+        <module name="foundations-project" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Team-A-API" target="8" />
+      <module name="foundations-project" target="8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Team-A-API" options="-parameters" />
+      <module name="foundations-project" options="-parameters" />
     </option>
   </component>
 </project>
