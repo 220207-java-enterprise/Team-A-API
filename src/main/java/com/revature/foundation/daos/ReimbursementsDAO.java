@@ -1,8 +1,7 @@
 package com.revature.foundation.daos;
 
-import com.revature.foundation.models.*;
 import com.revature.foundation.util.Bytea;
-import com.revature.foundation.util.connectionFactory;
+import com.revature.foundation.util.ConnectionFactory;
 import com.revature.foundation.util.exceptions.DataSourceException;
 import com.revature.foundation.util.exceptions.ResourcePersistenceException;
 import org.springframework.stereotype.Repository;
@@ -43,7 +42,7 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
     @Override
     public void save(Reimbursements newObject) {
 
-        try (Connection conn = connectionFactory.getInstance().getConnection()) {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             conn.setAutoCommit(false);
             PreparedStatement pstmt3 = conn.prepareStatement("INSERT INTO ers_reimbursements VALUES (?, ?, ?, ?, ?, null, ?, ?, ?, ?, ?)");
@@ -76,7 +75,7 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
     public Reimbursements getById(String id) {
         Reimbursements reimbursements = null;
 
-        try (Connection conn = connectionFactory.getInstance().getConnection()) {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             PreparedStatement pstmt = conn.prepareStatement(rootSelect + "WHERE reimb_id = ?");
             pstmt.setString(1, id);
@@ -140,7 +139,7 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
 
     public static List<Reimbursements> getAllById(String id) throws SQLException {
         List<Reimbursements> reimbursements1 = new ArrayList<>();
-        try (Connection conn = connectionFactory.getInstance().getConnection()) {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             conn.setAutoCommit(false);
             PreparedStatement pstmt4 = conn.prepareStatement(rootSelect + "WHERE AUTHOR_ID = ?");
@@ -170,7 +169,7 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
     public List<Reimbursements> getAll() {
         List<Reimbursements> reimbursements = new ArrayList<>();
 
-        try (Connection conn = connectionFactory.getInstance().getConnection()) {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             ResultSet rs = conn.createStatement().executeQuery(rootSelect);
             while (rs.next()) {
@@ -198,7 +197,7 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
     @Override
     public void update(Reimbursements updatedObject) {
 
-        try (Connection conn = connectionFactory.getInstance().getConnection()) {
+        try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
             conn.setAutoCommit(false);
             PreparedStatement pstmt = conn.prepareStatement("UPDATE ers_reimbursements " +

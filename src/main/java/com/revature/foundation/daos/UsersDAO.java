@@ -2,7 +2,7 @@ package com.revature.foundation.daos;
 
 import com.revature.foundation.models.UserRole;
 import com.revature.foundation.models.Users;
-import com.revature.foundation.util.connectionFactory;
+import com.revature.foundation.util.ConnectionFactory;
 import com.revature.foundation.util.exceptions.DataSourceException;
 import com.revature.foundation.util.exceptions.ResourcePersistenceException;
 import org.springframework.stereotype.Repository;
@@ -28,7 +28,7 @@ import java.util.List;
 
             Users user = null;
 
-            try (Connection conn = connectionFactory.getInstance().getConnection()) {
+            try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
                 PreparedStatement pstmt = conn.prepareStatement(rootSelect + "WHERE username = ?");
                 pstmt.setString(1, username);
@@ -57,7 +57,7 @@ import java.util.List;
 
             Users user = null;
 
-            try (Connection conn = connectionFactory.getInstance().getConnection()) {
+            try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
                 PreparedStatement pstmt = conn.prepareStatement(rootSelect + "WHERE email = ?");
                 pstmt.setString(1, email);
@@ -87,7 +87,7 @@ import java.util.List;
 
             Users authUser = null;
 
-            try (Connection conn = connectionFactory.getInstance().getConnection()) {
+            try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
                 PreparedStatement pstmt = conn.prepareStatement(rootSelect + "WHERE username = ? AND password = ?");
                 pstmt.setString(1, username);
@@ -116,7 +116,7 @@ import java.util.List;
         @Override
         public void save(Users newUser) {
 
-            try (Connection conn = connectionFactory.getInstance().getConnection()) {
+            try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
                 conn.setAutoCommit(false);
                 PreparedStatement pstmt = conn.prepareStatement("INSERT INTO ers_users VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
@@ -147,7 +147,7 @@ import java.util.List;
 
             Users user = null;
 
-            try (Connection conn = connectionFactory.getInstance().getConnection()) {
+            try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
                 PreparedStatement pstmt = conn.prepareStatement(rootSelect + "WHERE user_id = ?");
                 pstmt.setString(1, id);
@@ -178,7 +178,7 @@ import java.util.List;
 
             List<Users> users = new ArrayList<>();
 
-            try (Connection conn = connectionFactory.getInstance().getConnection()) {
+            try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
                 ResultSet rs = conn.createStatement().executeQuery(rootSelect);
                 while (rs.next()) {
@@ -202,7 +202,7 @@ import java.util.List;
 
         @Override
         public void update(Users updatedUser) {
-            try (Connection conn = connectionFactory.getInstance().getConnection()) {
+            try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
                 conn.setAutoCommit(false);
                 PreparedStatement pstmt = conn.prepareStatement("UPDATE ers_users " +
@@ -238,7 +238,7 @@ import java.util.List;
 
         @Override
         public void deleteById(String id) {
-            try (Connection conn = connectionFactory.getInstance().getConnection()) {
+            try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
                 conn.setAutoCommit(false);
                 PreparedStatement pstmt = conn.prepareStatement("DELETE FROM ers_users WHERE user_id = ?");
