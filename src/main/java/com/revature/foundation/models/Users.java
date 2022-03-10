@@ -9,7 +9,7 @@ import java.util.Objects;
 @Entity
 @Table(name="ers_users")
 public class Users {
-
+//this is a comment
     @Id
     private String userId;
 
