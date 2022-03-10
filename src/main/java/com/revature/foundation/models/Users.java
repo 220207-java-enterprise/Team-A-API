@@ -12,21 +12,27 @@ public class Users {
 
     @Id
     private String userId;
-    @Column()
+
+    @Column(nullable=false, unique=true)
     private String username;
-    @Column
+
+    @Column(nullable=false, unique=true)
     private String email;
-    @Column
+
+    @Column(nullable=false)
     private String password;
-    @Column
+
+    @Column(name="given_name", nullable = false)
     private String givenName;
-    @Column
+
+    @Column(nullable=false)
     private String surname;
-    @Column
+
+    @Column(name="is_active", columnDefinition = "boolean default false")
     private Boolean isActive;
-    @ManyToOne
-    @JoinColumn(name="role_id")
-    private String role_id;
+
+    @Embedded
+    private UserRole role;
 
     // TODO create a Role enum
 

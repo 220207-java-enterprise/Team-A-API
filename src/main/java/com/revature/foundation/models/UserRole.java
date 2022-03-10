@@ -1,7 +1,11 @@
 package com.revature.foundation.models;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
 
+// NOT AN ENTITY
+// NO TABLE MAPPED TO THIS CLASS
+@Embeddable // can be embedded within an entity class to add to its column list
 public class UserRole {
 
     private String id;
