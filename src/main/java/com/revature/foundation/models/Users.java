@@ -1,20 +1,32 @@
 package com.revature.foundation.models;
 
+import javax.persistence.*;
 import java.util.Objects;
 
 // POJO = Plain Ol' Java Object
 // Contains NO BUSINESS LOGIC
 // Simple encapsulation of some domain object's states
+@Entity
+@Table(name="ers_users")
 public class Users {
 
+    @Id
     private String userId;
+    @Column()
     private String username;
+    @Column
     private String email;
+    @Column
     private String password;
+    @Column
     private String givenName;
+    @Column
     private String surname;
+    @Column
     private Boolean isActive;
-    private UserRole role;
+    @ManyToOne
+    @JoinColumn(name="role_id")
+    private String role_id;
 
     // TODO create a Role enum
 
