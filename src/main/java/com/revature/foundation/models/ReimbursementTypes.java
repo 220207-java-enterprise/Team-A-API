@@ -1,5 +1,9 @@
 package com.revature.foundation.models;
 
+import javax.persistence.Embeddable;
+
+//verify
+@Embeddable
 public class ReimbursementTypes {
     private String typeId;
     private String type;

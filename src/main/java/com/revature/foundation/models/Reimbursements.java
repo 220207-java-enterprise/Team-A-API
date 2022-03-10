@@ -2,17 +2,42 @@ package com.revature.foundation.models;
 
 import com.revature.foundation.util.Bytea;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "reimbursements")
 public class Reimbursements {
+    @Id
     private String reimbId;
+
+    @Column
     private int amount;
+
+    @Column
     private String submitted;
+
+    @Column
     private String resolved;
+
+    @Column
     private String description;
+
+    @Column
     private Bytea receipt;
+
+    @Column
     private String paymentId;
+
+    @Column
     private String authorId;
+
+    @Column
     private String resolverId;
+
+    @Embedded
     private ReimbursementStatuses statusId;
+
+    @Embedded
     private ReimbursementTypes typeId;
 
     public Reimbursements() {
