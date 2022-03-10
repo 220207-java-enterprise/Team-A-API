@@ -1,14 +1,12 @@
 package com.revature.foundation.controllers;
 
 import com.revature.foundation.dtos.requests.NewUserRequest;
-import com.revature.foundation.dtos.responses.ResourceCreationResponse;
 import com.revature.foundation.services.UserService;
 import com.revature.foundation.util.exceptions.InvalidRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
@@ -25,8 +23,8 @@ public class UsersController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = "application/json", consumes = "application/json")
-    public ResourceCreationResponse(@RequestBody NewUserRequest request) {
-        return UserService.register(request);
+    public com.revature.foundation.models.Users ResourceCreationResponse(@RequestBody NewUserRequest request) {
+        return userService.register(request);
 
     }
 
