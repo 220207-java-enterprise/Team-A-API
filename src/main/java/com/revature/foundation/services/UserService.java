@@ -31,6 +31,7 @@ public class UserService {
         this.userDAO = userDAO;
     }
 
+
     public List<Users> getAll() {
         List<Users> users = userDAO.getAll();
         List<AppUserResponse> userResponses = new ArrayList<>();
@@ -73,6 +74,7 @@ public class UserService {
         newUser.setRole(new UserRole("3", "Employee")); // All newly registered users start as BASIC_USER
         newUser.setIsActive(false);
         userDAO.save(newUser);
+// TODO        return new ResourceCreationResponse(newCustomer.getId());
 
         return newUser;
     }
