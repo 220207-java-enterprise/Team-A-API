@@ -1,5 +1,8 @@
 package com.revature.foundation.daos;
 
+import com.revature.foundation.models.ReimbursementStatuses;
+import com.revature.foundation.models.ReimbursementTypes;
+import com.revature.foundation.models.Reimbursements;
 import com.revature.foundation.util.Bytea;
 import com.revature.foundation.util.ConnectionFactory;
 import com.revature.foundation.util.exceptions.DataSourceException;

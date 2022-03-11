@@ -5,6 +5,9 @@ import com.revature.foundation.models.ReimbursementTypes;
 import com.revature.foundation.models.Reimbursements;
 import com.revature.foundation.util.Bytea;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 public class NewReimbursementRequest {
     private int amount;
     private String submitted;
@@ -132,6 +135,18 @@ public class NewReimbursementRequest {
     }
 
     public Reimbursements extractReimbursement() {
-        return new Reimbursements(amount, submitted, resolved, description, receipt, paymentId, authorId, resolverId, statusId, typeId);
+        Reimbursements reimbursements = new Reimbursements();
+        reimbursements.setReimbId(UUID.randomUUID().toString());
+        reimbursements.setAmount(this.amount);
+        reimbursements.setSubmitted(String.valueOf(LocalDateTime.now()));
+        reimbursements.setResolved(this.resolved);
+        reimbursements.setDescription(this.description);
+        reimbursements.setReceipt(this.receipt);
+        reimbursements.setPaymentId(this.paymentId);
+        reimbursements.setAuthorId(this.authorId);
+        reimbursements.setResolverId(this.resolverId);
+        reimbursements.setStatusId(this.statusId);
+        reimbursements.setTypeId(this.typeId);
+        return reimbursements;
     }
 }

@@ -74,6 +74,13 @@ public class NewUserRequest {
     }
 
     public Users extractUser() {
-        return new Users(givenName, surname, email, username, password);
+        Users userData=new Users();
+        userData.setGivenName(givenName);
+        userData.setSurname(surname);
+        userData.setEmail(email);
+        userData.setUsername(username);
+        userData.setPassword(password);
+
+        return userData;
     }
 }

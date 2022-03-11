@@ -4,34 +4,41 @@ import com.revature.foundation.util.Bytea;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "reimbursements")
+
+@Table(name = "ers_reimbursements")
+
 public class Reimbursements {
     @Id
     private String reimbId;
 
-    @Column
+
+    @Column(nullable = false)
     private int amount;
 
-    @Column
+    @Column(nullable = false)
+
     private String submitted;
 
     @Column
     private String resolved;
 
-    @Column
+
+    @Column(nullable = false)
+
     private String description;
 
     @Column
     private Bytea receipt;
 
-    @Column
+
+    @Column(name = "payment_id")
     private String paymentId;
 
-    @Column
+    @Column(name = "author_id", nullable = false)
     private String authorId;
 
-    @Column
+    @Column(name = "resolver_id")
+
     private String resolverId;
 
     @Embedded

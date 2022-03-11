@@ -6,26 +6,37 @@ import com.revature.foundation.dtos.requests.AllReimbursementsByIdRequest;
 import com.revature.foundation.dtos.requests.NewReimbursementRequest;
 import com.revature.foundation.dtos.requests.UpdatedReimbursementRequest;
 import com.revature.foundation.dtos.responses.AppReimbursementResponse;
+import com.revature.foundation.dtos.responses.ResourceCreationResponse;
 import com.revature.foundation.models.ReimbursementStatuses;
 import com.revature.foundation.models.Reimbursements;
+import com.revature.foundation.repository.ReimbursementsRepository;
+import com.revature.foundation.repository.UsersRepository;
 import com.revature.foundation.util.exceptions.AuthenticationException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
+@Service
 public class ReimbursementService {
-    private ReimbursementsDAO reimbursementsDAO; // a dependency of UserService
-
+//OLD    private ReimbursementsDAO reimbursementsDAO; // a dependency of UserService
+    private ReimbursementsRepository reimbursementsRepository;
     // Constructor injection
 
-    public ReimbursementService(ReimbursementsDAO reimbursementsDAO) {
-        this.reimbursementsDAO = reimbursementsDAO;
+    @Autowired
+    public ReimbursementService(ReimbursementsRepository reimbursementsRepository) {
+        this.reimbursementsRepository = reimbursementsRepository;
     }
-    private UsersDAO userDAO;
+
+
+
+
+    private UsersRepository usersRepository;
+//OLD    private UsersDAO userDAO;
     public List<Reimbursements> getAll() {
-        List<Reimbursements> reimbursements = reimbursementsDAO.getAll();
+        List<Reimbursements> reimbursements = reimbursementsRepository.getAllReimbursements();
         List<AppReimbursementResponse> reimbursementResponses = new ArrayList<>();
         for (Reimbursements reimbursement : reimbursements) {
             reimbursementResponses.add(new AppReimbursementResponse(reimbursement));
@@ -34,35 +45,48 @@ public class ReimbursementService {
         return reimbursements;
     }
 
-    public Reimbursements create(NewReimbursementRequest newReimbursementRequest) {
-        Reimbursements newReimbursement = newReimbursementRequest.extractReimbursement();
-        System.out.println("pointer" + newReimbursement.toString());
+    public ResourceCreationResponse create(NewReimbursementRequest newReimbursementRequest) {
 
-        //TODO add if reimbursementIsValid logic
-        ReimbursementStatuses sdf = new ReimbursementStatuses("0", "PENDING");
-        newReimbursement.setReimbId(UUID.randomUUID().toString());
-        newReimbursement.setStatusId(sdf);
-        reimbursementsDAO.save(newReimbursement);
+        Reimbursements reimbursements = newReimbursementRequest.extractReimbursement();
 
-        return newReimbursement;
+        reimbursementsRepository.save(reimbursements);
+        //Should this implement public abstract save instead of overriden save in Repo?
+
+        return new ResourceCreationResponse(reimbursements.getReimbId());
+
+
+
+
+// Old version that used DAO's
+//        Reimbursements newReimbursement = newReimbursementRequest.extractReimbursement();
+//        System.out.println("pointer" + newReimbursement.toString());
+//
+//        //TODO add if reimbursementIsValid logic
+//        ReimbursementStatuses sdf = new ReimbursementStatuses("0", "PENDING");
+//        newReimbursement.setReimbId(UUID.randomUUID().toString());
+//        newReimbursement.setStatusId(sdf);
+//        reimbursementsDAO.save(newReimbursement);
+//
+//        return newReimbursement;
 
     }
 
     //redundant?
-    public Reimbursements updatedReimbursement(UpdatedReimbursementRequest updateRequest) {
-        Reimbursements updatedReimbursement = updateRequest.extractReimbursement();
-
-        reimbursementsDAO.update(updatedReimbursement);
-        return updatedReimbursement;
-    }
-
-    public String AllReimbursementsById(AllReimbursementsByIdRequest allReimbursementsByIdRequest) throws SQLException {
-        String allReimbursements = allReimbursementsByIdRequest.extractAuthorid();
-
-        reimbursementsDAO.getAllById(allReimbursements);
-
-        return allReimbursements;
-    }
+    // commented out until it gets rewrited without DAO
+//    public Reimbursements updatedReimbursement(UpdatedReimbursementRequest updateRequest) {
+//        Reimbursements updatedReimbursement = updateRequest.extractReimbursement();
+//
+//        reimbursementsDAO.update(updatedReimbursement);
+//        return updatedReimbursement;
+//    }
+//
+//    public String AllReimbursementsById(AllReimbursementsByIdRequest allReimbursementsByIdRequest) throws SQLException {
+//        String allReimbursements = allReimbursementsByIdRequest.extractAuthorid();
+//
+//        reimbursementsDAO.getAllById(allReimbursements);
+//
+//        return allReimbursements;
+//    }
 
     public List<Reimbursements> getAllReimbursementsById(AllReimbursementsByIdRequest allReimbursementsByIdRequest) throws SQLException {
 //        System.out.println("somethings");

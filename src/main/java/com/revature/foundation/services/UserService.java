@@ -9,6 +9,7 @@ import com.revature.foundation.dtos.requests.LoginRequest;
 import com.revature.foundation.dtos.requests.NewUserRequest;
 import com.revature.foundation.dtos.requests.UpdatedUserRequest;
 import com.revature.foundation.dtos.responses.AppUserResponse;
+import com.revature.foundation.dtos.responses.ResourceCreationResponse;
 import com.revature.foundation.models.UserRole;
 import com.revature.foundation.models.Users;
 import com.revature.foundation.daos.UsersDAO;
@@ -31,6 +32,7 @@ public class UserService {
         this.userDAO = userDAO;
     }
 
+
     public List<Users> getAll() {
         List<Users> users = userDAO.getAll();
         List<AppUserResponse> userResponses = new ArrayList<>();
@@ -49,7 +51,7 @@ public class UserService {
         return updatedUser;
     }
 
-    public Users register(NewUserRequest newUserRequest) {
+    public ResourceCreationResponse register(NewUserRequest newUserRequest) {
 
         Users newUser = newUserRequest.extractUser();
 
@@ -73,8 +75,9 @@ public class UserService {
         newUser.setRole(new UserRole("3", "Employee")); // All newly registered users start as BASIC_USER
         newUser.setIsActive(false);
         userDAO.save(newUser);
-
-        return newUser;
+// TODO        return new ResourceCreationResponse(newCustomer.getId());
+        return new ResourceCreationResponse(newUser.getUserId());
+//        return newUser;
     }
 
     public Users login(String username, String password) {
