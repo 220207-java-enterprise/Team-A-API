@@ -3,6 +3,7 @@ package com.revature.foundation.models;
 import javax.persistence.Embeddable;
 
 @Embeddable // can be embedded within an entity class to add to its column list
+
 public class ReimbursementStatuses {
     private String statusId;
     private String status;
