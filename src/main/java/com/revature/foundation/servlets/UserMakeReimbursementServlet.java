@@ -38,30 +38,33 @@ public class UserMakeReimbursementServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println(req.getServletContext().getInitParameter("programmaticParam"));
     }
-
-    // new reimbursement endpoint
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        PrintWriter respWriter = resp.getWriter();
-
-        try {
-            NewReimbursementRequest newReimbursementRequest = mapper.readValue(req.getInputStream(), NewReimbursementRequest.class);
-//            Reimbursements newReimbursement =
-                    reimbursementService.create(newReimbursementRequest);
-            resp.setStatus(201);
-            resp.setContentType("application/json");
-
-
-        } catch (InvalidRequestException | DatabindException e) {
-            e.printStackTrace();
-            resp.setStatus(400); // BAD REQUEST
-        } catch (ResourceConflictException e) {
-            resp.setStatus(409); // CONFLICT
-        } catch (Exception e) {
-            e.printStackTrace();
-            resp.setStatus(500);
-        }
-
-    }
 }
+
+    //Dont need this anymore
+    // new reimbursement endpoint
+//    @Override
+//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//
+//        PrintWriter respWriter = resp.getWriter();
+//
+//        try {
+//            NewReimbursementRequest newReimbursementRequest = mapper.readValue(req.getInputStream(), NewReimbursementRequest.class);
+//            Reimbursements newReimbursement = reimbursementService.create(newReimbursementRequest);
+//            resp.setStatus(201);
+//            resp.setContentType("application/json");
+//            String payload = mapper.writeValueAsString(new ResourceCreationResponse(newReimbursement.getReimbId()));
+//            respWriter.write(payload);
+//
+//
+//        } catch (InvalidRequestException | DatabindException e) {
+//            e.printStackTrace();
+//            resp.setStatus(400); // BAD REQUEST
+//        } catch (ResourceConflictException e) {
+//            resp.setStatus(409); // CONFLICT
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            resp.setStatus(500);
+//        }
+//
+//    }
+//}
