@@ -11,40 +11,38 @@ public class Reimbursements {
     @Id
     private String reimbId;
 
-
     @Column(nullable = false)
     private int amount;
 
     @Column(nullable = false)
-
     private String submitted;
 
     @Column
     private String resolved;
 
-
     @Column(nullable = false)
-
     private String description;
 
     @Column
     private Bytea receipt;
 
-
     @Column(name = "payment_id")
     private String paymentId;
 
-    @Column(name = "author_id", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "author_id", nullable = false)
     private String authorId;
 
-    @Column(name = "resolver_id")
-
+    @OneToOne
+    @JoinColumn(name = "resolver_id")
     private String resolverId;
 
-    @Embedded
+    @ManyToMany
+    @JoinColumn(name = "status_id", nullable = false)
     private ReimbursementStatuses statusId;
 
-    @Embedded
+    @ManyToMany
+    @JoinColumn(name = "type_id", nullable = false)
     private ReimbursementTypes typeId;
 
     public Reimbursements() {
