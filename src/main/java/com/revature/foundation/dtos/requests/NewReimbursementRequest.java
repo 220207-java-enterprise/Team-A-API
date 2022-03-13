@@ -1,9 +1,8 @@
 package com.revature.foundation.dtos.requests;
 
 import com.revature.foundation.models.ReimbursementStatuses;
-import com.revature.foundation.models.ReimbursementTypes;
+import com.revature.foundation.models.ReimbursementType;
 import com.revature.foundation.models.Reimbursements;
-import com.revature.foundation.util.Bytea;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -13,18 +12,19 @@ public class NewReimbursementRequest {
     private String submitted;
     private String resolved;
     private String description;
-    private Bytea receipt;
+    private byte[] receipt;
+    //TODO ctr Z
     private String paymentId;
     private String authorId;
     private String resolverId;
     private ReimbursementStatuses statusId;
-    private ReimbursementTypes typeId;
+    private ReimbursementType typeId;
 
     public NewReimbursementRequest() {
         super();
     }
 
-    public NewReimbursementRequest(int amount, String submitted, String resolved, String description, Bytea receipt, String paymentId, String authorId, String resolverId, ReimbursementStatuses statusId, ReimbursementTypes typeId) {
+    public NewReimbursementRequest(int amount, String submitted, String resolved, String description, byte[] receipt, String paymentId, String authorId, String resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
         this.amount = amount;
         this.submitted = submitted;
         this.resolved = resolved;
@@ -70,11 +70,11 @@ public class NewReimbursementRequest {
         this.description = description;
     }
 
-    public Bytea getReceipt() {
+    public byte[] getReceipt() {
         return receipt;
     }
 
-    public void setReceipt(Bytea receipt) {
+    public void setReceipt(byte[] receipt) {
         this.receipt = receipt;
     }
 
@@ -110,11 +110,11 @@ public class NewReimbursementRequest {
         this.statusId = statusId;
     }
 
-    public ReimbursementTypes getTypeId() {
+    public ReimbursementType getTypeId() {
         return typeId;
     }
 
-    public void setTypeId(ReimbursementTypes typeId) {
+    public void setTypeId(ReimbursementType typeId) {
         this.typeId = typeId;
     }
 

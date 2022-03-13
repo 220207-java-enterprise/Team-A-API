@@ -1,9 +1,8 @@
 package com.revature.foundation.dtos.responses;
 
 import com.revature.foundation.models.ReimbursementStatuses;
-import com.revature.foundation.models.ReimbursementTypes;
+import com.revature.foundation.models.ReimbursementType;
 import com.revature.foundation.models.Reimbursements;
-import com.revature.foundation.util.Bytea;
 
 public class AppReimbursementResponse {
     private String reimbId;
@@ -11,12 +10,13 @@ public class AppReimbursementResponse {
     private String submitted;
     private String resolved;
     private String description;
-    private Bytea receipt;
+    private byte[] receipt;
+    //TODO ctrz
     private String paymentId;
     private String authorId;
     private String resolverId;
     private ReimbursementStatuses statusId;
-    private ReimbursementTypes typeId;
+    private ReimbursementType typeId;
 
     public AppReimbursementResponse() {
         super();
@@ -76,11 +76,11 @@ public class AppReimbursementResponse {
         this.description = description;
     }
 
-    public Bytea getReceipt() {
+    public byte[] getReceipt() {
         return receipt;
     }
 
-    public void setReceipt(Bytea receipt) {
+    public void setReceipt(byte[] receipt) {
         this.receipt = receipt;
     }
 
@@ -116,11 +116,11 @@ public class AppReimbursementResponse {
         this.statusId = statusId;
     }
 
-    public ReimbursementTypes getTypeId() {
+    public ReimbursementType getTypeId() {
         return typeId;
     }
 
-    public void setTypeId(ReimbursementTypes typeId) {
+    public void setTypeId(ReimbursementType typeId) {
         this.typeId = typeId;
     }
 }

@@ -1,9 +1,8 @@
 package com.revature.foundation.daos;
 
 import com.revature.foundation.models.ReimbursementStatuses;
-import com.revature.foundation.models.ReimbursementTypes;
+import com.revature.foundation.models.ReimbursementType;
 import com.revature.foundation.models.Reimbursements;
-import com.revature.foundation.util.Bytea;
 import com.revature.foundation.util.ConnectionFactory;
 import com.revature.foundation.util.exceptions.DataSourceException;
 import com.revature.foundation.util.exceptions.ResourcePersistenceException;
@@ -59,7 +58,7 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
             pstmt3.setString(7, newObject.getAuthorId());
             pstmt3.setString(8, newObject.getResolverId());
             pstmt3.setString(9, newObject.getStatusId().getStatusId());
-            pstmt3.setString(10, newObject.getTypeId().getTypeId());
+            pstmt3.setString(10, newObject.getTypeId().getId());
             System.out.println(pstmt3);
             int rowsInserted3 = pstmt3.executeUpdate();
             if (rowsInserted3 != 1) {
@@ -97,7 +96,7 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
                 reimbursements.setAuthorId(rs.getString("author_id"));
                 reimbursements.setResolverId(rs.getString("resolver_id"));
                 reimbursements.setStatusId(new ReimbursementStatuses(rs.getString("status_id"), rs.getString("status")));
-                reimbursements.setTypeId(new ReimbursementTypes(rs.getString("type_id"), rs.getString("type")));
+                reimbursements.setTypeId(new ReimbursementType(rs.getString("type_id"), rs.getString("type")));
             }
 
         } catch (SQLException e) {
@@ -160,7 +159,7 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
                 reimbursement.setAuthorId(rs.getString("author_id"));
                 reimbursement.setResolverId(rs.getString("resolver_id"));
                 reimbursement.setStatusId(new ReimbursementStatuses(rs.getString("status_id"), rs.getString("status")));
-                reimbursement.setTypeId(new ReimbursementTypes(rs.getString("type_id"), rs.getString("type")));
+                reimbursement.setTypeId(new ReimbursementType(rs.getString("type_id"), rs.getString("type")));
 //                System.out.println(reimbursement);
                 reimbursements1.add(reimbursement);
             }
@@ -187,7 +186,7 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
                 reimbursement.setAuthorId(rs.getString("author_id"));
                 reimbursement.setResolverId(rs.getString("resolver_id"));
                 reimbursement.setStatusId(new ReimbursementStatuses(rs.getString("status_id"), rs.getString("status")));
-                reimbursement.setTypeId(new ReimbursementTypes(rs.getString("type_id"), rs.getString("type")));
+                reimbursement.setTypeId(new ReimbursementType(rs.getString("type_id"), rs.getString("type")));
                 reimbursements.add(reimbursement);
             }
         } catch (SQLException e) {

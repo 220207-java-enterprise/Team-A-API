@@ -2,8 +2,10 @@ package com.revature.foundation.models;
 
 import javax.persistence.Embeddable;
 
-@Embeddable // can be embedded within an entity class to add to its column list
-public class ReimbursementStatuses {
+// TODO needs to be an entity and mapped to a table
+public class ReimbursementStatuses { // TODO make singular name
+
+    // TODO map columns
     private String statusId;
     private String status;
 

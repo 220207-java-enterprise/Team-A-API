@@ -1,6 +1,6 @@
 package com.revature.foundation.dtos.requests;
 
-import com.revature.foundation.models.Users;
+import com.revature.foundation.models.User;
 
 public class NewUserRequest {
 
@@ -73,8 +73,8 @@ public class NewUserRequest {
                 '}';
     }
 
-    public Users extractUser() {
-        Users userData=new Users();
+    public User extractUser() {
+        User userData=new User();
         userData.setGivenName(givenName);
         userData.setSurname(surname);
         userData.setEmail(email);

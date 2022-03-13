@@ -10,7 +10,8 @@ public class UpdatedReimbursementResponse {
     private String submitted;
     private String resolved;
     private String description;
-    private Bytea receipt;
+    private byte[] receipt;
+    //TODO ctrz
     private String paymentId;
     private String authorId;
     private String resolverId;
@@ -74,11 +75,11 @@ public class UpdatedReimbursementResponse {
         this.description = description;
     }
 
-    public Bytea getReceipt() {
+    public byte[] getReceipt() {
         return receipt;
     }
 
-    public void setReceipt(Bytea receipt) {
+    public void setReceipt(byte[] receipt) {
         this.receipt = receipt;
     }
 

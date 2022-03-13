@@ -2,9 +2,8 @@ package com.revature.foundation.dtos.requests;
 
 import com.revature.foundation.daos.ReimbursementsDAO;
 import com.revature.foundation.models.ReimbursementStatuses;
-import com.revature.foundation.models.ReimbursementTypes;
+import com.revature.foundation.models.ReimbursementType;
 import com.revature.foundation.models.Reimbursements;
-import com.revature.foundation.util.Bytea;
 
 public class AllReimbursementsByIdRequest {
 
@@ -13,7 +12,8 @@ public class AllReimbursementsByIdRequest {
     private String submitted;
     private String resolved;
     private String description;
-    private Bytea receipt;
+    private byte[] receipt;
+    //TODO ctr + z
     private String paymentId;
     private String authorId;
     private String resolverId;
@@ -68,11 +68,11 @@ public class AllReimbursementsByIdRequest {
         this.description = description;
     }
 
-    public Bytea getReceipt() {
+    public byte[] getReceipt() {
         return receipt;
     }
 
-    public void setReceipt(Bytea receipt) {
+    public void setReceipt(byte[] receipt) {
         this.receipt = receipt;
     }
 
@@ -122,7 +122,7 @@ public class AllReimbursementsByIdRequest {
         Reimbursements pulledReimbursement = daoToPullUserForRole_Id.getById(this.reimbId);
 
         ReimbursementStatuses aStatus = new ReimbursementStatuses(pulledReimbursement.getStatusId().getStatus(), statusId);
-        ReimbursementTypes aType = new ReimbursementTypes(pulledReimbursement.getTypeId().getType(), statusId);
+        ReimbursementType aType = new ReimbursementType(pulledReimbursement.getTypeId().getType(), statusId);
         return new Reimbursements(this.reimbId, this.amount, this.submitted, this.resolved, this.description, this.receipt, this.paymentId, this.authorId, this.resolverId, aStatus, aType);
     }
 

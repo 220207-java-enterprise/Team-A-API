@@ -1,7 +1,7 @@
 package com.revature.foundation.daos;
 
 import com.revature.foundation.models.UserRole;
-import com.revature.foundation.models.Users;
+import com.revature.foundation.models.User;
 import com.revature.foundation.util.ConnectionFactory;
 import com.revature.foundation.util.exceptions.DataSourceException;
 import com.revature.foundation.util.exceptions.ResourcePersistenceException;
@@ -16,7 +16,7 @@ import java.util.List;
 
     // TODO attempt to centralize exception handling in service layer
 @Repository
-    public class UsersDAO implements CrudDAO<Users> {
+    public class UsersDAO implements CrudDAO<User> {
 
         private final String rootSelect = "SELECT " +
                 "au.user_id, au.given_name, au.surname, au.email, au.username, au.password, au.is_active, au.role_id, ur.role " +
@@ -24,9 +24,9 @@ import java.util.List;
                 "JOIN ers_user_roles ur " +
                 "ON au.role_id = ur.role_id ";
 
-        public Users findUserByUsername(String username) {
+        public User findUserByUsername(String username) {
 
-            Users user = null;
+            User user = null;
 
             try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
@@ -35,7 +35,7 @@ import java.util.List;
 
                 ResultSet rs = pstmt.executeQuery();
                 if (rs.next()) {
-                    user = new Users();
+                    user = new User();
                     user.setUserId(rs.getString("user_id"));
                     user.setGivenName(rs.getString("given_name"));
                     user.setSurname(rs.getString("surname"));
@@ -53,9 +53,9 @@ import java.util.List;
             return user;
         }
 
-        public Users findUserByEmail(String email) {
+        public User findUserByEmail(String email) {
 
-            Users user = null;
+            User user = null;
 
             try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
@@ -64,7 +64,7 @@ import java.util.List;
 
                 ResultSet rs = pstmt.executeQuery();
                 if (rs.next()) {
-                    user = new Users();
+                    user = new User();
                     user.setUserId(rs.getString("user_id"));
                     user.setGivenName(rs.getString("given_name"));
                     user.setSurname(rs.getString("surname"));
@@ -83,9 +83,9 @@ import java.util.List;
 
         }
 
-        public Users findUserByUsernameAndPassword(String username, String password) {
+        public User findUserByUsernameAndPassword(String username, String password) {
 
-            Users authUser = null;
+            User authUser = null;
 
             try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
@@ -95,7 +95,7 @@ import java.util.List;
 
                 ResultSet rs = pstmt.executeQuery();
                 if (rs.next()) {
-                    authUser = new Users();
+                    authUser = new User();
                     authUser.setUserId(rs.getString("user_id"));
                     authUser.setGivenName(rs.getString("given_name"));
                     authUser.setSurname(rs.getString("surname"));
@@ -114,7 +114,7 @@ import java.util.List;
         }
 
         @Override
-        public void save(Users newUser) {
+        public void save(User newUser) {
 
             try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
@@ -143,9 +143,9 @@ import java.util.List;
         }
 
         @Override
-        public Users getById(String id) {
+        public User getById(String id) {
 
-            Users user = null;
+            User user = null;
 
             try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
@@ -154,7 +154,7 @@ import java.util.List;
 
                 ResultSet rs = pstmt.executeQuery();
                 if (rs.next()) {
-                    user = new Users();
+                    user = new User();
                     user.setUserId(rs.getString("user_id"));
                     user.setGivenName(rs.getString("given_name"));
                     user.setSurname(rs.getString("surname"));
@@ -174,15 +174,15 @@ import java.util.List;
         }
 
         @Override
-        public List<Users> getAll() {
+        public List<User> getAll() {
 
-            List<Users> users = new ArrayList<>();
+            List<User> users = new ArrayList<>();
 
             try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
                 ResultSet rs = conn.createStatement().executeQuery(rootSelect);
                 while (rs.next()) {
-                    Users user = new Users();
+                    User user = new User();
                     user.setUserId(rs.getString("user_id"));
                     user.setGivenName(rs.getString("given_name"));
                     user.setSurname(rs.getString("surname"));
@@ -201,7 +201,7 @@ import java.util.List;
         }
 
         @Override
-        public void update(Users updatedUser) {
+        public void update(User updatedUser) {
             try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
                 conn.setAutoCommit(false);

@@ -1,6 +1,6 @@
 package com.revature.foundation.dtos.responses;
 
-import com.revature.foundation.models.Users;
+import com.revature.foundation.models.User;
 public class AppUserResponse {
 
     private String userId;
@@ -14,7 +14,7 @@ public class AppUserResponse {
     }
 
 
-    public AppUserResponse(Users user) {
+    public AppUserResponse(User user) {
         this.userId = user.getUserId();
         this.givenName = user.getGivenName();
         this.surname = user.getSurname();

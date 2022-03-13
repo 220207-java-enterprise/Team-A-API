@@ -11,7 +11,7 @@ import com.revature.foundation.dtos.requests.UpdatedUserRequest;
 import com.revature.foundation.dtos.responses.AppUserResponse;
 import com.revature.foundation.dtos.responses.ResourceCreationResponse;
 import com.revature.foundation.models.UserRole;
-import com.revature.foundation.models.Users;
+import com.revature.foundation.models.User;
 import com.revature.foundation.daos.UsersDAO;
 import com.revature.foundation.util.exceptions.AuthenticationException;
 import com.revature.foundation.util.exceptions.InvalidRequestException;
@@ -33,10 +33,10 @@ public class UserService {
     }
 
 
-    public List<Users> getAll() {
-        List<Users> users = userDAO.getAll();
+    public List<User> getAll() {
+        List<User> users = userDAO.getAll();
         List<AppUserResponse> userResponses = new ArrayList<>();
-        for (Users user : users) {
+        for (User user : users) {
             userResponses.add(new AppUserResponse(user));
         }
 
@@ -44,8 +44,8 @@ public class UserService {
     }
 
     //redundant?
-    public Users updatedUser(UpdatedUserRequest updateRequest) {
-        Users updatedUser = updateRequest.extractUser();
+    public User updatedUser(UpdatedUserRequest updateRequest) {
+        User updatedUser = updateRequest.extractUser();
 
         userDAO.update(updatedUser);
         return updatedUser;
@@ -53,7 +53,7 @@ public class UserService {
 
     public ResourceCreationResponse register(NewUserRequest newUserRequest) {
 
-        Users newUser = newUserRequest.extractUser();
+        User newUser = newUserRequest.extractUser();
 
         if (!isUserValid(newUser)) {
             throw new InvalidRequestException("Bad registration details given.");
@@ -80,7 +80,7 @@ public class UserService {
 //        return newUser;
     }
 
-    public Users login(String username, String password) {
+    public User login(String username, String password) {
 
         if (!isUsernameValid(username) || !isPasswordValid(password)) {
             throw new InvalidRequestException("Invalid credentials provided!");
@@ -88,7 +88,7 @@ public class UserService {
 
         // TODO encrypt provided password (assumes password encryption is in place) to see if it matches what is in the DB
 
-        Users authUser = userDAO.findUserByUsernameAndPassword(username, password);
+        User authUser = userDAO.findUserByUsernameAndPassword(username, password);
 
         if (authUser == null) {
             throw new AuthenticationException();
@@ -100,7 +100,7 @@ public class UserService {
 
 
 
-    private boolean isUserValid(Users appUser) {
+    private boolean isUserValid(User appUser) {
 
         // First name and last name are not just empty strings or filled with whitespace
         if (appUser.getGivenName().trim().equals("") || appUser.getSurname().trim().equals("")) {
@@ -149,7 +149,7 @@ public class UserService {
         return userDAO.findUserByEmail(email) == null;
     }
 
-    public Users login(LoginRequest loginRequest) {
+    public User login(LoginRequest loginRequest) {
         String username = loginRequest.getUsername();
         String password = loginRequest.getPassword();
 
@@ -159,13 +159,13 @@ public class UserService {
 
         // TODO encrypt provided password (assumes password encryption is in place) to see if it matches what is in the DB
 
-        Users authUsers = userDAO.findUserByUsernameAndPassword(username, password);
+        User authUser = userDAO.findUserByUsernameAndPassword(username, password);
 
-        if (authUsers == null) {
+        if (authUser == null) {
             throw new AuthenticationException();
         }
 
-        return authUsers;
+        return authUser;
 
     }
 }

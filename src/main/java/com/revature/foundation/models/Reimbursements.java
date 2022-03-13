@@ -1,50 +1,60 @@
 package com.revature.foundation.models;
 
-import com.revature.foundation.util.Bytea;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "ers_reimbursements")
-public class Reimbursements {
+public class Reimbursements { // TODO refactor be singular name
     @Id
     private String reimbId;
 
     @Column(nullable = false)
     private int amount;
+    //TODO change to double
 
     @Column(nullable = false)
     private String submitted;
-
+//TODO change to local datetime
     @Column
     private String resolved;
+//TODO change to local datetime
 
     @Column(nullable = false)
     private String description;
 
+    @Lob
     @Column
-    private Bytea receipt;
+    private byte[] receipt;
 
     @Column(name = "payment_id")
     private String paymentId;
 
-    @Column(name = "author_id", nullable = false)
+    @Column(
+            name = "author_id",
+            nullable = false
+            //columnDefinition = "NUMERIC(6,2)"  explicit type declaration:
+    )
     private String authorId;
+//TODO make authorID a users Type and instead of a column make this a join column
 
     @Column(name = "resolver_id")
     private String resolverId;
+//TODO make resolverId a users Type and instead of a column make this a join column
 
-    @Embedded
+    @Embedded // TODO specifiy multiplcity (many-to-one)
     private ReimbursementStatuses statusId;
+//TODO make statusId instead of a column make this a join column
 
-    @Embedded
-    private ReimbursementTypes typeId;
+    @Embedded // TODO specifiy multiplcity (many-to-one)
+    private ReimbursementType typeId;
+//TODO make typeId instead of a column make this a join column
+
 
     public Reimbursements() {
         super();
     }
 
-    public Reimbursements(String reimbId, int amount, String submitted, String resolved, String description, Bytea receipt, String paymentId, String authorId, String resolverId, ReimbursementStatuses statusId, ReimbursementTypes typeId) {
+    public Reimbursements(String reimbId, int amount, String submitted, String resolved, String description, byte[] receipt, String paymentId, String authorId, String resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
         this.reimbId = reimbId;
         this.amount = amount;
         this.submitted = submitted;
@@ -58,7 +68,7 @@ public class Reimbursements {
         this.typeId = typeId;
     }
 
-    public Reimbursements(int amount, String submitted, String resolved, String description, Bytea receipt, String paymentId, String authorId, String resolverId, ReimbursementStatuses statusId, ReimbursementTypes typeId) {
+    public Reimbursements(int amount, String submitted, String resolved, String description, byte[] receipt, String paymentId, String authorId, String resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
         this.amount = amount;
         this.submitted = submitted;
         this.resolved = resolved;
@@ -111,11 +121,11 @@ public class Reimbursements {
         this.description = description;
     }
 
-    public Bytea getReceipt() {
+    public byte[] getReceipt() {
         return receipt;
     }
 
-    public void setReceipt(Bytea receipt) {
+    public void setReceipt(byte[] receipt) {
         this.receipt = receipt;
     }
 
@@ -151,11 +161,11 @@ public class Reimbursements {
         this.statusId = statusId;
     }
 
-    public ReimbursementTypes getTypeId() {
+    public ReimbursementType getTypeId() {
         return typeId;
     }
 
-    public void setTypeId(ReimbursementTypes typeId) {
+    public void setTypeId(ReimbursementType typeId) {
         this.typeId = typeId;
     }
 
