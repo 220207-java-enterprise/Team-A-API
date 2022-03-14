@@ -28,6 +28,7 @@ public class UsersController {
         return userService.register(request);
     }
 
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public HashMap<String, Object> handleInvalidRequests(InvalidRequestException e) {
