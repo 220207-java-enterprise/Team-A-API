@@ -1,16 +1,17 @@
 package com.revature.foundation.dtos.responses;
 
 import com.revature.foundation.models.Reimbursements;
-import com.revature.foundation.util.Bytea;
+
+import java.sql.Timestamp;
 
 public class UpdatedReimbursementResponse {
 
     private String reimbId;
     private int amount;
-    private String submitted;
-    private String resolved;
+    private Timestamp submitted;
+    private Timestamp resolved;
     private String description;
-    private byte[] receipt;
+    private String receipt;
     //TODO ctrz
     private String paymentId;
     private String authorId;
@@ -22,7 +23,7 @@ public class UpdatedReimbursementResponse {
     }
 
     public UpdatedReimbursementResponse(Reimbursements reimbursements) {
-        this.reimbId = reimbursements.getReimbId();
+        this.reimbId = reimbursements.getId();
         this.amount = reimbursements.getAmount();
         this.submitted = reimbursements.getSubmitted();
         this.resolved = reimbursements.getResolved();
@@ -51,19 +52,19 @@ public class UpdatedReimbursementResponse {
         this.amount = amount;
     }
 
-    public String getSubmitted() {
+    public Timestamp getSubmitted() {
         return submitted;
     }
 
-    public void setSubmitted(String submitted) {
+    public void setSubmitted(Timestamp submitted) {
         this.submitted = submitted;
     }
 
-    public String getResolved() {
+    public Timestamp getResolved() {
         return resolved;
     }
 
-    public void setResolved(String resolved) {
+    public void setResolved(Timestamp resolved) {
         this.resolved = resolved;
     }
 
@@ -75,11 +76,11 @@ public class UpdatedReimbursementResponse {
         this.description = description;
     }
 
-    public byte[] getReceipt() {
+    public String getReceipt() {
         return receipt;
     }
 
-    public void setReceipt(byte[] receipt) {
+    public void setReceipt(String receipt) {
         this.receipt = receipt;
     }
 

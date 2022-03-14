@@ -4,15 +4,16 @@ import com.revature.foundation.models.ReimbursementStatuses;
 import com.revature.foundation.models.ReimbursementType;
 import com.revature.foundation.models.Reimbursements;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class NewReimbursementRequest {
     private int amount;
-    private String submitted;
-    private String resolved;
+    private Timestamp submitted;
+    private Timestamp resolved;
     private String description;
-    private byte[] receipt;
+    private String receipt;
     //TODO ctr Z
     private String paymentId;
     private String authorId;
@@ -24,7 +25,7 @@ public class NewReimbursementRequest {
         super();
     }
 
-    public NewReimbursementRequest(int amount, String submitted, String resolved, String description, byte[] receipt, String paymentId, String authorId, String resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
+    public NewReimbursementRequest(int amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, String authorId, String resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
         this.amount = amount;
         this.submitted = submitted;
         this.resolved = resolved;
@@ -46,19 +47,19 @@ public class NewReimbursementRequest {
         this.amount = amount;
     }
 
-    public String getSubmitted() {
+    public Timestamp getSubmitted() {
         return submitted;
     }
 
-    public void setSubmitted(String submitted) {
+    public void setSubmitted(Timestamp submitted) {
         this.submitted = submitted;
     }
 
-    public String getResolved() {
+    public Timestamp getResolved() {
         return resolved;
     }
 
-    public void setResolved(String resolved) {
+    public void setResolved(Timestamp resolved) {
         this.resolved = resolved;
     }
 
@@ -70,11 +71,11 @@ public class NewReimbursementRequest {
         this.description = description;
     }
 
-    public byte[] getReceipt() {
+    public String getReceipt() {
         return receipt;
     }
 
-    public void setReceipt(byte[] receipt) {
+    public void setReceipt(String receipt) {
         this.receipt = receipt;
     }
 
@@ -136,10 +137,10 @@ public class NewReimbursementRequest {
 
     public Reimbursements extractReimbursement() {
         Reimbursements reimbursements = new Reimbursements();
-        reimbursements.setReimbId(UUID.randomUUID().toString());
+        reimbursements.setId(UUID.randomUUID().toString());
         reimbursements.setAmount(this.amount);
-        reimbursements.setSubmitted(String.valueOf(LocalDateTime.now()));
-        reimbursements.setResolved(this.resolved);
+        reimbursements.setSubmitted(Timestamp.valueOf(LocalDateTime.now()));
+        reimbursements.setResolved(Timestamp.valueOf(String.valueOf(this.resolved)));
         reimbursements.setDescription(this.description);
         reimbursements.setReceipt(this.receipt);
         reimbursements.setPaymentId(this.paymentId);

@@ -1,61 +1,63 @@
 package com.revature.foundation.models;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "ers_reimbursements")
 public class Reimbursements { // TODO refactor be singular name
     @Id
-    private String reimbId;
+    private String id;
 
     @Column(nullable = false)
     private int amount;
     //TODO change to double
 
     @Column(nullable = false)
-    private String submitted;
+    private Timestamp submitted;
 //TODO change to local datetime
     @Column
-    private String resolved;
+    private Timestamp resolved;
 //TODO change to local datetime
 
     @Column(nullable = false)
     private String description;
 
-    @Lob
     @Column
-    private byte[] receipt;
+    private String receipt;
 
     @Column(name = "payment_id")
     private String paymentId;
 
-    @Column(
+    @OneToOne(targetEntity = Reimbursements.class)
+    @JoinColumn(
             name = "author_id",
             nullable = false
             //columnDefinition = "NUMERIC(6,2)"  explicit type declaration:
     )
     private String authorId;
-//TODO make authorID a users Type and instead of a column make this a join column
+//TODO make authorID a users Type
 
-    @Column(name = "resolver_id")
+    @OneToOne(targetEntity = Reimbursements.class)
+    @JoinColumn(name = "resolver_id")
     private String resolverId;
-//TODO make resolverId a users Type and instead of a column make this a join column
+//TODO make resolverId a users Type
 
-    @Embedded // TODO specifiy multiplcity (many-to-one)
+    @ManyToOne(targetEntity = Reimbursements.class)
+    @JoinColumn(name = "status_id", nullable = false)
     private ReimbursementStatuses statusId;
-//TODO make statusId instead of a column make this a join column
 
-    @Embedded // TODO specifiy multiplcity (many-to-one)
+    @ManyToOne(targetEntity = Reimbursements.class)
+    @JoinColumn(name = "type_id", nullable = false)
     private ReimbursementType typeId;
-//TODO make typeId instead of a column make this a join column
 
 
     public Reimbursements() {
         super();
     }
 
-    public Reimbursements(String reimbId, int amount, String submitted, String resolved, String description, byte[] receipt, String paymentId, String authorId, String resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
-        this.reimbId = reimbId;
+    public Reimbursements(String id, int amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, String authorId, String resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
+        this.id = id;
         this.amount = amount;
         this.submitted = submitted;
         this.resolved = resolved;
@@ -68,7 +70,7 @@ public class Reimbursements { // TODO refactor be singular name
         this.typeId = typeId;
     }
 
-    public Reimbursements(int amount, String submitted, String resolved, String description, byte[] receipt, String paymentId, String authorId, String resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
+    public Reimbursements(int amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, String authorId, String resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
         this.amount = amount;
         this.submitted = submitted;
         this.resolved = resolved;
@@ -81,12 +83,12 @@ public class Reimbursements { // TODO refactor be singular name
         this.typeId = typeId;
     }
 
-    public String getReimbId() {
-        return reimbId;
+    public String getId() {
+        return id;
     }
 
-    public void setReimbId(String reimbId) {
-        this.reimbId = reimbId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getAmount() {
@@ -97,19 +99,19 @@ public class Reimbursements { // TODO refactor be singular name
         this.amount = amount;
     }
 
-    public String getSubmitted() {
+    public Timestamp getSubmitted() {
         return submitted;
     }
 
-    public void setSubmitted(String submitted) {
+    public void setSubmitted(Timestamp submitted) {
         this.submitted = submitted;
     }
 
-    public String getResolved() {
+    public Timestamp getResolved() {
         return resolved;
     }
 
-    public void setResolved(String resolved) {
+    public void setResolved(Timestamp resolved) {
         this.resolved = resolved;
     }
 
@@ -121,11 +123,11 @@ public class Reimbursements { // TODO refactor be singular name
         this.description = description;
     }
 
-    public byte[] getReceipt() {
+    public String getReceipt() {
         return receipt;
     }
 
-    public void setReceipt(byte[] receipt) {
+    public void setReceipt(String receipt) {
         this.receipt = receipt;
     }
 
@@ -172,7 +174,7 @@ public class Reimbursements { // TODO refactor be singular name
     @Override
     public String toString() {
         return "Reimbursements{" +
-                "reimbId='" + reimbId + '\'' +
+                "id='" + id + '\'' +
                 ", amount=" + amount +
                 ", submitted=" + submitted +
                 ", resolved=" + resolved +
@@ -186,3 +188,4 @@ public class Reimbursements { // TODO refactor be singular name
                 '}';
     }
 }
+

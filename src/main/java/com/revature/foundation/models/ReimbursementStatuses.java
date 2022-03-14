@@ -1,29 +1,27 @@
 package com.revature.foundation.models;
 
-import javax.persistence.Embeddable;
-
 // TODO needs to be an entity and mapped to a table
 public class ReimbursementStatuses { // TODO make singular name
 
     // TODO map columns
-    private String statusId;
+    private String id;
     private String status;
 
     public ReimbursementStatuses() {
         super();
     }
 
-    public ReimbursementStatuses(String statusId, String status) {
-        this.statusId = statusId;
+    public ReimbursementStatuses(String id, String status) {
+        this.id = id;
         this.status = status;
     }
 
-    public String getStatusId() {
-        return statusId;
+    public String getId() {
+        return id;
     }
 
-    public void setStatusId(String statusId) {
-        this.statusId = statusId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getStatus() {
@@ -37,7 +35,7 @@ public class ReimbursementStatuses { // TODO make singular name
     @Override
     public String toString() {
         return "ReimbursementStatuses{" +
-                "statusId='" + statusId + '\'' +
+                "id='" + id + '\'' +
                 ", status='" + status + '\'' +
                 '}';
     }

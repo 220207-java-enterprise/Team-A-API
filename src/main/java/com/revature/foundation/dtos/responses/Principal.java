@@ -21,7 +21,7 @@ public class Principal {
 
     public Principal(Reimbursements reimbursements) {
         this.userId = reimbursements.getAuthorId();
-        this.username = reimbursements.getReimbId();
+        this.username = reimbursements.getId();
         this.roleId = reimbursements.getTypeId().getType();
     }
 

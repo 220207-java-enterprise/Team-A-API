@@ -5,14 +5,16 @@ import com.revature.foundation.models.ReimbursementStatuses;
 import com.revature.foundation.models.ReimbursementType;
 import com.revature.foundation.models.Reimbursements;
 
+import java.sql.Timestamp;
+
 public class AllReimbursementsByIdRequest {
 
     private String reimbId;
     private int amount;
-    private String submitted;
-    private String resolved;
+    private Timestamp submitted;
+    private Timestamp resolved;
     private String description;
-    private byte[] receipt;
+    private String receipt;
     //TODO ctr + z
     private String paymentId;
     private String authorId;
@@ -44,19 +46,19 @@ public class AllReimbursementsByIdRequest {
         this.amount = amount;
     }
 
-    public String getSubmitted() {
+    public Timestamp getSubmitted() {
         return submitted;
     }
 
-    public void setSubmitted(String submitted) {
+    public void setSubmitted(Timestamp submitted) {
         this.submitted = submitted;
     }
 
-    public String getResolved() {
+    public Timestamp getResolved() {
         return resolved;
     }
 
-    public void setResolved(String resolved) {
+    public void setResolved(Timestamp resolved) {
         this.resolved = resolved;
     }
 
@@ -68,11 +70,11 @@ public class AllReimbursementsByIdRequest {
         this.description = description;
     }
 
-    public byte[] getReceipt() {
+    public String getReceipt() {
         return receipt;
     }
 
-    public void setReceipt(byte[] receipt) {
+    public void setReceipt(String receipt) {
         this.receipt = receipt;
     }
 

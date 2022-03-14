@@ -48,7 +48,7 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
 
             conn.setAutoCommit(false);
             PreparedStatement pstmt3 = conn.prepareStatement("INSERT INTO ers_reimbursements VALUES (?, ?, ?, ?, ?, null, ?, ?, ?, ?, ?)");
-            pstmt3.setString(1, newObject.getReimbId());
+            pstmt3.setString(1, newObject.getId());
             pstmt3.setDouble(2, newObject.getAmount());
             pstmt3.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
             pstmt3.setTimestamp(4, null);
@@ -57,7 +57,7 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
             pstmt3.setString(6, newObject.getPaymentId());
             pstmt3.setString(7, newObject.getAuthorId());
             pstmt3.setString(8, newObject.getResolverId());
-            pstmt3.setString(9, newObject.getStatusId().getStatusId());
+            pstmt3.setString(9, newObject.getStatusId().getId());
             pstmt3.setString(10, newObject.getTypeId().getId());
             System.out.println(pstmt3);
             int rowsInserted3 = pstmt3.executeUpdate();
@@ -86,10 +86,10 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
             if (rs.next()) {
                 reimbursements = new Reimbursements();
 
-                reimbursements.setReimbId(rs.getString("reimb_id"));
+                reimbursements.setId(rs.getString("reimb_id"));
                 reimbursements.setAmount(rs.getInt("amount"));
-                reimbursements.setSubmitted(rs.getString("submitted"));
-                reimbursements.setResolved(rs.getString("resolved"));
+                reimbursements.setSubmitted(rs.getTimestamp("submitted"));
+                reimbursements.setResolved(rs.getTimestamp("resolved"));
                 reimbursements.setDescription(rs.getString("description"));
 //                reimbursements.setReceipt(new Bytea(rs.getBytes("receipt")));
                 reimbursements.setPaymentId(rs.getString("payment_id"));
@@ -149,10 +149,10 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
             ResultSet rs = pstmt4.executeQuery();
             while (rs.next()) {
                 Reimbursements reimbursement = new Reimbursements();
-                reimbursement.setReimbId(rs.getString("reimb_id"));
+                reimbursement.setId(rs.getString("reimb_id"));
                 reimbursement.setAmount(rs.getInt("amount"));
-                reimbursement.setSubmitted(rs.getString("submitted"));
-                reimbursement.setResolved(rs.getString("resolved"));
+                reimbursement.setSubmitted(rs.getTimestamp("submitted"));
+                reimbursement.setResolved(rs.getTimestamp("resolved"));
                 reimbursement.setDescription(rs.getString("description"));
 //                reimbursemets.setReceipt(new Bytea(rs.getBytes("receipt")));
                 reimbursement.setPaymentId(rs.getString("payment_id"));
@@ -176,10 +176,10 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
             ResultSet rs = conn.createStatement().executeQuery(rootSelect);
             while (rs.next()) {
                 Reimbursements reimbursement = new Reimbursements();
-                reimbursement.setReimbId(rs.getString("reimb_id"));
+                reimbursement.setId(rs.getString("reimb_id"));
                 reimbursement.setAmount(rs.getInt("amount"));
-                reimbursement.setSubmitted(rs.getString("submitted"));
-                reimbursement.setResolved(rs.getString("resolved"));
+                reimbursement.setSubmitted(rs.getTimestamp("submitted"));
+                reimbursement.setResolved(rs.getTimestamp("resolved"));
                 reimbursement.setDescription(rs.getString("description"));
 //                reimbursement.setReceipt(new Bytea(rs.getBytes("receipt")));
                 reimbursement.setPaymentId(rs.getString("payment_id"));
@@ -223,7 +223,7 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
             pstmt.setString(5, updatedObject.getResolverId());
             pstmt.setString(6, updatedObject.getStatusId().getStatus());
             pstmt.setString(7, updatedObject.getTypeId().getType());
-            pstmt.setString(8, updatedObject.getReimbId());
+            pstmt.setString(8, updatedObject.getId());
 
 
 

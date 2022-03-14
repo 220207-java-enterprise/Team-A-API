@@ -1,13 +1,10 @@
 package com.revature.foundation.services;
 
 import com.revature.foundation.daos.ReimbursementsDAO;
-import com.revature.foundation.daos.UsersDAO;
 import com.revature.foundation.dtos.requests.AllReimbursementsByIdRequest;
 import com.revature.foundation.dtos.requests.NewReimbursementRequest;
-import com.revature.foundation.dtos.requests.UpdatedReimbursementRequest;
 import com.revature.foundation.dtos.responses.AppReimbursementResponse;
 import com.revature.foundation.dtos.responses.ResourceCreationResponse;
-import com.revature.foundation.models.ReimbursementStatuses;
 import com.revature.foundation.models.Reimbursements;
 import com.revature.foundation.repository.ReimbursementsRepository;
 import com.revature.foundation.repository.UsersRepository;
@@ -18,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
 @Service
 public class ReimbursementService {
 //OLD    private ReimbursementsDAO reimbursementsDAO; // a dependency of UserService
@@ -36,7 +33,7 @@ public class ReimbursementService {
     private UsersRepository usersRepository;
 //OLD    private UsersDAO userDAO;
     public List<Reimbursements> getAll() {
-        List<Reimbursements> reimbursements = reimbursementsRepository.getAllReimbursements();
+        List<Reimbursements> reimbursements = (List<Reimbursements>) reimbursementsRepository.findAll();
         List<AppReimbursementResponse> reimbursementResponses = new ArrayList<>();
         for (Reimbursements reimbursement : reimbursements) {
             reimbursementResponses.add(new AppReimbursementResponse(reimbursement));
@@ -52,7 +49,7 @@ public class ReimbursementService {
         reimbursementsRepository.save(reimbursements);
         //Should this implement public abstract save instead of overriden save in Repo?
 
-        return new ResourceCreationResponse(reimbursements.getReimbId());
+        return new ResourceCreationResponse(reimbursements.getId());
 
 
 
