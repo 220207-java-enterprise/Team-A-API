@@ -5,6 +5,7 @@ public class ReimbursementStatuses { // TODO make singular name
 
     // TODO map columns
     private String id;
+
     private String status;
 
     public ReimbursementStatuses() {

@@ -6,8 +6,10 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "ers_reimbursements")
 public class Reimbursements { // TODO refactor be singular name
+
     @Id
     private String id;
+
 
     @Column(nullable = false)
     private int amount;
@@ -15,16 +17,19 @@ public class Reimbursements { // TODO refactor be singular name
 
     @Column(nullable = false)
     private Timestamp submitted;
-//TODO change to local datetime
+
     @Column
     private Timestamp resolved;
 //TODO change to local datetime
 
+
     @Column(nullable = false)
+
     private String description;
 
     @Column
     private String receipt;
+
 
     @Column(name = "payment_id")
     private String paymentId;
@@ -40,6 +45,7 @@ public class Reimbursements { // TODO refactor be singular name
 
     @OneToOne(targetEntity = Reimbursements.class)
     @JoinColumn(name = "resolver_id")
+
     private String resolverId;
 //TODO make resolverId a users Type
 

@@ -12,7 +12,7 @@ public interface ReimbursementsRepository extends CrudRepository<Reimbursements,
 
 
 
-    List<Reimbursements> findReimbursementBystatusId(String statusId);
+//    List<Reimbursements> findReimbursementBystatusId(String statusId);
 
 
 
