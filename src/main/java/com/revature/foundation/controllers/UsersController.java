@@ -44,8 +44,8 @@ public class UsersController {
             System.out.println(loginRequest);
             Principal principal = new Principal(userService.login(loginRequest));
             System.out.println(principal);
-//            String token = tokenService.generateToken(principal);
-//            resp.setHeader("Authorization", token);
+            String token = tokenService.generateToken(principal);
+            resp.setHeader("Authorization", token);
         } else {
             resp.setStatus(401);
         }
