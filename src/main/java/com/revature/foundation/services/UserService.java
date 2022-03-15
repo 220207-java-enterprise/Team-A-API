@@ -13,6 +13,7 @@ import com.revature.foundation.dtos.responses.ResourceCreationResponse;
 import com.revature.foundation.models.UserRole;
 import com.revature.foundation.models.User;
 import com.revature.foundation.daos.UsersDAO;
+import com.revature.foundation.repository.UsersRepository;
 import com.revature.foundation.util.exceptions.AuthenticationException;
 import com.revature.foundation.util.exceptions.InvalidRequestException;
 import com.revature.foundation.util.exceptions.ResourceConflictException;
@@ -24,13 +25,16 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private UsersDAO userDAO; // a dependency of UserService
+    private UsersRepository usersRepository;
 
     // Constructor injection
     //If you only have one constructor then you dont really need this autowired tag ebcause its implied
     @Autowired
-    public UserService(UsersDAO userDAO) {
+    public UserService(UsersDAO userDAO, UsersRepository usersRepository) {
         this.userDAO = userDAO;
+        this.usersRepository = usersRepository;
     }
+
 
 
     public List<User> getAll() {
@@ -158,10 +162,11 @@ public class UserService {
         }
 
         // TODO encrypt provided password (assumes password encryption is in place) to see if it matches what is in the DB
-
-        User authUser = userDAO.findUserByUsernameAndPassword(username, password);
+        User authUser = usersRepository.getUserByUsernameandPassword(username, password);
+        System.out.println(authUser);
 
         if (authUser == null) {
+
             throw new AuthenticationException();
         }
 

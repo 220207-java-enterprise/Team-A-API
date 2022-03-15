@@ -1,14 +1,16 @@
 package com.revature.foundation.models;
 
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import java.util.Objects;
 
-// NOT AN ENTITY
-// NO TABLE MAPPED TO THIS CLASS
-@Embeddable // can be embedded within an entity class to add to its column list
+@Entity
+@Table(name = "ers_user_roles")
 public class UserRole {
 
+    @Id
     private String id;
+
+    @Column(name = "role", nullable = false, unique = true)
     private String roleName;
 
     public UserRole() {

@@ -1,5 +1,6 @@
 package com.revature.foundation.services;
 
+import com.revature.foundation.dtos.requests.LoginRequest;
 import com.revature.foundation.dtos.responses.Principal;
 import com.revature.foundation.util.JwtConfig;
 import io.jsonwebtoken.Claims;
@@ -29,6 +30,25 @@ public class TokenService {
                                       .setSubject(subject.getUsername())
                                       .claim("roleId", subject.getRoleId())
                                       .signWith(jwtConfig.getSigAlg(), jwtConfig.getSigningKey());
+
+        return tokenBuilder.compact();
+
+    }
+
+
+    public String generateToken(LoginRequest subject) {
+
+        // number of milliseconds passed since the beginning of UNIX time
+        // start of UNIX time: January 1, 1970
+        long now = System.currentTimeMillis();
+
+        JwtBuilder tokenBuilder = Jwts.builder()
+                .setId(subject.getUsername())
+                .setIssuer("foundation")
+                .setIssuedAt(new Date(now))
+                .setExpiration(new Date(now + jwtConfig.getExpiration()))
+                .setSubject(subject.getUsername())
+                .signWith(jwtConfig.getSigAlg(), jwtConfig.getSigningKey());
 
         return tokenBuilder.compact();
 

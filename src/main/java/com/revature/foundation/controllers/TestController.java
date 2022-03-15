@@ -39,11 +39,11 @@ public class TestController {
 
     // Grabbing request param values
     @GetMapping(value = "test3", produces = "application/json")
-    public HashMap<String, Object> test3(@RequestParam String username, @RequestParam("email") String someEmail) {
+    public HashMap<String, Object> test3(@RequestBody String username, String email) {
         HashMap<String, Object> responseMap = new HashMap<>();
         responseMap.put("endpoint", "/test3");
         responseMap.put("status", "UP");
-        responseMap.put("providedValues", Arrays.asList(username, someEmail));
+        responseMap.put("providedValues", Arrays.asList(username, email));
         return responseMap;
     }
 
@@ -97,7 +97,9 @@ public class TestController {
     // Using an injected HttpServletResponse to modify response headers/status code
     @PostMapping(value = "test8", produces = "application/json", consumes = "application/json")
     public void test8(@RequestBody HashMap<String, Object> credentials, HttpServletResponse resp) {
-        if (credentials.get("username").equals("wsingleton") && credentials.get("password").equals("p4$$W0RD")) {
+        //    public void test8(@RequestBody String username, String password, HttpServletResponse resp) {
+
+        if (credentials.get("username").equals("Gmanderr") && credentials.get("password").equals("p@$$w0rD")) {
             resp.setHeader("Authorization", "some-token-value-here");
         } else {
             resp.setStatus(401);

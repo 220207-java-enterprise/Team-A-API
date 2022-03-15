@@ -22,19 +22,16 @@ public class Reimbursements { // TODO refactor be singular name
     private Timestamp resolved;
 //TODO change to local datetime
 
-
     @Column(nullable = false)
-
     private String description;
 
     @Column
     private String receipt;
 
-
     @Column(name = "payment_id")
     private String paymentId;
 
-    @OneToOne(targetEntity = Reimbursements.class)
+    @ManyToOne(targetEntity = Reimbursements.class)
     @JoinColumn(
             name = "author_id",
             nullable = false
@@ -45,7 +42,6 @@ public class Reimbursements { // TODO refactor be singular name
 
     @OneToOne(targetEntity = Reimbursements.class)
     @JoinColumn(name = "resolver_id")
-
     private String resolverId;
 //TODO make resolverId a users Type
 

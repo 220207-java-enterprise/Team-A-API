@@ -11,6 +11,7 @@ import java.util.Objects;
 public class User {
 //this is a comment
     @Id
+    @Column(name = "user_id")
     private String userId;
 
     @Column(nullable=false, unique=true)
@@ -31,9 +32,9 @@ public class User {
     @Column(name="is_active", columnDefinition = "boolean default false")
     private Boolean isActive;
 
-    @Embedded
+    @ManyToOne
+    @JoinColumn(name = "role_id")
     private UserRole role;
-//TODO join column instead of embeded
 
     public User() {
         super(); // not required, but it bugs me personally not to have it
