@@ -52,12 +52,7 @@ public class UsersController {
             resp.setHeader("Authorization", token);
 
     }
-//        if (credentials.get("username").equals("Gmanderr") && credentials.get("password").equals("p@$$w0rD")) {
-//        System.out.println("this");
-//        LoginRequest loginRequest = new LoginRequest(credentials);
-//        System.out.println(loginRequest);
-//        String token = tokenService.generateToken(loginRequest);
-//            resp.setHeader("Authorization", token);
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public HashMap<String, Object> handleInvalidRequests(InvalidRequestException e) {

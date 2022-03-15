@@ -24,8 +24,6 @@ public class JwtConfig {
     }
 
     public int getExpiration() {
-        System.out.println("but i did not get here");
-        System.out.println(expiration);
         return expiration;
     }
 
