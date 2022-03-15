@@ -1,12 +1,15 @@
 package com.revature.foundation.util;
 
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.persistence.Entity;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
+@ComponentScan
+
 @Component
 public class JwtConfig {
 

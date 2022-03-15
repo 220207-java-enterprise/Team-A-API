@@ -20,10 +20,13 @@ import java.util.HashMap;
 @RequestMapping("/users")
 public class UsersController {
 
+    private TokenService tokenService;
+
     private UserService userService;
     @Autowired
-    public UsersController(UserService userService) {
+    public UsersController(UserService userService, TokenService tokenService) {
         this.userService = userService;
+        this.tokenService = tokenService;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -35,20 +38,19 @@ public class UsersController {
     // Using an injected HttpServletResponse to modify response headers/status code
     // Login
     @PostMapping(value = "login", produces = "application/json", consumes = "application/json")
-    public void login(@RequestBody HashMap<String, Object> credentials, HttpServletResponse resp, TokenService tokenService) {
+    public void login(@RequestBody HashMap<String, Object> credentials, HttpServletResponse resp) {
         //    public void login(@RequestBody String username, String password, HttpServletResponse resp) {
 //pass as request instead of hashmap
-        if (credentials.get("username").equals("Gmanderr") && credentials.get("password").equals("p@$$w0rD")) {
+
             System.out.println("this");
             LoginRequest loginRequest = new LoginRequest(credentials);
             System.out.println(loginRequest);
             Principal principal = new Principal(userService.login(loginRequest));
             System.out.println(principal);
+
             String token = tokenService.generateToken(principal);
             resp.setHeader("Authorization", token);
-        } else {
-            resp.setStatus(401);
-        }
+
     }
 //        if (credentials.get("username").equals("Gmanderr") && credentials.get("password").equals("p@$$w0rD")) {
 //        System.out.println("this");

@@ -7,9 +7,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+@ComponentScan
 @Component
 public class TokenService {
 
@@ -47,23 +49,7 @@ public class TokenService {
     }
 
 
-    public String generateToken(LoginRequest subject) {
 
-        // number of milliseconds passed since the beginning of UNIX time
-        // start of UNIX time: January 1, 1970
-        long now = System.currentTimeMillis();
-
-        JwtBuilder tokenBuilder = Jwts.builder()
-                .setId(subject.getUsername())
-                .setIssuer("technologyp")
-                .setIssuedAt(new Date(now))
-                .setExpiration(new Date(now + jwtConfig.getExpiration()))
-                .setSubject(subject.getUsername())
-                .signWith(jwtConfig.getSigAlg(), jwtConfig.getSigningKey());
-
-        return tokenBuilder.compact();
-
-    }
 
     public Principal extractRequesterDetails(String token) {
 
