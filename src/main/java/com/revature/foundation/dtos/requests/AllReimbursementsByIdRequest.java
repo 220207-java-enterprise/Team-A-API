@@ -4,13 +4,14 @@ import com.revature.foundation.daos.ReimbursementsDAO;
 import com.revature.foundation.models.ReimbursementStatuses;
 import com.revature.foundation.models.ReimbursementType;
 import com.revature.foundation.models.Reimbursements;
+import com.revature.foundation.models.User;
 
 import java.sql.Timestamp;
 
 public class AllReimbursementsByIdRequest {
 
     private String reimbId;
-    private int amount;
+    private double amount;
     private Timestamp submitted;
     private Timestamp resolved;
     private String description;
@@ -18,16 +19,16 @@ public class AllReimbursementsByIdRequest {
     //TODO ctr + z
     private String paymentId;
     private String authorId;
-    private String resolverId;
-    private String statusId;
+    private User resolverId;
+    private User statusId;
     private String typeId;
 
     public AllReimbursementsByIdRequest() {
         super();
     }
 
-    public AllReimbursementsByIdRequest(String authorId) {
-        this.authorId = authorId;
+    public AllReimbursementsByIdRequest(User authorId) {
+        this.authorId = String.valueOf(authorId);
     }
 
     public String getReimbId() {
@@ -38,11 +39,11 @@ public class AllReimbursementsByIdRequest {
         this.reimbId = reimbId;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
@@ -86,19 +87,19 @@ public class AllReimbursementsByIdRequest {
         this.paymentId = paymentId;
     }
 
-    public String getAuthorId() {
+    public User getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(String authorId) {
+    public void setAuthorId(User authorId) {
         this.authorId = authorId;
     }
 
-    public String getResolverId() {
+    public User getResolverId() {
         return resolverId;
     }
 
-    public void setResolverId(String resolverId) {
+    public void setResolverId(User resolverId) {
         this.resolverId = resolverId;
     }
 

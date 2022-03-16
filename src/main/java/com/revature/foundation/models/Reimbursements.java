@@ -2,6 +2,7 @@ package com.revature.foundation.models;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @Entity
 @Table(name = "ers_reimbursements")
@@ -12,8 +13,7 @@ public class Reimbursements { // TODO refactor be singular name
 
 
     @Column(nullable = false)
-    private int amount;
-    //TODO change to double
+    private double amount;
 
     @Column(nullable = false)
     private Timestamp submitted;
@@ -37,12 +37,12 @@ public class Reimbursements { // TODO refactor be singular name
             nullable = false
             //columnDefinition = "NUMERIC(6,2)"  explicit type declaration:
     )
-    private String authorId;
+    private User authorId;
 //TODO make authorID a users Type
 
     @OneToOne(targetEntity = Reimbursements.class)
     @JoinColumn(name = "resolver_id")
-    private String resolverId;
+    private User resolverId;
 //TODO make resolverId a users Type
 
     @ManyToOne(targetEntity = Reimbursements.class)
@@ -58,7 +58,7 @@ public class Reimbursements { // TODO refactor be singular name
         super();
     }
 
-    public Reimbursements(String id, int amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, String authorId, String resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
+    public Reimbursements(String id, double amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, User authorId, User resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
         this.id = id;
         this.amount = amount;
         this.submitted = submitted;
@@ -71,8 +71,8 @@ public class Reimbursements { // TODO refactor be singular name
         this.statusId = statusId;
         this.typeId = typeId;
     }
-
-    public Reimbursements(int amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, String authorId, String resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
+    //why are there 2 here?
+    public Reimbursements(double amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, User authorId, User resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
         this.amount = amount;
         this.submitted = submitted;
         this.resolved = resolved;
@@ -93,11 +93,11 @@ public class Reimbursements { // TODO refactor be singular name
         this.id = id;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
@@ -141,19 +141,19 @@ public class Reimbursements { // TODO refactor be singular name
         this.paymentId = paymentId;
     }
 
-    public String getAuthorId() {
+    public User getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(String authorId) {
+    public void setAuthorId(User authorId) {
         this.authorId = authorId;
     }
 
-    public String getResolverId() {
+    public User getResolverId() {
         return resolverId;
     }
 
-    public void setResolverId(String resolverId) {
+    public void setResolverId(User resolverId) {
         this.resolverId = resolverId;
     }
 
@@ -171,6 +171,30 @@ public class Reimbursements { // TODO refactor be singular name
 
     public void setTypeId(ReimbursementType typeId) {
         this.typeId = typeId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Reimbursements)) return false;
+        Reimbursements that = (Reimbursements) o;
+        return Double.compare(that.amount, amount) == 0
+                && Objects.equals(id, that.id)
+                && Objects.equals(submitted, that.submitted)
+                && Objects.equals(resolved, that.resolved)
+                && Objects.equals(description, that.description)
+                && Objects.equals(receipt, that.receipt)
+                && Objects.equals(paymentId, that.paymentId)
+                && Objects.equals(authorId, that.authorId)
+                && Objects.equals(resolverId, that.resolverId)
+                && Objects.equals(statusId, that.statusId)
+                && Objects.equals(typeId, that.typeId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, amount, submitted, resolved, description,
+                receipt, paymentId, authorId, resolverId, statusId, typeId);
     }
 
     @Override

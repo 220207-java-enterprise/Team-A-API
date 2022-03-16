@@ -3,9 +3,9 @@ package com.revature.foundation.daos;
 import com.revature.foundation.models.ReimbursementStatuses;
 import com.revature.foundation.models.ReimbursementType;
 import com.revature.foundation.models.Reimbursements;
+import com.revature.foundation.models.User;
 import com.revature.foundation.util.ConnectionFactory;
 import com.revature.foundation.util.exceptions.DataSourceException;
-import com.revature.foundation.util.exceptions.ResourcePersistenceException;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -41,7 +41,7 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
 
     }
 
-    @Override
+    /*@Override
     public void save(Reimbursements newObject) {
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
@@ -55,8 +55,8 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
             pstmt3.setString(5, newObject.getDescription());
 //            pstmt3.setString(, null);
             pstmt3.setString(6, newObject.getPaymentId());
-            pstmt3.setString(7, newObject.getAuthorId());
-            pstmt3.setString(8, newObject.getResolverId());
+            pstmt3.setUser(7, newObject.getAuthorId());
+            pstmt3.setUser(8, newObject.getResolverId());
             pstmt3.setString(9, newObject.getStatusId().getId());
             pstmt3.setString(10, newObject.getTypeId().getId());
             System.out.println(pstmt3);
@@ -71,9 +71,9 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
         } catch (SQLException e) {
             throw new DataSourceException(e);
         }
-    }
+    }*/
 
-    @Override
+    /*@Override
     public Reimbursements getById(String id) {
         Reimbursements reimbursements = null;
 
@@ -93,8 +93,8 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
                 reimbursements.setDescription(rs.getString("description"));
 //                reimbursements.setReceipt(new Bytea(rs.getBytes("receipt")));
                 reimbursements.setPaymentId(rs.getString("payment_id"));
-                reimbursements.setAuthorId(rs.getString("author_id"));
-                reimbursements.setResolverId(rs.getString("resolver_id"));
+                reimbursements.setAuthorId(rs.getUser("author_id"));
+                reimbursements.setResolverId(rs.getUser("resolver_id"));
                 reimbursements.setStatusId(new ReimbursementStatuses(rs.getString("status_id"), rs.getString("status")));
                 reimbursements.setTypeId(new ReimbursementType(rs.getString("type_id"), rs.getString("type")));
             }
@@ -104,7 +104,7 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
         }
         return reimbursements;
 
-    }
+    }*/
 
 //    public static Reimbursements getByIdOk(String id) {
 //        Reimbursements reimbursements = null;
@@ -139,7 +139,7 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
 //    }
 
 
-    public static List<Reimbursements> getAllById(String id) throws SQLException {
+    public static List<Reimbursements> getAllById(User id) throws SQLException {
         List<Reimbursements> reimbursements1 = new ArrayList<>();
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
@@ -156,8 +156,8 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
                 reimbursement.setDescription(rs.getString("description"));
 //                reimbursemets.setReceipt(new Bytea(rs.getBytes("receipt")));
                 reimbursement.setPaymentId(rs.getString("payment_id"));
-                reimbursement.setAuthorId(rs.getString("author_id"));
-                reimbursement.setResolverId(rs.getString("resolver_id"));
+                reimbursement.setAuthorId(rs.getUser("author_id"));
+                reimbursement.setResolverId(rs.getUser("resolver_id"));
                 reimbursement.setStatusId(new ReimbursementStatuses(rs.getString("status_id"), rs.getString("status")));
                 reimbursement.setTypeId(new ReimbursementType(rs.getString("type_id"), rs.getString("type")));
 //                System.out.println(reimbursement);
@@ -183,8 +183,8 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
                 reimbursement.setDescription(rs.getString("description"));
 //                reimbursement.setReceipt(new Bytea(rs.getBytes("receipt")));
                 reimbursement.setPaymentId(rs.getString("payment_id"));
-                reimbursement.setAuthorId(rs.getString("author_id"));
-                reimbursement.setResolverId(rs.getString("resolver_id"));
+                reimbursement.setAuthorId(rs.getUser("author_id"));
+                reimbursement.setResolverId(rs.getUser("resolver_id"));
                 reimbursement.setStatusId(new ReimbursementStatuses(rs.getString("status_id"), rs.getString("status")));
                 reimbursement.setTypeId(new ReimbursementType(rs.getString("type_id"), rs.getString("type")));
                 reimbursements.add(reimbursement);
@@ -196,7 +196,7 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
         return reimbursements;
     }
 
-    @Override
+   /* @Override
     public void update(Reimbursements updatedObject) {
 
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
@@ -214,13 +214,13 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
                     "type_id = ? " +
                     "WHERE reimb_id = ?");
 
-            pstmt.setInt(1, updatedObject.getAmount());
+            pstmt.setDouble(1, updatedObject.getAmount());
 //            pstmt.setString(2, updatedObject.getResolved());
             pstmt.setString(2, updatedObject.getDescription());
 //            pstmt.setBinaryStream(4, updatedObject.getReceipt().getBinaryStream());
             pstmt.setString(3, updatedObject.getPaymentId());
-            pstmt.setString(4,updatedObject.getAuthorId());
-            pstmt.setString(5, updatedObject.getResolverId());
+            pstmt.setUser(4,updatedObject.getAuthorId());
+            pstmt.setUser(5, updatedObject.getResolverId());
             pstmt.setString(6, updatedObject.getStatusId().getStatus());
             pstmt.setString(7, updatedObject.getTypeId().getType());
             pstmt.setString(8, updatedObject.getId());
@@ -240,7 +240,7 @@ public class ReimbursementsDAO implements CrudDAO<Reimbursements> {
             throw new DataSourceException(e);
         }
 
-    }
+    }*/
 
     @Override
     public void deleteById(String id) {
