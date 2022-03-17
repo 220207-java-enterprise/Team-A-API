@@ -6,6 +6,7 @@ import com.revature.foundation.dtos.requests.NewReimbursementRequest;
 import com.revature.foundation.dtos.responses.AppReimbursementResponse;
 import com.revature.foundation.dtos.responses.ResourceCreationResponse;
 import com.revature.foundation.models.Reimbursements;
+import com.revature.foundation.models.User;
 import com.revature.foundation.repository.ReimbursementsRepository;
 import com.revature.foundation.repository.UsersRepository;
 import com.revature.foundation.util.exceptions.AuthenticationException;
@@ -88,7 +89,7 @@ public class ReimbursementService {
     public List<Reimbursements> getAllReimbursementsById(AllReimbursementsByIdRequest allReimbursementsByIdRequest) throws SQLException {
 //        System.out.println("somethings");
 
-        String authorId = allReimbursementsByIdRequest.getAuthorId();
+        User authorId = allReimbursementsByIdRequest.getAuthorId();
 //        System.out.println(authorId);
 
         List<Reimbursements>  reimbursements = ReimbursementsDAO.getAllById(authorId);

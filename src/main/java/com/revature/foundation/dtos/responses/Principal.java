@@ -20,7 +20,7 @@ public class Principal {
     }
 
     public Principal(Reimbursements reimbursements) {
-        this.userId = reimbursements.getAuthorId();
+        this.userId = String.valueOf(reimbursements.getAuthorId());
         this.username = reimbursements.getId();
         this.roleId = reimbursements.getTypeId().getType();
     }

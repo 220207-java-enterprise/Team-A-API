@@ -3,21 +3,22 @@ package com.revature.foundation.dtos.requests;
 import com.revature.foundation.models.ReimbursementStatuses;
 import com.revature.foundation.models.ReimbursementType;
 import com.revature.foundation.models.Reimbursements;
+import com.revature.foundation.models.User;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class NewReimbursementRequest {
-    private int amount;
+    private double amount;
     private Timestamp submitted;
     private Timestamp resolved;
     private String description;
     private String receipt;
     //TODO ctr Z
     private String paymentId;
-    private String authorId;
-    private String resolverId;
+    private User authorId;
+    private User resolverId;
     private ReimbursementStatuses statusId;
     private ReimbursementType typeId;
 
@@ -25,7 +26,7 @@ public class NewReimbursementRequest {
         super();
     }
 
-    public NewReimbursementRequest(int amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, String authorId, String resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
+    public NewReimbursementRequest(double amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, User authorId, User resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
         this.amount = amount;
         this.submitted = submitted;
         this.resolved = resolved;
@@ -39,11 +40,11 @@ public class NewReimbursementRequest {
     }
 
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
@@ -87,19 +88,19 @@ public class NewReimbursementRequest {
         this.paymentId = paymentId;
     }
 
-    public String getAuthorId() {
+    public User getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(String authorId) {
+    public void setAuthorId(User authorId) {
         this.authorId = authorId;
     }
 
-    public String getResolverId() {
+    public User getResolverId() {
         return resolverId;
     }
 
-    public void setResolverId(String resolverId) {
+    public void setResolverId(User resolverId) {
         this.resolverId = resolverId;
     }
 
