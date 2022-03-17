@@ -4,6 +4,8 @@ import com.revature.foundation.dtos.requests.LoginRequest;
 import com.revature.foundation.dtos.requests.NewUserRequest;
 import com.revature.foundation.dtos.responses.Principal;
 import com.revature.foundation.dtos.responses.ResourceCreationResponse;
+import com.revature.foundation.repository.ReimbursementsRepository;
+import com.revature.foundation.services.ReimbursementService;
 import com.revature.foundation.services.TokenService;
 import com.revature.foundation.services.UserService;
 import com.revature.foundation.util.exceptions.InvalidRequestException;
@@ -21,12 +23,13 @@ import java.util.HashMap;
 public class UsersController {
 
     private TokenService tokenService;
-
+    private ReimbursementService reimbursementService;
     private UserService userService;
     @Autowired
-    public UsersController(UserService userService, TokenService tokenService) {
+    public UsersController(UserService userService, TokenService tokenService, ReimbursementService reimbursementService) {
         this.userService = userService;
         this.tokenService = tokenService;
+        this.reimbursementService = reimbursementService;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -62,6 +65,25 @@ public class UsersController {
         responseBody.put("timestamp", LocalDateTime.now());
 
         return responseBody;
+
+    }
+
+    @PostMapping(value = "newoldreimbursement", produces = "application/json", consumes = "application/json")
+    public void updateReimbursementById(@RequestBody HashMap<String, Object> credentials, HttpServletResponse resp) {
+        //    public void login(@RequestBody String username, String password, HttpServletResponse resp) {
+//pass as request instead of hashmap
+        System.out.println(credentials);
+        System.out.println("this");
+
+        reimbursementService.updateReimbursementById("2");
+        System.out.println("did i get here");
+//        LoginRequest loginRequest = new LoginRequest(credentials);
+//        System.out.println(loginRequest);
+//        Principal principal = new Principal(userService.login(loginRequest));
+//        System.out.println(principal);
+
+//        String token = tokenService.generateToken(principal);
+        resp.setHeader("Authorization", "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzMjE1IiwiaXNzIjoidGVjaG5vbG9neXAiLCJpYXQiOjE2NDczNzc3NzksImV4cCI6MTY0NzM4MTM3OSwic3ViIjoiR21hbmRlcnIiLCJyb2xlSWQiOiJBZG1pbiJ9.NgV8-UrUGXxuuCJKWBpsXkhyIKMhx82liQgPWBh69EM");
 
     }
 

@@ -11,11 +11,11 @@ import java.util.List;
 public interface ReimbursementsRepository extends CrudRepository<Reimbursements, String> {
 
 
+    @Query(value = "select * from ers_reimbursements r where r.status_id = ?1", nativeQuery = true)
+    Reimbursements findReimbursementBystatusId(String statusId);
 
-//    List<Reimbursements> findReimbursementBystatusId(String statusId);
 
-
-
+//    updateReimbursementById
 
 
 }

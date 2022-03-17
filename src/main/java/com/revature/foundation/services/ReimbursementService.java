@@ -92,12 +92,22 @@ public class ReimbursementService {
 //        System.out.println(authorId);
 
         List<Reimbursements>  reimbursements = ReimbursementsDAO.getAllById(authorId);
-        System.out.println(reimbursements + "asodf");
+        System.out.println("something here" + reimbursements + "asodf");
         if (reimbursements == null) {
             throw new AuthenticationException();
         }
 
         return reimbursements;
+
+    }
+
+    public Reimbursements updateReimbursementById(String id) {
+        System.out.println("asfadf " + id);
+        System.out.println(reimbursementsRepository.findReimbursementBystatusId(id));
+        System.out.println("last print");
+        Reimbursements updatingThisReimbursement = reimbursementsRepository.findReimbursementBystatusId(id);
+        System.out.println(updatingThisReimbursement);
+        return null;
 
     }
 
