@@ -1,6 +1,6 @@
 package com.revature.foundation.dtos.responses;
 
-import com.revature.foundation.models.Reimbursements;
+import com.revature.foundation.models.Reimbursement;
 import com.revature.foundation.models.User;
 
 import java.sql.Timestamp;
@@ -23,18 +23,18 @@ public class UpdatedReimbursementResponse {
     public UpdatedReimbursementResponse() {
     }
 
-    public UpdatedReimbursementResponse(Reimbursements reimbursements) {
-        this.reimbId = reimbursements.getId();
-        this.amount = reimbursements.getAmount();
-        this.submitted = reimbursements.getSubmitted();
-        this.resolved = reimbursements.getResolved();
-        this.description = reimbursements.getDescription();
-        this.receipt = reimbursements.getReceipt();
-        this.paymentId = reimbursements.getPaymentId();
-        this.authorId = reimbursements.getAuthorId();
-        this.resolverId = reimbursements.getResolverId();
-        this.statusId = reimbursements.getStatusId().getStatus();
-        this.typeId = reimbursements.getTypeId().getType();
+    public UpdatedReimbursementResponse(Reimbursement reimbursement) {
+        this.reimbId = reimbursement.getId();
+        this.amount = reimbursement.getAmount();
+        this.submitted = reimbursement.getSubmitted();
+        this.resolved = reimbursement.getResolved();
+        this.description = reimbursement.getDescription();
+        this.receipt = reimbursement.getReceipt();
+        this.paymentId = reimbursement.getPaymentId();
+        this.authorId = reimbursement.getAuthorId();
+        this.resolverId = reimbursement.getResolverId();
+        this.statusId = reimbursement.getStatusId().getStatus();
+        this.typeId = reimbursement.getTypeId().getType();
     }
 
     public String getReimbId() {

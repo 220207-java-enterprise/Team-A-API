@@ -6,13 +6,13 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "ers_reimbursements")
-public class Reimbursements { // TODO refactor be singular name
+public class Reimbursement { // TODO refactor be singular name
 
     @Id
     private String id;
 
 
-    @Column(nullable = false)
+    @Column(name = "amount", nullable = false, columnDefinition = "numeric(6,2)")
     private double amount;
 
     @Column(nullable = false)
@@ -31,7 +31,7 @@ public class Reimbursements { // TODO refactor be singular name
     @Column(name = "payment_id")
     private String paymentId;
 
-    @ManyToOne(targetEntity = Reimbursements.class)
+    @ManyToOne(targetEntity = Reimbursement.class)
     @JoinColumn(
             name = "author_id",
             nullable = false
@@ -40,25 +40,25 @@ public class Reimbursements { // TODO refactor be singular name
     private User authorId;
 //TODO make authorID a users Type
 
-    @OneToOne(targetEntity = Reimbursements.class)
+    @OneToOne(targetEntity = Reimbursement.class)
     @JoinColumn(name = "resolver_id")
     private User resolverId;
 //TODO make resolverId a users Type
 
-    @ManyToOne(targetEntity = Reimbursements.class)
+    @ManyToOne(targetEntity = Reimbursement.class)
     @JoinColumn(name = "status_id", nullable = false)
     private ReimbursementStatuses statusId;
 
-    @ManyToOne(targetEntity = Reimbursements.class)
+    @ManyToOne(targetEntity = Reimbursement.class)
     @JoinColumn(name = "type_id", nullable = false)
     private ReimbursementType typeId;
 
 
-    public Reimbursements() {
+    public Reimbursement() {
         super();
     }
 
-    public Reimbursements(String id, double amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, User authorId, User resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
+    public Reimbursement(String id, double amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, User authorId, User resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
         this.id = id;
         this.amount = amount;
         this.submitted = submitted;
@@ -72,7 +72,7 @@ public class Reimbursements { // TODO refactor be singular name
         this.typeId = typeId;
     }
     //why are there 2 here?
-    public Reimbursements(double amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, User authorId, User resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
+    public Reimbursement(double amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, User authorId, User resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
         this.amount = amount;
         this.submitted = submitted;
         this.resolved = resolved;
@@ -176,8 +176,8 @@ public class Reimbursements { // TODO refactor be singular name
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Reimbursements)) return false;
-        Reimbursements that = (Reimbursements) o;
+        if (!(o instanceof Reimbursement)) return false;
+        Reimbursement that = (Reimbursement) o;
         return Double.compare(that.amount, amount) == 0
                 && Objects.equals(id, that.id)
                 && Objects.equals(submitted, that.submitted)

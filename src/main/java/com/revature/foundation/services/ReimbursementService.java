@@ -1,19 +1,15 @@
 package com.revature.foundation.services;
 
-import com.revature.foundation.daos.ReimbursementsDAO;
-import com.revature.foundation.dtos.requests.AllReimbursementsByIdRequest;
+
 import com.revature.foundation.dtos.requests.NewReimbursementRequest;
 import com.revature.foundation.dtos.responses.AppReimbursementResponse;
 import com.revature.foundation.dtos.responses.ResourceCreationResponse;
-import com.revature.foundation.models.Reimbursements;
-import com.revature.foundation.models.User;
+import com.revature.foundation.models.Reimbursement;
 import com.revature.foundation.repository.ReimbursementsRepository;
 import com.revature.foundation.repository.UsersRepository;
-import com.revature.foundation.util.exceptions.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,10 +29,10 @@ public class ReimbursementService {
 
     private UsersRepository usersRepository;
 //OLD    private UsersDAO userDAO;
-    public List<Reimbursements> getAll() {
-        List<Reimbursements> reimbursements = (List<Reimbursements>) reimbursementsRepository.findAll();
+    public List<Reimbursement> getAll() {
+        List<Reimbursement> reimbursements = (List<Reimbursement>) reimbursementsRepository.findAll();
         List<AppReimbursementResponse> reimbursementResponses = new ArrayList<>();
-        for (Reimbursements reimbursement : reimbursements) {
+        for (Reimbursement reimbursement : reimbursements) {
             reimbursementResponses.add(new AppReimbursementResponse(reimbursement));
         }
 
@@ -45,12 +41,12 @@ public class ReimbursementService {
 
     public ResourceCreationResponse create(NewReimbursementRequest newReimbursementRequest) {
 
-        Reimbursements reimbursements = newReimbursementRequest.extractReimbursement();
+        Reimbursement reimbursement = newReimbursementRequest.extractReimbursement();
 
-        reimbursementsRepository.save(reimbursements);
+        reimbursementsRepository.save(reimbursement);
         //Should this implement public abstract save instead of overriden save in Repo?
 
-        return new ResourceCreationResponse(reimbursements.getId());
+        return new ResourceCreationResponse(reimbursement.getId());
 
 
 
@@ -86,27 +82,27 @@ public class ReimbursementService {
 //        return allReimbursements;
 //    }
 
-    public List<Reimbursements> getAllReimbursementsById(AllReimbursementsByIdRequest allReimbursementsByIdRequest) throws SQLException {
-//        System.out.println("somethings");
+//    public List<Reimbursements> getAllReimbursementsById(AllReimbursementsByIdRequest allReimbursementsByIdRequest) throws SQLException {
+////        System.out.println("somethings");
+//
+//        User authorId = allReimbursementsByIdRequest.getAuthorId();
+////        System.out.println(authorId);
+//
+//        List<Reimbursements>  reimbursements = reimbursementsRepository.findReimbursementBystatusId(authorId.getUserId());
+//        System.out.println("something here" + reimbursements + "asodf");
+//        if (reimbursements == null) {
+//            throw new AuthenticationException();
+//        }
+//
+//        return reimbursements;
+//
+//    }
 
-        User authorId = allReimbursementsByIdRequest.getAuthorId();
-//        System.out.println(authorId);
-
-        List<Reimbursements>  reimbursements = ReimbursementsDAO.getAllById(authorId);
-        System.out.println("something here" + reimbursements + "asodf");
-        if (reimbursements == null) {
-            throw new AuthenticationException();
-        }
-
-        return reimbursements;
-
-    }
-
-    public Reimbursements updateReimbursementById(String id) {
+    public Reimbursement updateReimbursementById(String id) {
         System.out.println("asfadf " + id);
         System.out.println(reimbursementsRepository.findReimbursementBystatusId(id));
         System.out.println("last print");
-        Reimbursements updatingThisReimbursement = reimbursementsRepository.findReimbursementBystatusId(id);
+        List<Reimbursement> updatingThisReimbursement = reimbursementsRepository.findReimbursementBystatusId(id);
         System.out.println(updatingThisReimbursement);
         return null;
 

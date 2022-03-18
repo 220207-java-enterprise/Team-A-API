@@ -1,6 +1,6 @@
 package com.revature.foundation.dtos.responses;
 
-import com.revature.foundation.models.Reimbursements;
+import com.revature.foundation.models.Reimbursement;
 import com.revature.foundation.models.User;
 
 import java.sql.Timestamp;
@@ -39,19 +39,19 @@ public class AllReimbursementsByIdResponse {
 //        this.typeId = reimbursements.getTypeId().getType();
 //    }
 
-    public AllReimbursementsByIdResponse(List<Reimbursements> allReimbursementsById) {
-        for(Reimbursements reimbursements : allReimbursementsById) {
-            this.reimbId = reimbursements.getId();
-            this.amount = reimbursements.getAmount();
-            this.submitted = reimbursements.getSubmitted();
-            this.resolved = reimbursements.getResolved();
-            this.description = reimbursements.getDescription();
-            this.receipt = reimbursements.getReceipt();
-            this.paymentId = reimbursements.getPaymentId();
-            this.authorId = reimbursements.getAuthorId();
-            this.resolverId = reimbursements.getResolverId();
-            this.statusId = reimbursements.getStatusId().getStatus();
-            this.typeId = reimbursements.getTypeId().getType();
+    public AllReimbursementsByIdResponse(List<Reimbursement> allReimbursementById) {
+        for(Reimbursement reimbursement : allReimbursementById) {
+            this.reimbId = reimbursement.getId();
+            this.amount = reimbursement.getAmount();
+            this.submitted = reimbursement.getSubmitted();
+            this.resolved = reimbursement.getResolved();
+            this.description = reimbursement.getDescription();
+            this.receipt = reimbursement.getReceipt();
+            this.paymentId = reimbursement.getPaymentId();
+            this.authorId = reimbursement.getAuthorId();
+            this.resolverId = reimbursement.getResolverId();
+            this.statusId = reimbursement.getStatusId().getStatus();
+            this.typeId = reimbursement.getTypeId().getType();
 
         }
 //        return allReimbursementsById;

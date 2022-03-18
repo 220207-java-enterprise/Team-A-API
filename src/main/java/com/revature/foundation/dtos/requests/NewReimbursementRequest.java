@@ -1,8 +1,8 @@
 package com.revature.foundation.dtos.requests;
 
+import com.revature.foundation.models.Reimbursement;
 import com.revature.foundation.models.ReimbursementStatuses;
 import com.revature.foundation.models.ReimbursementType;
-import com.revature.foundation.models.Reimbursements;
 import com.revature.foundation.models.User;
 
 import java.sql.Timestamp;
@@ -136,19 +136,19 @@ public class NewReimbursementRequest {
                 '}';
     }
 
-    public Reimbursements extractReimbursement() {
-        Reimbursements reimbursements = new Reimbursements();
-        reimbursements.setId(UUID.randomUUID().toString());
-        reimbursements.setAmount(this.amount);
-        reimbursements.setSubmitted(Timestamp.valueOf(LocalDateTime.now()));
-        reimbursements.setResolved(Timestamp.valueOf(String.valueOf(this.resolved)));
-        reimbursements.setDescription(this.description);
-        reimbursements.setReceipt(this.receipt);
-        reimbursements.setPaymentId(this.paymentId);
-        reimbursements.setAuthorId(this.authorId);
-        reimbursements.setResolverId(this.resolverId);
-        reimbursements.setStatusId(this.statusId);
-        reimbursements.setTypeId(this.typeId);
-        return reimbursements;
+    public Reimbursement extractReimbursement() {
+        Reimbursement reimbursement = new Reimbursement();
+        reimbursement.setId(UUID.randomUUID().toString());
+        reimbursement.setAmount(this.amount);
+        reimbursement.setSubmitted(Timestamp.valueOf(LocalDateTime.now()));
+        reimbursement.setResolved(Timestamp.valueOf(String.valueOf(this.resolved)));
+        reimbursement.setDescription(this.description);
+        reimbursement.setReceipt(this.receipt);
+        reimbursement.setPaymentId(this.paymentId);
+        reimbursement.setAuthorId(this.authorId);
+        reimbursement.setResolverId(this.resolverId);
+        reimbursement.setStatusId(this.statusId);
+        reimbursement.setTypeId(this.typeId);
+        return reimbursement;
     }
 }

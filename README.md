@@ -172,11 +172,11 @@ The PRISM application is another internal system that your expense reimbursement
 - Functional: Admin users are able to approve pending registration requests
 - Functional: Admin users are able to change the role of a system user
 - Functional: Activated users are able to authenticate with the system
-- Functional: Employee users are able to create and submit new reimbursements
-- Functional: Employee users are able to see a table of all of their reimbursements (sortable and filterable)
+- Functional: Employee users are able to create and submit new reimbursement
+- Functional: Employee users are able to see a table of all of their reimbursement (sortable and filterable)
 - Functional: Finance managers are able to see a table of all pending reimburesments (sortable and filterable)
 - Functional: Finance managers are able to select a reimbursement from the table and see separate view containing that reimbursement's details
-- Functional: Finance managers are able to approve or deny pending reimbursements
+- Functional: Finance managers are able to approve or deny pending reimbursement
 - Non-Functional: Test coverage of the API's service layer is at least 80%
 - Non-Functional: The API's endpoints are exposed in a RESTful manner
 - Non-Functional: User passwords are hashed or encrypted before persisting to the database
