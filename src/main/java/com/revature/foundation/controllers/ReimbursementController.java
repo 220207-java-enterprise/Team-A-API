@@ -2,20 +2,18 @@ package com.revature.foundation.controllers;
 
 import com.revature.foundation.dtos.requests.NewReimbursementRequest;
 import com.revature.foundation.dtos.responses.ResourceCreationResponse;
-import com.revature.foundation.models.Reimbursements;
 import com.revature.foundation.services.ReimbursementService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/Reimbursements")
-public class ReimbursementsController {
+public class ReimbursementController {
     private ReimbursementService reimbursementService;
 
     @Autowired
-    public ReimbursementsController(ReimbursementService reimbursementService) {
+    public ReimbursementController(ReimbursementService reimbursementService) {
         this.reimbursementService = reimbursementService;
     }
 

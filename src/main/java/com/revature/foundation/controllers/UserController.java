@@ -14,11 +14,11 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("/Users")
-public class UsersController {
+public class UserController {
 
     private UserService userService;
     @Autowired
-    public UsersController(UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
