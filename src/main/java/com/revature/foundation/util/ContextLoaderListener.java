@@ -18,9 +18,9 @@ public class ContextLoaderListener implements ServletContextListener {
 
     private static Logger logger = LogManager.getLogger(ContextLoaderListener.class);
 
-//    @Override
-//    public void contextInitialized(ServletContextEvent sce) {
-//        logger.debug("Initializing foundation web application");
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+        logger.debug("Initializing foundation web application");
 //
 //        ObjectMapper mapper = new ObjectMapper();
 //        JwtConfig jwtConfig = new JwtConfig();
@@ -50,9 +50,9 @@ public class ContextLoaderListener implements ServletContextListener {
 //
 //    }
 
-    @Override
-    public void contextDestroyed(ServletContextEvent sce) {
-        logger.debug("Shutting down foundation web application");
+        @Override
+        public void contextDestroyed (ServletContextEvent sce){
+            logger.debug("Shutting down foundation web application");
+        }
     }
-
 }
