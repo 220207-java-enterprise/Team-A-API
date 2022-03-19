@@ -9,9 +9,11 @@ import com.revature.foundation.dtos.requests.LoginRequest;
 import com.revature.foundation.dtos.requests.NewUserRequest;
 import com.revature.foundation.dtos.requests.UpdatedUserRequest;
 import com.revature.foundation.dtos.responses.AppUserResponse;
+import com.revature.foundation.dtos.responses.ResourceCreationResponse;
 import com.revature.foundation.models.UserRole;
-import com.revature.foundation.models.Users;
+import com.revature.foundation.models.User;
 import com.revature.foundation.daos.UsersDAO;
+import com.revature.foundation.repository.UsersRepository;
 import com.revature.foundation.util.exceptions.AuthenticationException;
 import com.revature.foundation.util.exceptions.InvalidRequestException;
 import com.revature.foundation.util.exceptions.ResourceConflictException;
@@ -23,19 +25,22 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private UsersDAO userDAO; // a dependency of UserService
+    private UsersRepository usersRepository;
 
     // Constructor injection
     //If you only have one constructor then you dont really need this autowired tag ebcause its implied
     @Autowired
-    public UserService(UsersDAO userDAO) {
+    public UserService(UsersDAO userDAO, UsersRepository usersRepository) {
         this.userDAO = userDAO;
+        this.usersRepository = usersRepository;
     }
 
 
-    public List<Users> getAll() {
-        List<Users> users = userDAO.getAll();
+
+    public List<User> getAll() {
+        List<User> users = userDAO.getAll();
         List<AppUserResponse> userResponses = new ArrayList<>();
-        for (Users user : users) {
+        for (User user : users) {
             userResponses.add(new AppUserResponse(user));
         }
 
@@ -43,16 +48,16 @@ public class UserService {
     }
 
     //redundant?
-    public Users updatedUser(UpdatedUserRequest updateRequest) {
-        Users updatedUser = updateRequest.extractUser();
+    public User updatedUser(UpdatedUserRequest updateRequest) {
+        User updatedUser = updateRequest.extractUser();
 
         userDAO.update(updatedUser);
         return updatedUser;
     }
 
-    public Users register(NewUserRequest newUserRequest) {
+    public ResourceCreationResponse register(NewUserRequest newUserRequest) {
 
-        Users newUser = newUserRequest.extractUser();
+        User newUser = newUserRequest.extractUser();
 
         if (!isUserValid(newUser)) {
             throw new InvalidRequestException("Bad registration details given.");
@@ -73,13 +78,13 @@ public class UserService {
         newUser.setUserId(UUID.randomUUID().toString());
         newUser.setRole(new UserRole("3", "Employee")); // All newly registered users start as BASIC_USER
         newUser.setIsActive(false);
-        userDAO.save(newUser);
+        usersRepository.save(newUser);
 // TODO        return new ResourceCreationResponse(newCustomer.getId());
-
-        return newUser;
+        return new ResourceCreationResponse(newUser.getUserId());
+//        return newUser;
     }
 
-    public Users login(String username, String password) {
+    public User login(String username, String password) {
 
         if (!isUsernameValid(username) || !isPasswordValid(password)) {
             throw new InvalidRequestException("Invalid credentials provided!");
@@ -87,7 +92,7 @@ public class UserService {
 
         // TODO encrypt provided password (assumes password encryption is in place) to see if it matches what is in the DB
 
-        Users authUser = userDAO.findUserByUsernameAndPassword(username, password);
+        User authUser = userDAO.findUserByUsernameAndPassword(username, password);
 
         if (authUser == null) {
             throw new AuthenticationException();
@@ -99,7 +104,7 @@ public class UserService {
 
 
 
-    private boolean isUserValid(Users appUser) {
+    private boolean isUserValid(User appUser) {
 
         // First name and last name are not just empty strings or filled with whitespace
         if (appUser.getGivenName().trim().equals("") || appUser.getSurname().trim().equals("")) {
@@ -140,15 +145,15 @@ public class UserService {
 
     public boolean isUsernameAvailable(String username) {
         if (username == null || !isUsernameValid(username)) return false;
-        return userDAO.findUserByUsername(username) == null;
+        return usersRepository.findByusername(username) == null;
     }
 
     public boolean isEmailAvailable(String email) {
         if (email == null || !isEmailValid(email)) return false;
-        return userDAO.findUserByEmail(email) == null;
+        return usersRepository.findByemail(email) == null;
     }
 
-    public Users login(LoginRequest loginRequest) {
+    public User login(LoginRequest loginRequest) {
         String username = loginRequest.getUsername();
         String password = loginRequest.getPassword();
 
@@ -157,14 +162,36 @@ public class UserService {
         }
 
         // TODO encrypt provided password (assumes password encryption is in place) to see if it matches what is in the DB
+        User authUser = usersRepository.getUserByUsernameandPassword(username, password);
+        System.out.println(authUser);
 
-        Users authUsers = userDAO.findUserByUsernameAndPassword(username, password);
+        if (authUser == null) {
 
-        if (authUsers == null) {
             throw new AuthenticationException();
         }
 
-        return authUsers;
+        return authUser;
+
+    }
+
+    public User login(NewUserRequest newUserRequest) {
+        String username = newUserRequest.getUsername();
+        String password = newUserRequest.getPassword();
+
+        if (!isUsernameValid(username) || !isPasswordValid(password)) {
+            throw new InvalidRequestException("Invalid credentials provided!");
+        }
+
+        // TODO encrypt provided password (assumes password encryption is in place) to see if it matches what is in the DB
+        User authUser = usersRepository.getUserByUsernameandPassword(username, password);
+        System.out.println(authUser);
+
+        if (authUser == null) {
+
+            throw new AuthenticationException();
+        }
+
+        return authUser;
 
     }
 }

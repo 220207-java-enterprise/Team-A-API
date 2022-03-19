@@ -8,33 +8,39 @@ import java.util.Objects;
 // Simple encapsulation of some domain object's states
 @Entity
 @Table(name="ers_users")
-public class Users {
-
+public class User {
+//this is a comment
     @Id
+    @Column(name = "user_id")
     private String userId;
-    @Column()
+
+    @Column(nullable=false, unique=true)
     private String username;
-    @Column
+
+    @Column(nullable=false, unique=true)
     private String email;
-    @Column
+
+    @Column(nullable=false)
     private String password;
-    @Column
+
+    @Column(name="given_name", nullable = false)
     private String givenName;
-    @Column
+
+    @Column(nullable=false)
     private String surname;
-    @Column
+
+    @Column(name="is_active", columnDefinition = "boolean default false")
     private Boolean isActive;
+
     @ManyToOne
-    @JoinColumn(name="role_id")
-    private String role_id;
+    @JoinColumn(name = "role_id")
+    private UserRole role;
 
-    // TODO create a Role enum
-
-    public Users() {
+    public User() {
         super(); // not required, but it bugs me personally not to have it
     }
 
-    public Users(String givenName, String surname, String email, String username, String password) {
+    public User(String givenName, String surname, String email, String username, String password) {
         this.givenName = givenName;
         this.surname = surname;
         this.email = email;
@@ -42,7 +48,7 @@ public class Users {
         this.password = password;
     }
 
-    public Users(String userId, String username, String email, String password, String givenName, String surname, Boolean isActive, UserRole role) {
+    public User(String userId, String username, String email, String password, String givenName, String surname, Boolean isActive, UserRole role) {
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -133,7 +139,7 @@ public class Users {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Users appUser = (Users) o;
+        User appUser = (User) o;
         return Objects.equals(userId, appUser.userId) && Objects.equals(username, appUser.username) && Objects.equals(email, appUser.email) && Objects.equals(password, appUser.password) && Objects.equals(givenName, appUser.givenName) && Objects.equals(surname, appUser.surname) && Objects.equals(isActive, appUser.isActive) && Objects.equals(role, appUser.role);
     }
 

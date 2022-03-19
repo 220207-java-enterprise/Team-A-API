@@ -1,7 +1,7 @@
 package com.revature.foundation.dtos.responses;
 
-import com.revature.foundation.models.Reimbursements;
-import com.revature.foundation.models.Users;
+import com.revature.foundation.models.Reimbursement;
+import com.revature.foundation.models.User;
 
 public class Principal {
 
@@ -13,16 +13,16 @@ public class Principal {
         super();
     }
 
-    public Principal(Users user) {
+    public Principal(User user) {
         this.userId = user.getUserId();
         this.username = user.getUsername();
         this.roleId = user.getRole().getRoleName();
     }
 
-    public Principal(Reimbursements reimbursements) {
-        this.userId = reimbursements.getAuthorId();
-        this.username = reimbursements.getReimbId();
-        this.roleId = reimbursements.getTypeId().getType();
+    public Principal(Reimbursement reimbursement) {
+        this.userId = String.valueOf(reimbursement.getAuthorId());
+        this.username = reimbursement.getId();
+        this.roleId = reimbursement.getTypeId().getType();
     }
 
     public String getUserId() {

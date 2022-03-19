@@ -1,10 +1,16 @@
 package com.revature.foundation.models;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "ers_user_roles")
 public class UserRole {
 
+    @Id
     private String id;
+
+    @Column(name = "role", nullable = false, unique = true)
     private String roleName;
 
     public UserRole() {

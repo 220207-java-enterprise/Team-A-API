@@ -1,7 +1,6 @@
 package com.revature.foundation.dtos.responses;
 
-import com.revature.foundation.models.UserRole;
-import com.revature.foundation.models.Users;
+import com.revature.foundation.models.User;
 
 public class UpdatedUserReponse {
 
@@ -18,7 +17,7 @@ public class UpdatedUserReponse {
         super();
     }
 
-    public UpdatedUserReponse(Users user) {
+    public UpdatedUserReponse(User user) {
         this.userId = user.getUserId();
         this.username = user.getUsername();
         this.email = user.getEmail();

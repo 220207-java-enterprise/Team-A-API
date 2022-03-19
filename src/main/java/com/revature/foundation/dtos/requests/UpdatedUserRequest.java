@@ -2,7 +2,7 @@ package com.revature.foundation.dtos.requests;
 
 import com.revature.foundation.daos.UsersDAO;
 import com.revature.foundation.models.UserRole;
-import com.revature.foundation.models.Users;
+import com.revature.foundation.models.User;
 
 public class UpdatedUserRequest {
     private String userId;
@@ -93,7 +93,9 @@ public class UpdatedUserRequest {
         this.role = role;
     }
 
-    public Users extractUser() {
+
+    //TODO un-DOA-afy this when we update a user
+    public User extractUser() {
 //        UsersDAO daoToPullUserForRole_Id = new UsersDAO();
 //        Users pulledUser = daoToPullUserForRole_Id.getById(this.userId);
 ////        Users pulledUser = otherVar.getById(this.role);
@@ -102,9 +104,9 @@ public class UpdatedUserRequest {
 //        return pulledUser;
 
         UsersDAO daoToPullUserForRole_Id = new UsersDAO();
-        Users pulledUser = daoToPullUserForRole_Id.getById(this.userId);
+        User pulledUser = daoToPullUserForRole_Id.getById(this.userId);
         UserRole aRole = new UserRole(pulledUser.getRole().getId(), role);
-        return new Users(this.userId, this.username, this.email, this.password, this.givenName, this.surname, this.isActive, aRole);
+        return new User(this.userId, this.username, this.email, this.password, this.givenName, this.surname, this.isActive, aRole);
     }
 
     @Override

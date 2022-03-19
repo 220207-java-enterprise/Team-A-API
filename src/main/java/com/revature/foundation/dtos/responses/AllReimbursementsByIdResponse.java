@@ -1,21 +1,23 @@
 package com.revature.foundation.dtos.responses;
 
-import com.revature.foundation.models.Reimbursements;
-import com.revature.foundation.util.Bytea;
+import com.revature.foundation.models.Reimbursement;
+import com.revature.foundation.models.User;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class AllReimbursementsByIdResponse {
 
     private String reimbId;
-    private int amount;
-    private String submitted;
-    private String resolved;
+    private double amount;
+    private Timestamp submitted;
+    private Timestamp resolved;
     private String description;
-    private Bytea receipt;
+    private String receipt;
+    //TODO ctrz
     private String paymentId;
-    private String authorId;
-    private String resolverId;
+    private User authorId;
+    private User resolverId;
     private String statusId;
     private String typeId;
 
@@ -37,19 +39,19 @@ public class AllReimbursementsByIdResponse {
 //        this.typeId = reimbursements.getTypeId().getType();
 //    }
 
-    public AllReimbursementsByIdResponse(List<Reimbursements> allReimbursementsById) {
-        for(Reimbursements reimbursements : allReimbursementsById) {
-            this.reimbId = reimbursements.getReimbId();
-            this.amount = reimbursements.getAmount();
-            this.submitted = reimbursements.getSubmitted();
-            this.resolved = reimbursements.getResolved();
-            this.description = reimbursements.getDescription();
-            this.receipt = reimbursements.getReceipt();
-            this.paymentId = reimbursements.getPaymentId();
-            this.authorId = reimbursements.getAuthorId();
-            this.resolverId = reimbursements.getResolverId();
-            this.statusId = reimbursements.getStatusId().getStatus();
-            this.typeId = reimbursements.getTypeId().getType();
+    public AllReimbursementsByIdResponse(List<Reimbursement> allReimbursementById) {
+        for(Reimbursement reimbursement : allReimbursementById) {
+            this.reimbId = reimbursement.getId();
+            this.amount = reimbursement.getAmount();
+            this.submitted = reimbursement.getSubmitted();
+            this.resolved = reimbursement.getResolved();
+            this.description = reimbursement.getDescription();
+            this.receipt = reimbursement.getReceipt();
+            this.paymentId = reimbursement.getPaymentId();
+            this.authorId = reimbursement.getAuthorId();
+            this.resolverId = reimbursement.getResolverId();
+            this.statusId = reimbursement.getStatusId().getStatus();
+            this.typeId = reimbursement.getTypeId().getType();
 
         }
 //        return allReimbursementsById;
@@ -63,27 +65,27 @@ public class AllReimbursementsByIdResponse {
         this.reimbId = reimbId;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
-    public String getSubmitted() {
+    public Timestamp getSubmitted() {
         return submitted;
     }
 
-    public void setSubmitted(String submitted) {
+    public void setSubmitted(Timestamp submitted) {
         this.submitted = submitted;
     }
 
-    public String getResolved() {
+    public Timestamp getResolved() {
         return resolved;
     }
 
-    public void setResolved(String resolved) {
+    public void setResolved(Timestamp resolved) {
         this.resolved = resolved;
     }
 
@@ -95,11 +97,11 @@ public class AllReimbursementsByIdResponse {
         this.description = description;
     }
 
-    public Bytea getReceipt() {
+    public String getReceipt() {
         return receipt;
     }
 
-    public void setReceipt(Bytea receipt) {
+    public void setReceipt(String receipt) {
         this.receipt = receipt;
     }
 
@@ -111,19 +113,19 @@ public class AllReimbursementsByIdResponse {
         this.paymentId = paymentId;
     }
 
-    public String getAuthorId() {
+    public User getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(String authorId) {
+    public void setAuthorId(User authorId) {
         this.authorId = authorId;
     }
 
-    public String getResolverId() {
+    public User getResolverId() {
         return resolverId;
     }
 
-    public void setResolverId(String resolverId) {
+    public void setResolverId(User resolverId) {
         this.resolverId = resolverId;
     }
 
