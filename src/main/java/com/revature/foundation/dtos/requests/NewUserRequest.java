@@ -1,6 +1,9 @@
 package com.revature.foundation.dtos.requests;
 
 import com.revature.foundation.models.User;
+import com.revature.foundation.models.UserRole;
+
+import java.util.HashMap;
 
 public class NewUserRequest {
 
@@ -21,6 +24,17 @@ public class NewUserRequest {
         this.username = username;
         this.password = password;
     }
+
+
+    public NewUserRequest(HashMap<String, Object> credentials) {
+        this.username = (String) credentials.get("username");
+        this.email = (String) credentials.get("email");
+        this.password = (String) credentials.get("password");
+        this.givenName = (String) credentials.get("given_name");
+        this.surname = (String) credentials.get("surname");
+    }
+
+
 
     public String getGivenName() {
         return givenName;
@@ -62,6 +76,7 @@ public class NewUserRequest {
         this.password = password;
     }
 
+
     @Override
     public String toString() {
         return "NewUserRequest{" +
@@ -80,6 +95,7 @@ public class NewUserRequest {
         userData.setEmail(email);
         userData.setUsername(username);
         userData.setPassword(password);
+
 
         return userData;
     }

@@ -33,8 +33,6 @@ public class TokenService {
         // number of milliseconds passed since the beginning of UNIX time
         // start of UNIX time: January 1, 1970
         long now = System.currentTimeMillis();
-        System.out.println(now);
-        System.out.println(jwtConfig.getExpiration());
         JwtBuilder tokenBuilder = Jwts.builder()
                                       .setId(subject.getUserId())
                                       .setIssuer("technologyp")

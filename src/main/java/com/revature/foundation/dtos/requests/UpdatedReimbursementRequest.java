@@ -1,7 +1,8 @@
 //package com.revature.foundation.dtos.requests;
 //
-//import com.revature.foundation.daos.Re;
+//
 //import com.revature.foundation.models.*;
+//import com.revature.foundation.repository.ReimbursementsRepository;
 //
 //import java.sql.Timestamp;
 //
@@ -129,8 +130,8 @@
 //
 //    public Reimbursements extractReimbursement() {
 //
-//        ReimbursementsDAO daoToPullUserForRole_Id = new ReimbursementsDAO();
-//        Reimbursements pulledReimbursement = daoToPullUserForRole_Id.getById(this.reimbId);
+//        ReimbursementsRepository daoToPullUserForRole_Id = new ReimbursementsRepository();
+//        ReimbursementsRepository pulledReimbursement = daoToPullUserForRole_Id.getById(this.reimbId);
 //
 //        ReimbursementStatuses aStatus = new ReimbursementStatuses(pulledReimbursement.getStatusId().getStatus(), statusId);
 //        ReimbursementType aType = new ReimbursementType(pulledReimbursement.getTypeId().getType(), statusId);

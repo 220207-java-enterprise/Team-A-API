@@ -38,6 +38,19 @@ public class UsersController {
         return userService.register(request);
     }
 
+    @PostMapping(value = "register", produces = "application/json", consumes = "application/json")
+    public void register(@RequestBody HashMap<String, Object> credentials, HttpServletResponse resp) {
+        //    public void login(@RequestBody String username, String password, HttpServletResponse resp) {
+//pass as request instead of hashmap
+
+        NewUserRequest newUserRequest = new NewUserRequest(credentials);
+        userService.register(newUserRequest);
+        Principal principal = new Principal(userService.login(newUserRequest));
+        String token = tokenService.generateToken(principal);
+        resp.setHeader("Authorization", token);
+
+    }
+
     // Using an injected HttpServletResponse to modify response headers/status code
     // Login
     @PostMapping(value = "login", produces = "application/json", consumes = "application/json")
@@ -45,12 +58,8 @@ public class UsersController {
         //    public void login(@RequestBody String username, String password, HttpServletResponse resp) {
 //pass as request instead of hashmap
 
-            System.out.println("this");
             LoginRequest loginRequest = new LoginRequest(credentials);
-            System.out.println(loginRequest);
             Principal principal = new Principal(userService.login(loginRequest));
-            System.out.println(principal);
-
             String token = tokenService.generateToken(principal);
             resp.setHeader("Authorization", token);
 

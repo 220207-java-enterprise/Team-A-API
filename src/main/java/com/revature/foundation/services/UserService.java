@@ -78,7 +78,7 @@ public class UserService {
         newUser.setUserId(UUID.randomUUID().toString());
         newUser.setRole(new UserRole("3", "Employee")); // All newly registered users start as BASIC_USER
         newUser.setIsActive(false);
-        userDAO.save(newUser);
+        usersRepository.save(newUser);
 // TODO        return new ResourceCreationResponse(newCustomer.getId());
         return new ResourceCreationResponse(newUser.getUserId());
 //        return newUser;
@@ -145,17 +145,38 @@ public class UserService {
 
     public boolean isUsernameAvailable(String username) {
         if (username == null || !isUsernameValid(username)) return false;
-        return userDAO.findUserByUsername(username) == null;
+        return usersRepository.findByusername(username) == null;
     }
 
     public boolean isEmailAvailable(String email) {
         if (email == null || !isEmailValid(email)) return false;
-        return userDAO.findUserByEmail(email) == null;
+        return usersRepository.findByemail(email) == null;
     }
 
     public User login(LoginRequest loginRequest) {
         String username = loginRequest.getUsername();
         String password = loginRequest.getPassword();
+
+        if (!isUsernameValid(username) || !isPasswordValid(password)) {
+            throw new InvalidRequestException("Invalid credentials provided!");
+        }
+
+        // TODO encrypt provided password (assumes password encryption is in place) to see if it matches what is in the DB
+        User authUser = usersRepository.getUserByUsernameandPassword(username, password);
+        System.out.println(authUser);
+
+        if (authUser == null) {
+
+            throw new AuthenticationException();
+        }
+
+        return authUser;
+
+    }
+
+    public User login(NewUserRequest newUserRequest) {
+        String username = newUserRequest.getUsername();
+        String password = newUserRequest.getPassword();
 
         if (!isUsernameValid(username) || !isPasswordValid(password)) {
             throw new InvalidRequestException("Invalid credentials provided!");

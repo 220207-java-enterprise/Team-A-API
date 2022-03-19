@@ -93,6 +93,8 @@ public class UpdatedUserRequest {
         this.role = role;
     }
 
+
+    //TODO un-DOA-afy this when we update a user
     public User extractUser() {
 //        UsersDAO daoToPullUserForRole_Id = new UsersDAO();
 //        Users pulledUser = daoToPullUserForRole_Id.getById(this.userId);
