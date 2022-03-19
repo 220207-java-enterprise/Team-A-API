@@ -2,12 +2,9 @@ package com.revature.foundation.servlets;
 
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.revature.foundation.daos.UsersDAO;
-import com.revature.foundation.dtos.requests.LoginRequest;
 import com.revature.foundation.dtos.requests.UpdatedUserRequest;
 import com.revature.foundation.dtos.responses.Principal;
 import com.revature.foundation.dtos.responses.UpdatedUserReponse;
-import com.revature.foundation.models.Users;
 import com.revature.foundation.services.TokenService;
 import com.revature.foundation.services.UserService;
 import com.revature.foundation.util.exceptions.AuthenticationException;

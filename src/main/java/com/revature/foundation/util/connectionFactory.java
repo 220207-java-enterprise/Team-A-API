@@ -7,9 +7,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class connectionFactory {
+public class ConnectionFactory {
 
-    private static connectionFactory connectionFactory;
+    private static ConnectionFactory connectionFactory;
 
     static {
         try {
@@ -21,7 +21,7 @@ public class connectionFactory {
 
     private Properties props = new Properties();
 
-    private connectionFactory() {
+    private ConnectionFactory() {
         try {
             props.load(new FileReader("src/main/resources/application.properties"));
         } catch (IOException e) {
@@ -29,9 +29,9 @@ public class connectionFactory {
         }
     }
 
-    public static connectionFactory getInstance() {
+    public static ConnectionFactory getInstance() {
         if (connectionFactory == null) {
-            connectionFactory = new connectionFactory();
+            connectionFactory = new ConnectionFactory();
         }
         return connectionFactory;
     }
