@@ -31,7 +31,7 @@ public class Reimbursement {
     @Column(name = "payment_id")
     private String paymentId;
 
-    @ManyToOne(targetEntity = Reimbursement.class)
+    @ManyToOne
     @JoinColumn(
             name = "author_id",
             nullable = false
@@ -40,16 +40,16 @@ public class Reimbursement {
     private User authorId;
 
 
-    @OneToOne(targetEntity = Reimbursement.class)
+    @OneToOne
     @JoinColumn(name = "resolver_id")
     private User resolverId;
 
 
-    @ManyToOne(targetEntity = Reimbursement.class)
+    @ManyToOne
     @JoinColumn(name = "status_id", nullable = false)
-    private ReimbursementStatuses statusId;
+    private ReimbursementStatus statusId;
 
-    @ManyToOne(targetEntity = Reimbursement.class)
+    @ManyToOne
     @JoinColumn(name = "type_id", nullable = false)
     private ReimbursementType typeId;
 
@@ -58,7 +58,7 @@ public class Reimbursement {
         super();
     }
 
-    public Reimbursement(String id, double amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, User authorId, User resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
+    public Reimbursement(String id, double amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, User authorId, User resolverId, ReimbursementStatus statusId, ReimbursementType typeId) {
         this.id = id;
         this.amount = amount;
         this.submitted = submitted;
@@ -72,7 +72,7 @@ public class Reimbursement {
         this.typeId = typeId;
     }
 
-    public Reimbursement(double amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, User authorId, User resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
+    public Reimbursement(double amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, User authorId, User resolverId, ReimbursementStatus statusId, ReimbursementType typeId) {
         this.amount = amount;
         this.submitted = submitted;
         this.resolved = resolved;
@@ -157,11 +157,11 @@ public class Reimbursement {
         this.resolverId = resolverId;
     }
 
-    public ReimbursementStatuses getStatusId() {
+    public ReimbursementStatus getStatusId() {
         return statusId;
     }
 
-    public void setStatusId(ReimbursementStatuses statusId) {
+    public void setStatusId(ReimbursementStatus statusId) {
         this.statusId = statusId;
     }
 

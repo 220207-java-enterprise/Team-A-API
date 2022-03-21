@@ -7,28 +7,25 @@ import com.revature.foundation.dtos.responses.ResourceCreationResponse;
 import com.revature.foundation.models.Reimbursement;
 import com.revature.foundation.repository.ReimbursementsRepository;
 import com.revature.foundation.repository.UsersRepository;
+import com.revature.foundation.util.exceptions.InvalidRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReimbursementService {
-//OLD    private ReimbursementsDAO reimbursementsDAO; // a dependency of UserService
-    private ReimbursementsRepository reimbursementsRepository;
-    // Constructor injection
+
+    private final ReimbursementsRepository reimbursementsRepository;
 
     @Autowired
     public ReimbursementService(ReimbursementsRepository reimbursementsRepository) {
         this.reimbursementsRepository = reimbursementsRepository;
     }
 
-
-
-
-    private UsersRepository usersRepository;
-//OLD    private UsersDAO userDAO;
     public List<Reimbursement> getAll() {
         List<Reimbursement> reimbursements = (List<Reimbursement>) reimbursementsRepository.findAll();
         List<AppReimbursementResponse> reimbursementResponses = new ArrayList<>();
@@ -66,7 +63,7 @@ public class ReimbursementService {
     }
 
     //redundant?
-    // commented out until it gets rewrited without DAO
+    // commented out until it gets rewritten without DAO
 //    public Reimbursements updatedReimbursement(UpdatedReimbursementRequest updateRequest) {
 //        Reimbursements updatedReimbursement = updateRequest.extractReimbursement();
 //
@@ -98,14 +95,36 @@ public class ReimbursementService {
 //
 //    }
 
-    public Reimbursement updateReimbursementById(String id) {
-        System.out.println("asfadf " + id);
-        System.out.println(reimbursementsRepository.findReimbursementByid(id));
+    public List<Reimbursement> findReimbursementByauthor_id(String author_id) {
+        System.out.println("asfadf " + author_id);
+        System.out.println(reimbursementsRepository.findReimbursementByauthor_id(author_id));
         System.out.println("last print");
-        Reimbursement updatingThisReimbursement = reimbursementsRepository.findReimbursementByid(id);
-        System.out.println(updatingThisReimbursement);
-        return null;
+        List<Reimbursement> authorsReimbursements = reimbursementsRepository.findReimbursementByauthor_id(author_id);
+        System.out.println("something" + authorsReimbursements);
+        return authorsReimbursements;
 
+    }
+
+    @Transactional
+    public List<AppReimbursementResponse> findReimbursementsByStatus(String status) {
+
+        if (status == null) {
+            throw new InvalidRequestException("Null status name provided!");
+        }
+
+        switch (status.toUpperCase()) {
+            case "PENDING":
+            case "APPROVED":
+            case "DENIED":
+                break;
+            default:
+                throw new InvalidRequestException("Invalid status name provided!");
+        }
+
+        return reimbursementsRepository.findReimbursementByStatus(status.toUpperCase())
+                .stream()
+                .map(AppReimbursementResponse::new)
+                .collect(Collectors.toList());
     }
 
 }

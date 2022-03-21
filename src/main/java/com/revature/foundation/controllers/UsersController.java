@@ -81,7 +81,7 @@ public class UsersController {
         System.out.println(credentials);
         System.out.println("this");
 
-        reimbursementService.updateReimbursementById("2");
+        reimbursementService.findReimbursementByauthor_id("123");
         System.out.println("did i get here");
 //        LoginRequest loginRequest = new LoginRequest(credentials);
 //        System.out.println(loginRequest);

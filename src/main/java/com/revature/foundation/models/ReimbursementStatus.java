@@ -1,18 +1,25 @@
 package com.revature.foundation.models;
 
-// TODO needs to be an entity and mapped to a table
-public class ReimbursementStatuses { // TODO make singular name
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-    // TODO map columns
+@Entity
+@Table(name = "ers_reimbursement_statuses")
+public class ReimbursementStatus {
+
+    @Id
     private String id;
 
+    @Column(nullable = false, unique = true)
     private String status;
 
-    public ReimbursementStatuses() {
+    public ReimbursementStatus() {
         super();
     }
 
-    public ReimbursementStatuses(String id, String status) {
+    public ReimbursementStatus(String id, String status) {
         this.id = id;
         this.status = status;
     }
@@ -35,7 +42,7 @@ public class ReimbursementStatuses { // TODO make singular name
 
     @Override
     public String toString() {
-        return "ReimbursementStatuses{" +
+        return "ReimbursementStatus{" +
                 "id='" + id + '\'' +
                 ", status='" + status + '\'' +
                 '}';
