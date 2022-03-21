@@ -1,8 +1,11 @@
 package com.revature.foundation.dtos.requests;
 
-import com.revature.foundation.daos.UsersDAO;
 import com.revature.foundation.models.UserRole;
 import com.revature.foundation.models.User;
+import com.revature.foundation.repository.UsersRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Optional;
 
 public class UpdatedUserRequest {
     private String userId;
@@ -14,6 +17,15 @@ public class UpdatedUserRequest {
     private Boolean isActive;
     private String role;
 
+
+    private UsersRepository usersRepository;
+
+    // Constructor injection
+    //If you only have one constructor then you dont really need this autowired tag ebcause its implied
+    @Autowired
+    public UpdatedUserRequest(UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
+    }
     public UpdatedUserRequest() {
         super();
     }
@@ -95,19 +107,19 @@ public class UpdatedUserRequest {
 
 
     //TODO un-DOA-afy this when we update a user
-    public User extractUser() {
-//        UsersDAO daoToPullUserForRole_Id = new UsersDAO();
-//        Users pulledUser = daoToPullUserForRole_Id.getById(this.userId);
-////        Users pulledUser = otherVar.getById(this.role);
+//    public User extractUser() {
+////        UsersDAO daoToPullUserForRole_Id = new UsersDAO();
+////        Users pulledUser = daoToPullUserForRole_Id.getById(this.userId);
+//////        Users pulledUser = otherVar.getById(this.role);
+////        UserRole aRole = new UserRole(pulledUser.getRole().getId(), role);
+////        System.out.println("tsate" + pulledUser);
+////        return pulledUser;
+//
+//
+//        User pulledUser = usersRepository.findById(this.userId);
 //        UserRole aRole = new UserRole(pulledUser.getRole().getId(), role);
-//        System.out.println("tsate" + pulledUser);
-//        return pulledUser;
-
-        UsersDAO daoToPullUserForRole_Id = new UsersDAO();
-        User pulledUser = daoToPullUserForRole_Id.getById(this.userId);
-        UserRole aRole = new UserRole(pulledUser.getRole().getId(), role);
-        return new User(this.userId, this.username, this.email, this.password, this.givenName, this.surname, this.isActive, aRole);
-    }
+//        return new User(this.userId, this.username, this.email, this.password, this.givenName, this.surname, this.isActive, aRole);
+//    }
 
     @Override
     public String toString() {
