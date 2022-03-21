@@ -12,7 +12,7 @@ public interface UsersRepository extends CrudRepository<User, String> {
 //    @Query(value = "select * from ers_users where ers_users.user_id = ?1", nativeQuery = true)
 //    User getUserById(String user_id);
 
-    @Query(value = "select * from technologyp.ers_users u where u.username = ?1 AND u.password = ?2", nativeQuery = true)
+    @Query(value = "select * from ers_users u where u.username = ?1 AND u.password = ?2", nativeQuery = true)
     User getUserByUsernameandPassword(String username, String password);
 
     @Query(value = "insert into ers_users values (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)", nativeQuery = true)
