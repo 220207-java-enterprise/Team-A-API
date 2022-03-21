@@ -100,9 +100,9 @@ public class ReimbursementService {
 
     public Reimbursement updateReimbursementById(String id) {
         System.out.println("asfadf " + id);
-        System.out.println(reimbursementsRepository.findReimbursementBystatusId(id));
+        System.out.println(reimbursementsRepository.findReimbursementByid(id));
         System.out.println("last print");
-        List<Reimbursement> updatingThisReimbursement = reimbursementsRepository.findReimbursementBystatusId(id);
+        Reimbursement updatingThisReimbursement = reimbursementsRepository.findReimbursementByid(id);
         System.out.println(updatingThisReimbursement);
         return null;
 

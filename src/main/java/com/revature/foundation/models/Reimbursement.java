@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "ers_reimbursements")
-public class Reimbursement { // TODO refactor be singular name
+public class Reimbursement {
 
     @Id
     private String id;
@@ -20,7 +20,7 @@ public class Reimbursement { // TODO refactor be singular name
 
     @Column
     private Timestamp resolved;
-//TODO change to local datetime
+
 
     @Column(nullable = false)
     private String description;
@@ -38,12 +38,12 @@ public class Reimbursement { // TODO refactor be singular name
             //columnDefinition = "NUMERIC(6,2)"  explicit type declaration:
     )
     private User authorId;
-//TODO make authorID a users Type
+
 
     @OneToOne(targetEntity = Reimbursement.class)
     @JoinColumn(name = "resolver_id")
     private User resolverId;
-//TODO make resolverId a users Type
+
 
     @ManyToOne(targetEntity = Reimbursement.class)
     @JoinColumn(name = "status_id", nullable = false)
@@ -71,7 +71,7 @@ public class Reimbursement { // TODO refactor be singular name
         this.statusId = statusId;
         this.typeId = typeId;
     }
-    //why are there 2 here?
+
     public Reimbursement(double amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, User authorId, User resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
         this.amount = amount;
         this.submitted = submitted;

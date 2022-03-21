@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/Reimbursements")
+@RequestMapping("/reimbursements")
 public class ReimbursementsController {
     private ReimbursementService reimbursementService;
 
