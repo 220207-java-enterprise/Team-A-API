@@ -12,7 +12,7 @@ public class Reimbursement { // TODO refactor be singular name
     private String id;
 
 
-    @Column(name = "amount", nullable = false, columnDefinition = "numeric(6,2)")
+    @Column(name = "amount", nullable = false)
     private double amount;
 
     @Column(nullable = false)
