@@ -8,10 +8,10 @@
 
     <Appenders>
         <Console name="ConsoleAppender" target="SYSTEM_OUT">
-            <PatternLayout pattern="${layout}"/>
+            <PatternLayout pattern="[%d{yyyy-MM-dd'T'HH:mm:ss.sss'Z'}] [%C] [%t] [%L] [%-5p] %m%n"/>
         </Console>
         <File name="FileAppender" fileName="${logdir}/app.log">
-            <PatternLayout pattern="${layout}"/>
+            <PatternLayout pattern="[%d{yyyy-MM-dd'T'HH:mm:ss.sss'Z'}] [%C] [%t] [%L] [%-5p] %m%n"/>
         </File>
     </Appenders>
     <Loggers>
