@@ -2,24 +2,31 @@
 <Configuration>
 
     <Properties>
-        <Property name="logdir">${env:HOME}/dev-logs/quizzard</Property>
+        <Property name="logdir">${env:HOME}/dev-logs/Foundations</Property>
         <Property name="layout">%d [%t] %-5level %logger{36} - %msg%n%throwable</Property>
     </Properties>
 
     <Appenders>
         <Console name="ConsoleAppender" target="SYSTEM_OUT">
-            <PatternLayout pattern="[%d{yyyy-MM-dd'T'HH:mm:ss.sss'Z'}] [%C] [%t] [%L] [%-5p] %m%n"/>
+            <PatternLayout pattern="%style{%date{DEFAULT}}{yellow}
+      %highlight{%-5level}{FATAL=bg_red, ERROR=red, WARN=yellow, INFO=green}
+      %message"/>
+            <!--="[%d{yyyy-MM-dd'T'HH:mm:ss.sss'Z'}] [%C] [%t] [%L] [%-5p] %m%n"/>-->
         </Console>
-        <File name="FileAppender" fileName="${logdir}/app.log">
+        <File name="FileAppender" fileName="/my-logs/app.log">
             <PatternLayout pattern="[%d{yyyy-MM-dd'T'HH:mm:ss.sss'Z'}] [%C] [%t] [%L] [%-5p] %m%n"/>
         </File>
     </Appenders>
     <Loggers>
-        <Logger name="FileLogger" level="DEBUG">
+        <Logger name="FileLogger" level="DEBUG" additivity="false">
             <AppenderRef ref="FileAppender"/>
+        </Logger>
+        <Logger name="org.springframework.boot" level="ERROR" additivity="false">
+        <AppenderRef ref="LogToConsole"/>
         </Logger>
         <Root level="DEBUG">
             <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="FileLogger"/>
         </Root>
     </Loggers>
 </Configuration>
