@@ -4,6 +4,7 @@ import com.revature.foundation.models.Reimbursement;
 import com.revature.foundation.models.ReimbursementStatus;
 import com.revature.foundation.models.ReimbursementType;
 import com.revature.foundation.models.User;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;

@@ -1,29 +1,32 @@
 package com.revature.foundation.services;
 
 
+import com.revature.foundation.dtos.requests.AllReimbursementsByIdRequest;
 import com.revature.foundation.dtos.requests.NewReimbursementRequest;
 import com.revature.foundation.dtos.responses.AppReimbursementResponse;
 import com.revature.foundation.dtos.responses.ResourceCreationResponse;
 import com.revature.foundation.models.Reimbursement;
 import com.revature.foundation.repository.ReimbursementsRepository;
-import com.revature.foundation.repository.UsersRepository;
 import com.revature.foundation.util.exceptions.InvalidRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class ReimbursementService {
 
+    private final AllReimbursementsByIdRequest allReimbursementsByIdRequest;
     private final ReimbursementsRepository reimbursementsRepository;
 
     @Autowired
-    public ReimbursementService(ReimbursementsRepository reimbursementsRepository) {
+    public ReimbursementService(ReimbursementsRepository reimbursementsRepository, AllReimbursementsByIdRequest allReimbursementsByIdRequest) {
         this.reimbursementsRepository = reimbursementsRepository;
+        this.allReimbursementsByIdRequest = allReimbursementsByIdRequest;
     }
 
     public List<Reimbursement> getAll() {
@@ -95,13 +98,13 @@ public class ReimbursementService {
 //
 //    }
 
-    public List<Reimbursement> findReimbursementByauthor_id(String author_id) {
-        System.out.println("asfadf " + author_id);
-        System.out.println(reimbursementsRepository.findReimbursementByauthor_id(author_id));
-        System.out.println("last print");
-        List<Reimbursement> authorsReimbursements = reimbursementsRepository.findReimbursementByauthor_id(author_id);
-        System.out.println("something" + authorsReimbursements);
-        return authorsReimbursements;
+    public List<Reimbursement> findReimbursementByAuthor_id(HashMap<String, Object> author_id) {
+        /*System.out.println(author_id);
+        System.out.println(allReimbursementsByIdRequest.ExtractAuthorId(author_id));*/
+        //this is why it was printing twice
+        List<Reimbursement> reimbursements = reimbursementsRepository.findReimbursementByAuthor_id(String.valueOf(author_id));
+        //System.out.println(authorReimbursements);
+        return reimbursements;
 
     }
 

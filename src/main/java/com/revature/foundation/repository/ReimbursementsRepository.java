@@ -19,7 +19,7 @@ public interface ReimbursementsRepository extends CrudRepository<Reimbursement, 
     List<Reimbursement> findReimbursementByStatus(String status);
 
     @Query(value = "select * from ers_reimbursements r where r.author_id = ?1", nativeQuery = true)
-    List<Reimbursement> findReimbursementByauthor_id(String author_id);
+    List<Reimbursement> findReimbursementByAuthor_id(String author_id);
 
 
 //    updateReimbursementById

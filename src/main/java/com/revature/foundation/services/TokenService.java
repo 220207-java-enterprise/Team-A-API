@@ -46,9 +46,6 @@ public class TokenService {
 
     }
 
-
-
-
     public Principal extractRequesterDetails(String token) {
 
         try {

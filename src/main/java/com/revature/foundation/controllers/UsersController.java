@@ -23,13 +23,13 @@ import java.util.HashMap;
 public class UsersController {
 
     private TokenService tokenService;
-    private ReimbursementService reimbursementService;
+    //private ReimbursementService reimbursementService;
     private UserService userService;
     @Autowired
     public UsersController(UserService userService, TokenService tokenService, ReimbursementService reimbursementService) {
         this.userService = userService;
         this.tokenService = tokenService;
-        this.reimbursementService = reimbursementService;
+        //this.reimbursementService = reimbursementService;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -73,29 +73,5 @@ public class UsersController {
         return responseBody;
 
     }
-
-    @PostMapping(value = "newoldreimbursement", produces = "application/json", consumes = "application/json")
-    public void updateReimbursementById(@RequestBody HashMap<String, Object> credentials, HttpServletResponse resp) {
-        //    public void login(@RequestBody String username, String password, HttpServletResponse resp) {
-//pass as request instead of hashmap
-        System.out.println(credentials);
-        System.out.println("this");
-
-        reimbursementService.findReimbursementByauthor_id("123");
-        System.out.println("did i get here");
-//        LoginRequest loginRequest = new LoginRequest(credentials);
-//        System.out.println(loginRequest);
-//        Principal principal = new Principal(userService.login(loginRequest));
-//        System.out.println(principal);
-
-//        String token = tokenService.generateToken(principal);
-        resp.setHeader("Authorization", "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzMjE1IiwiaXNzIjoidGVjaG5vbG9neXAiLCJpYXQiOjE2NDczNzc3NzksImV4cCI6MTY0NzM4MTM3OSwic3ViIjoiR21hbmRlcnIiLCJyb2xlSWQiOiJBZG1pbiJ9.NgV8-UrUGXxuuCJKWBpsXkhyIKMhx82liQgPWBh69EM");
-
-    }
-
-
-
-
-
 
 }
