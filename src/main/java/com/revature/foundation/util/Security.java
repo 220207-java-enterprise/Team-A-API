@@ -1,27 +1,32 @@
 package com.revature.foundation.util;
 
-        import javax.crypto.SecretKeyFactory;
-        import javax.crypto.spec.PBEKeySpec;
-        import java.math.BigInteger;
-        import java.security.NoSuchAlgorithmException;
-        import java.security.SecureRandom;
-        import java.security.spec.InvalidKeySpecException;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import java.math.BigInteger;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
 
 public class Security {
-    // just to test git
-    public static String getEncryptedPassword(String originalPassword)
-            throws NoSuchAlgorithmException, InvalidKeySpecException {
-        // String originalPassword = "password";
+    // Tested on 03/18/2022
 
-        String generatedSecuredPasswordHash
-                = generateStrongPasswordHash(originalPassword);
-        // System.out.println(generatedSecuredPasswordHash);
-        return generatedSecuredPasswordHash;
+    public static String generateStrongPasswordHash(String password)
+            throws NoSuchAlgorithmException, InvalidKeySpecException {
+        int iterations = 1000;
+        char[] chars = password.toCharArray();
+        byte[] salt = getSalt();
+
+        PBEKeySpec spec = new PBEKeySpec(chars, salt, iterations, 64 * 8);
+        SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+
+        byte[] hash = skf.generateSecret(spec).getEncoded();
+        return iterations + ":" + toHex(salt) + ":" + toHex(hash);
     }
 
-    private static boolean validatePassword(String originalPassword, String storedPassword)
-            throws NoSuchAlgorithmException, InvalidKeySpecException
-    {
+    public static boolean validatePassword(String originalPassword, String storedPassword)
+            throws NoSuchAlgorithmException, InvalidKeySpecException {
+
         String[] parts = storedPassword.split(":");
         int iterations = Integer.parseInt(parts[0]);
 
@@ -34,24 +39,22 @@ public class Security {
         byte[] testHash = skf.generateSecret(spec).getEncoded();
 
         int diff = hash.length ^ testHash.length;
-        for(int i = 0; i < hash.length && i < testHash.length; i++)
-        {
+
+        for (int i = 0; i < hash.length && i < testHash.length; i++) {
+
             diff |= hash[i] ^ testHash[i];
         }
         return diff == 0;
     }
 
-    private static String generateStrongPasswordHash(String password)
-            throws NoSuchAlgorithmException, InvalidKeySpecException {
-        int iterations = 1000;
-        char[] chars = password.toCharArray();
-        byte[] salt = getSalt();
 
-        PBEKeySpec spec = new PBEKeySpec(chars, salt, iterations, 64 * 8);
-        SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+    private static byte[] fromHex(String hex) throws NoSuchAlgorithmException {
+        byte[] bytes = new byte[hex.length() / 2];
+        for (int i = 0; i < bytes.length; i++) {
+            bytes[i] = (byte) Integer.parseInt(hex.substring(2 * i, 2 * i + 2), 16);
+        }
+        return bytes;
 
-        byte[] hash = skf.generateSecret(spec).getEncoded();
-        return iterations + ":" + toHex(salt) + ":" + toHex(hash);
     }
 
     private static byte[] getSalt() throws NoSuchAlgorithmException {
@@ -73,29 +76,5 @@ public class Security {
         }
     }
 
-//    String  originalPassword = "password";
-//
-//    String generatedSecuredPasswordHash
-//            = generateStorngPasswordHash(originalPassword);
-//    System.out.println(generatedSecuredPasswordHash);
-//
-//    boolean matched = validatePassword("password", generatedSecuredPasswordHash);
-//    System.out.println(matched);
-//
-//    matched = validatePassword("password1", generatedSecuredPasswordHash);
-//    System.out.println(matched);
-//    }
-
-
-    private static byte[] fromHex(String hex) throws NoSuchAlgorithmException
-    {
-        byte[] bytes = new byte[hex.length() / 2];
-        for(int i = 0; i < bytes.length ;i++)
-        {
-            bytes[i] = (byte)Integer.parseInt(hex.substring(2 * i, 2 * i + 2), 16);
-        }
-        return bytes;
-    }
-
-
 }
+

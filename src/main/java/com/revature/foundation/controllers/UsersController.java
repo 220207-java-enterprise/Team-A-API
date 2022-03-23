@@ -2,8 +2,10 @@ package com.revature.foundation.controllers;
 
 import com.revature.foundation.dtos.requests.LoginRequest;
 import com.revature.foundation.dtos.requests.NewUserRequest;
+import com.revature.foundation.dtos.requests.UpdatedUserRequest;
 import com.revature.foundation.dtos.responses.Principal;
 import com.revature.foundation.dtos.responses.ResourceCreationResponse;
+import com.revature.foundation.models.User;
 import com.revature.foundation.repository.ReimbursementsRepository;
 import com.revature.foundation.services.ReimbursementService;
 import com.revature.foundation.services.TokenService;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -23,13 +26,13 @@ import java.util.HashMap;
 public class UsersController {
 
     private TokenService tokenService;
-    private ReimbursementService reimbursementService;
     private UserService userService;
+    private UpdatedUserRequest updatedUserRequest;
     @Autowired
-    public UsersController(UserService userService, TokenService tokenService, ReimbursementService reimbursementService) {
+    public UsersController(UserService userService, TokenService tokenService, UpdatedUserRequest updatedUserRequest) {
         this.userService = userService;
         this.tokenService = tokenService;
-        this.reimbursementService = reimbursementService;
+        this.updatedUserRequest = updatedUserRequest;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -40,15 +43,12 @@ public class UsersController {
 
     @PostMapping(value = "register", produces = "application/json", consumes = "application/json")
     public void register(@RequestBody HashMap<String, Object> credentials, HttpServletResponse resp) {
-        //    public void login(@RequestBody String username, String password, HttpServletResponse resp) {
-//pass as request instead of hashmap
 
         NewUserRequest newUserRequest = new NewUserRequest(credentials);
         userService.register(newUserRequest);
         Principal principal = new Principal(userService.login(newUserRequest));
         String token = tokenService.generateToken(principal);
         resp.setHeader("Authorization", token);
-
     }
 
     // Using an injected HttpServletResponse to modify response headers/status code
@@ -65,6 +65,29 @@ public class UsersController {
 
     }
 
+    @PostMapping(value = "user-update", produces = "application/json", consumes = "application/json")
+    public void userUpdate(@RequestBody HashMap<String, Object> credentials, HttpServletResponse resp, HttpServletRequest req) {
+
+        System.out.println(req.getHeader("Authorization"));
+        Principal potentiallyAdmin = tokenService.extractRequesterDetails(req.getHeader("Authorization"));
+        if (!(potentiallyAdmin.getRoleId().equals("Admin"))) {
+            throw new InvalidRequestException();
+        }
+        System.out.println("got here");
+        // TODO convert/typecast credentials to user
+        LoginRequest loginRequest = new LoginRequest(credentials);
+        System.out.println(loginRequest);
+
+
+//uncomment after credentials typecast... hour later I think that maybe I should completely change the
+// request to reflact that it is a HashMap. The whole conversion may work too.
+
+// User updatedUser = updatedUserRequest.extractUser(credentials);
+//        System.out.println(updatedUser);
+//
+//        //TODO return updated user (currently is void)
+    }
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public HashMap<String, Object> handleInvalidRequests(InvalidRequestException e) {
@@ -76,29 +99,5 @@ public class UsersController {
         return responseBody;
 
     }
-
-    @PostMapping(value = "newoldreimbursement", produces = "application/json", consumes = "application/json")
-    public void updateReimbursementById(@RequestBody HashMap<String, Object> credentials, HttpServletResponse resp) {
-        //    public void login(@RequestBody String username, String password, HttpServletResponse resp) {
-//pass as request instead of hashmap
-        System.out.println(credentials);
-        System.out.println("this");
-
-        reimbursementService.updateReimbursementById("2");
-        System.out.println("did i get here");
-//        LoginRequest loginRequest = new LoginRequest(credentials);
-//        System.out.println(loginRequest);
-//        Principal principal = new Principal(userService.login(loginRequest));
-//        System.out.println(principal);
-
-//        String token = tokenService.generateToken(principal);
-        resp.setHeader("Authorization", "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzMjE1IiwiaXNzIjoidGVjaG5vbG9neXAiLCJpYXQiOjE2NDczNzc3NzksImV4cCI6MTY0NzM4MTM3OSwic3ViIjoiR21hbmRlcnIiLCJyb2xlSWQiOiJBZG1pbiJ9.NgV8-UrUGXxuuCJKWBpsXkhyIKMhx82liQgPWBh69EM");
-
-    }
-
-
-
-
-
 
 }

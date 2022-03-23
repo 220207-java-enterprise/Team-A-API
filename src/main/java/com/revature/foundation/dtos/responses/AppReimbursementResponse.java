@@ -1,7 +1,7 @@
 package com.revature.foundation.dtos.responses;
 
 import com.revature.foundation.models.Reimbursement;
-import com.revature.foundation.models.ReimbursementStatuses;
+import com.revature.foundation.models.ReimbursementStatus;
 import com.revature.foundation.models.ReimbursementType;
 import com.revature.foundation.models.User;
 
@@ -18,7 +18,7 @@ public class AppReimbursementResponse {
     private String paymentId;
     private User authorId;
     private User resolverId;
-    private ReimbursementStatuses statusId;
+    private ReimbursementStatus statusId;
     private ReimbursementType typeId;
 
     public AppReimbursementResponse() {
@@ -111,11 +111,11 @@ public class AppReimbursementResponse {
         this.resolverId = resolverId;
     }
 
-    public ReimbursementStatuses getStatusId() {
+    public ReimbursementStatus getStatusId() {
         return statusId;
     }
 
-    public void setStatusId(ReimbursementStatuses statusId) {
+    public void setStatusId(ReimbursementStatus statusId) {
         this.statusId = statusId;
     }
 

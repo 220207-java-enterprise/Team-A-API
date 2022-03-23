@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "ers_reimbursements")
-public class Reimbursement { // TODO refactor be singular name
+public class Reimbursement {
 
     @Id
     private String id;
@@ -20,7 +20,7 @@ public class Reimbursement { // TODO refactor be singular name
 
     @Column
     private Timestamp resolved;
-//TODO change to local datetime
+
 
     @Column(nullable = false)
     private String description;
@@ -31,25 +31,25 @@ public class Reimbursement { // TODO refactor be singular name
     @Column(name = "payment_id")
     private String paymentId;
 
-    @ManyToOne(targetEntity = Reimbursement.class)
+    @ManyToOne
     @JoinColumn(
             name = "author_id",
             nullable = false
             //columnDefinition = "NUMERIC(6,2)"  explicit type declaration:
     )
     private User authorId;
-//TODO make authorID a users Type
 
-    @OneToOne(targetEntity = Reimbursement.class)
+
+    @OneToOne
     @JoinColumn(name = "resolver_id")
     private User resolverId;
-//TODO make resolverId a users Type
 
-    @ManyToOne(targetEntity = Reimbursement.class)
+
+    @ManyToOne
     @JoinColumn(name = "status_id", nullable = false)
-    private ReimbursementStatuses statusId;
+    private ReimbursementStatus statusId;
 
-    @ManyToOne(targetEntity = Reimbursement.class)
+    @ManyToOne
     @JoinColumn(name = "type_id", nullable = false)
     private ReimbursementType typeId;
 
@@ -58,7 +58,7 @@ public class Reimbursement { // TODO refactor be singular name
         super();
     }
 
-    public Reimbursement(String id, double amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, User authorId, User resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
+    public Reimbursement(String id, double amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, User authorId, User resolverId, ReimbursementStatus statusId, ReimbursementType typeId) {
         this.id = id;
         this.amount = amount;
         this.submitted = submitted;
@@ -71,8 +71,8 @@ public class Reimbursement { // TODO refactor be singular name
         this.statusId = statusId;
         this.typeId = typeId;
     }
-    //why are there 2 here?
-    public Reimbursement(double amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, User authorId, User resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
+
+    public Reimbursement(double amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, User authorId, User resolverId, ReimbursementStatus statusId, ReimbursementType typeId) {
         this.amount = amount;
         this.submitted = submitted;
         this.resolved = resolved;
@@ -157,11 +157,11 @@ public class Reimbursement { // TODO refactor be singular name
         this.resolverId = resolverId;
     }
 
-    public ReimbursementStatuses getStatusId() {
+    public ReimbursementStatus getStatusId() {
         return statusId;
     }
 
-    public void setStatusId(ReimbursementStatuses statusId) {
+    public void setStatusId(ReimbursementStatus statusId) {
         this.statusId = statusId;
     }
 

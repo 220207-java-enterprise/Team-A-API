@@ -1,9 +1,14 @@
 package com.revature.foundation.dtos.requests;
 
-import com.revature.foundation.daos.UsersDAO;
 import com.revature.foundation.models.UserRole;
 import com.revature.foundation.models.User;
+import com.revature.foundation.repository.UsersRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+
+@RestController
 public class UpdatedUserRequest {
     private String userId;
     private String username;
@@ -14,6 +19,13 @@ public class UpdatedUserRequest {
     private Boolean isActive;
     private String role;
 
+
+    private UsersRepository usersRepository;
+
+   @Autowired
+    public UpdatedUserRequest(UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
+    }
     public UpdatedUserRequest() {
         super();
     }
@@ -93,21 +105,38 @@ public class UpdatedUserRequest {
         this.role = role;
     }
 
-
-    //TODO un-DOA-afy this when we update a user
-    public User extractUser() {
-//        UsersDAO daoToPullUserForRole_Id = new UsersDAO();
-//        Users pulledUser = daoToPullUserForRole_Id.getById(this.userId);
-////        Users pulledUser = otherVar.getById(this.role);
+//OG, prob uncomment eventually
+//    public User extractUser(HashMap<String, Object> credentials) {
+//        User pulledUser = usersRepository.findById(this.userId).orElse(null);
+//        assert pulledUser != null;
 //        UserRole aRole = new UserRole(pulledUser.getRole().getId(), role);
-//        System.out.println("tsate" + pulledUser);
-//        return pulledUser;
+//        return new User(this.userId, this.username, this.email, this.password, this.givenName, this.surname, this.isActive, aRole);
+//    }
 
-        UsersDAO daoToPullUserForRole_Id = new UsersDAO();
-        User pulledUser = daoToPullUserForRole_Id.getById(this.userId);
+    public User extractUser(HashMap<String, Object> credentials) {
+       this.userId = (String) credentials.get("userId");
+        this.username = (String) credentials.get("username");
+        this.email = (String) credentials.get("email");
+        this.givenName = (String) credentials.get("givenName");
+        this.surname = (String) credentials.get("surname");
+        this.isActive = (Boolean) credentials.get("isActive");
+        this.role = (String) credentials.get("role");
+
+
+        User pulledUser = usersRepository.findById(this.userId).orElse(null);
+        assert pulledUser != null;
         UserRole aRole = new UserRole(pulledUser.getRole().getId(), role);
-        return new User(this.userId, this.username, this.email, this.password, this.givenName, this.surname, this.isActive, aRole);
+        return(new User());
+        //TODO un comment below
+//        return new User(this.userId, this.username, this.email, this.password, this.givenName, this.surname, this.isActive, this.role);
     }
+
+//    public HashMap<String, Object> extractUser() {
+//        User pulledUser = usersRepository.findById(this.userId).orElse(null);
+//        assert pulledUser != null;
+//        UserRole aRole = new UserRole(pulledUser.getRole().getId(), role);
+//        return new User(this.userId, this.username, this.email, this.password, this.givenName, this.surname, this.isActive, aRole);
+//    }
 
     @Override
     public String toString() {

@@ -1,9 +1,10 @@
 package com.revature.foundation.dtos.requests;
 
 import com.revature.foundation.models.Reimbursement;
-import com.revature.foundation.models.ReimbursementStatuses;
+import com.revature.foundation.models.ReimbursementStatus;
 import com.revature.foundation.models.ReimbursementType;
 import com.revature.foundation.models.User;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -19,14 +20,14 @@ public class NewReimbursementRequest {
     private String paymentId;
     private User authorId;
     private User resolverId;
-    private ReimbursementStatuses statusId;
+    private ReimbursementStatus statusId;
     private ReimbursementType typeId;
 
     public NewReimbursementRequest() {
         super();
     }
 
-    public NewReimbursementRequest(double amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, User authorId, User resolverId, ReimbursementStatuses statusId, ReimbursementType typeId) {
+    public NewReimbursementRequest(double amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String paymentId, User authorId, User resolverId, ReimbursementStatus statusId, ReimbursementType typeId) {
         this.amount = amount;
         this.submitted = submitted;
         this.resolved = resolved;
@@ -104,11 +105,11 @@ public class NewReimbursementRequest {
         this.resolverId = resolverId;
     }
 
-    public ReimbursementStatuses getStatusId() {
+    public ReimbursementStatus getStatusId() {
         return statusId;
     }
 
-    public void setStatusId(ReimbursementStatuses statusId) {
+    public void setStatusId(ReimbursementStatus statusId) {
         this.statusId = statusId;
     }
 

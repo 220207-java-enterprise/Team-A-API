@@ -12,7 +12,7 @@ import com.revature.foundation.dtos.responses.AppUserResponse;
 import com.revature.foundation.dtos.responses.ResourceCreationResponse;
 import com.revature.foundation.models.UserRole;
 import com.revature.foundation.models.User;
-import com.revature.foundation.daos.UsersDAO;
+
 import com.revature.foundation.repository.UsersRepository;
 import com.revature.foundation.util.exceptions.AuthenticationException;
 import com.revature.foundation.util.exceptions.InvalidRequestException;
@@ -24,21 +24,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    private UsersDAO userDAO; // a dependency of UserService
     private UsersRepository usersRepository;
 
     // Constructor injection
     //If you only have one constructor then you dont really need this autowired tag ebcause its implied
     @Autowired
-    public UserService(UsersDAO userDAO, UsersRepository usersRepository) {
-        this.userDAO = userDAO;
+    public UserService(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
 
 
 
     public List<User> getAll() {
-        List<User> users = userDAO.getAll();
+        List<User> users = (List<User>) usersRepository.findAll();
         List<AppUserResponse> userResponses = new ArrayList<>();
         for (User user : users) {
             userResponses.add(new AppUserResponse(user));
@@ -47,13 +45,14 @@ public class UserService {
         return users;
     }
 
-    //redundant?
-    public User updatedUser(UpdatedUserRequest updateRequest) {
-        User updatedUser = updateRequest.extractUser();
+//TODO either uncomment or determine that it is in fact redundant
 
-        userDAO.update(updatedUser);
-        return updatedUser;
-    }
+//    public User updatedUser(UpdatedUserRequest updateRequest) {
+//        User updatedUser = updateRequest.extractUser();
+//
+//        usersRepository.save(updatedUser);
+//        return updatedUser;
+//    }
 
     public ResourceCreationResponse register(NewUserRequest newUserRequest) {
 
@@ -84,23 +83,6 @@ public class UserService {
 //        return newUser;
     }
 
-    public User login(String username, String password) {
-
-        if (!isUsernameValid(username) || !isPasswordValid(password)) {
-            throw new InvalidRequestException("Invalid credentials provided!");
-        }
-
-        // TODO encrypt provided password (assumes password encryption is in place) to see if it matches what is in the DB
-
-        User authUser = userDAO.findUserByUsernameAndPassword(username, password);
-
-        if (authUser == null) {
-            throw new AuthenticationException();
-        }
-
-        return authUser;
-
-    }
 
 
 
