@@ -70,7 +70,7 @@ public class UsersController {
 
         System.out.println(req.getHeader("Authorization"));
         Principal potentiallyAdmin = tokenService.extractRequesterDetails(req.getHeader("Authorization"));
-        if (!(potentiallyAdmin.getRoleId().equals("Admin"))) {
+        if (!(potentiallyAdmin.getRole().equals("Admin"))) {
             throw new InvalidRequestException();
         }
         System.out.println("got here");

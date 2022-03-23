@@ -7,7 +7,8 @@ public class Principal {
 
     private String userId;
     private String username;
-    private String roleId;
+    //private String roleId;
+    private String role;
 
     public Principal() {
         super();
@@ -16,13 +17,16 @@ public class Principal {
     public Principal(User user) {
         this.userId = user.getUserId();
         this.username = user.getUsername();
-        this.roleId = user.getRole().getRoleName();
+        //this.roleId = user.getRole().getRoleName();
+        this.role = user.getRole().getRoleName();
+
     }
 
     public Principal(Reimbursement reimbursement) {
         this.userId = String.valueOf(reimbursement.getAuthorId());
         this.username = reimbursement.getId();
-        this.roleId = reimbursement.getTypeId().getType();
+        //this.roleId = reimbursement.getTypeId().getType();
+        this.role = reimbursement.getTypeId().getType();
     }
 
     public String getUserId() {
@@ -41,12 +45,19 @@ public class Principal {
         this.username = username;
     }
 
-    public String getRoleId() {
-        return roleId;
-    }
+//    public String getRoleId() {
+//        return roleId;
+//    }
+//
+//    public void setRoleId(String roleId) {
+//        this.roleId = roleId;
+//    }
+public String getRole() {
+    return role;
+}
 
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override
@@ -54,7 +65,7 @@ public class Principal {
         return "Principal{" +
                 "userId='" + userId + '\'' +
                 ", username='" + username + '\'' +
-                ", roleId='" + roleId + '\'' +
+                ", roleId='" + role + '\'' +
                 '}';
     }
 }

@@ -6,6 +6,8 @@ import com.revature.foundation.dtos.requests.NewReimbursementRequest;
 import com.revature.foundation.dtos.responses.AppReimbursementResponse;
 import com.revature.foundation.dtos.responses.ResourceCreationResponse;
 import com.revature.foundation.models.Reimbursement;
+// TKODO see if this is needed
+import com.revature.foundation.models.ReimbursementStatus;
 import com.revature.foundation.repository.ReimbursementsRepository;
 import com.revature.foundation.util.exceptions.InvalidRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +44,7 @@ public class ReimbursementService {
     public ResourceCreationResponse create(NewReimbursementRequest newReimbursementRequest) {
 
         Reimbursement reimbursement = newReimbursementRequest.extractReimbursement();
-
+        reimbursement.setStatusId(new ReimbursementStatus("0", "PENDING"));
         reimbursementsRepository.save(reimbursement);
         //Should this implement public abstract save instead of overriden save in Repo?
 
