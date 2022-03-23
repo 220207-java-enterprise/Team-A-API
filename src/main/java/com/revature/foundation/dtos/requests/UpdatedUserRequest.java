@@ -126,7 +126,9 @@ public class UpdatedUserRequest {
         User pulledUser = usersRepository.findById(this.userId).orElse(null);
         assert pulledUser != null;
         UserRole aRole = new UserRole(pulledUser.getRole().getId(), role);
-        return new User(this.userId, this.username, this.email, this.password, this.givenName, this.surname, this.isActive, this.role);
+        return(new User());
+        //TODO un comment below
+//        return new User(this.userId, this.username, this.email, this.password, this.givenName, this.surname, this.isActive, this.role);
     }
 
 //    public HashMap<String, Object> extractUser() {
