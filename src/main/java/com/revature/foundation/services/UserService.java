@@ -45,12 +45,12 @@ public class UserService {
         return users;
     }
 
-    //TODO convert from DAO
-    //redundant?
+//TODO either uncomment or determine that it is in fact redundant
+
 //    public User updatedUser(UpdatedUserRequest updateRequest) {
 //        User updatedUser = updateRequest.extractUser();
 //
-//        userDAO.update(updatedUser);
+//        usersRepository.save(updatedUser);
 //        return updatedUser;
 //    }
 

@@ -4,9 +4,11 @@ import com.revature.foundation.models.UserRole;
 import com.revature.foundation.models.User;
 import com.revature.foundation.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
+import java.util.HashMap;
 
+@RestController
 public class UpdatedUserRequest {
     private String userId;
     private String username;
@@ -20,9 +22,7 @@ public class UpdatedUserRequest {
 
     private UsersRepository usersRepository;
 
-    // Constructor injection
-    //If you only have one constructor then you dont really need this autowired tag ebcause its implied
-    @Autowired
+   @Autowired
     public UpdatedUserRequest(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
@@ -105,18 +105,33 @@ public class UpdatedUserRequest {
         this.role = role;
     }
 
+//OG, prob uncomment eventually
+//    public User extractUser(HashMap<String, Object> credentials) {
+//        User pulledUser = usersRepository.findById(this.userId).orElse(null);
+//        assert pulledUser != null;
+//        UserRole aRole = new UserRole(pulledUser.getRole().getId(), role);
+//        return new User(this.userId, this.username, this.email, this.password, this.givenName, this.surname, this.isActive, aRole);
+//    }
 
-    //TODO un-DOA-afy this when we update a user
-//    public User extractUser() {
-////        UsersDAO daoToPullUserForRole_Id = new UsersDAO();
-////        Users pulledUser = daoToPullUserForRole_Id.getById(this.userId);
-//////        Users pulledUser = otherVar.getById(this.role);
-////        UserRole aRole = new UserRole(pulledUser.getRole().getId(), role);
-////        System.out.println("tsate" + pulledUser);
-////        return pulledUser;
-//
-//
-//        User pulledUser = usersRepository.findById(this.userId);
+    public User extractUser(HashMap<String, Object> credentials) {
+       this.userId = (String) credentials.get("userId");
+        this.username = (String) credentials.get("username");
+        this.email = (String) credentials.get("email");
+        this.givenName = (String) credentials.get("givenName");
+        this.surname = (String) credentials.get("surname");
+        this.isActive = (Boolean) credentials.get("isActive");
+        this.role = (String) credentials.get("role");
+
+
+        User pulledUser = usersRepository.findById(this.userId).orElse(null);
+        assert pulledUser != null;
+        UserRole aRole = new UserRole(pulledUser.getRole().getId(), role);
+        return new User(this.userId, this.username, this.email, this.password, this.givenName, this.surname, this.isActive, this.role);
+    }
+
+//    public HashMap<String, Object> extractUser() {
+//        User pulledUser = usersRepository.findById(this.userId).orElse(null);
+//        assert pulledUser != null;
 //        UserRole aRole = new UserRole(pulledUser.getRole().getId(), role);
 //        return new User(this.userId, this.username, this.email, this.password, this.givenName, this.surname, this.isActive, aRole);
 //    }
