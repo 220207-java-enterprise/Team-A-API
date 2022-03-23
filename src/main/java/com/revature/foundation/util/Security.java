@@ -1,5 +1,6 @@
 package com.revature.foundation.util;
 
+
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.math.BigInteger;
@@ -25,6 +26,7 @@ public class Security {
 
     public static boolean validatePassword(String originalPassword, String storedPassword)
             throws NoSuchAlgorithmException, InvalidKeySpecException {
+
         String[] parts = storedPassword.split(":");
         int iterations = Integer.parseInt(parts[0]);
 
@@ -37,11 +39,14 @@ public class Security {
         byte[] testHash = skf.generateSecret(spec).getEncoded();
 
         int diff = hash.length ^ testHash.length;
+
         for (int i = 0; i < hash.length && i < testHash.length; i++) {
+
             diff |= hash[i] ^ testHash[i];
         }
         return diff == 0;
     }
+
 
     private static byte[] fromHex(String hex) throws NoSuchAlgorithmException {
         byte[] bytes = new byte[hex.length() / 2];
@@ -49,6 +54,7 @@ public class Security {
             bytes[i] = (byte) Integer.parseInt(hex.substring(2 * i, 2 * i + 2), 16);
         }
         return bytes;
+
     }
 
     private static byte[] getSalt() throws NoSuchAlgorithmException {
@@ -69,4 +75,6 @@ public class Security {
             return hex;
         }
     }
+
 }
+
