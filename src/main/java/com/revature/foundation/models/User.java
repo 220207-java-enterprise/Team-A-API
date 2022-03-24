@@ -40,6 +40,10 @@ public class User {
         super(); // not required, but it bugs me personally not to have it
     }
 
+    public User(String id) {
+        this.userId = id;
+    }
+
     public User(String givenName, String surname, String email, String username, String password) {
         this.givenName = givenName;
         this.surname = surname;

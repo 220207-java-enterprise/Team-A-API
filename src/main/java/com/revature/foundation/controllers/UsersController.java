@@ -5,7 +5,6 @@ import com.revature.foundation.dtos.requests.NewUserRequest;
 import com.revature.foundation.dtos.requests.UpdatedUserRequest;
 import com.revature.foundation.dtos.responses.Principal;
 import com.revature.foundation.dtos.responses.ResourceCreationResponse;
-import com.revature.foundation.models.User;
 import com.revature.foundation.repository.ReimbursementsRepository;
 import com.revature.foundation.services.ReimbursementService;
 import com.revature.foundation.services.TokenService;
@@ -51,12 +50,8 @@ public class UsersController {
         resp.setHeader("Authorization", token);
     }
 
-    // Using an injected HttpServletResponse to modify response headers/status code
-    // Login
     @PostMapping(value = "login", produces = "application/json", consumes = "application/json")
     public void login(@RequestBody HashMap<String, Object> credentials, HttpServletResponse resp) {
-        //    public void login(@RequestBody String username, String password, HttpServletResponse resp) {
-//pass as request instead of hashmap
 
             LoginRequest loginRequest = new LoginRequest(credentials);
             Principal principal = new Principal(userService.login(loginRequest));
@@ -70,7 +65,7 @@ public class UsersController {
 
         System.out.println(req.getHeader("Authorization"));
         Principal potentiallyAdmin = tokenService.extractRequesterDetails(req.getHeader("Authorization"));
-        if (!(potentiallyAdmin.getRoleId().equals("Admin"))) {
+        if (!(potentiallyAdmin.getRole().equals("Admin"))) {
             throw new InvalidRequestException();
         }
         System.out.println("got here");
@@ -78,14 +73,6 @@ public class UsersController {
         LoginRequest loginRequest = new LoginRequest(credentials);
         System.out.println(loginRequest);
 
-
-//uncomment after credentials typecast... hour later I think that maybe I should completely change the
-// request to reflact that it is a HashMap. The whole conversion may work too.
-
-// User updatedUser = updatedUserRequest.extractUser(credentials);
-//        System.out.println(updatedUser);
-//
-//        //TODO return updated user (currently is void)
     }
 
     @ExceptionHandler

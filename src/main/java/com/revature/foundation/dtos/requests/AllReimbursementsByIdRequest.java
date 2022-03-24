@@ -1,21 +1,12 @@
 package com.revature.foundation.dtos.requests;
 
-
-import com.revature.foundation.models.Reimbursement;
 import com.revature.foundation.models.ReimbursementStatus;
 import com.revature.foundation.models.ReimbursementType;
 import com.revature.foundation.models.User;
-import com.revature.foundation.repository.ReimbursementsRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.lang.reflect.Array;
 import java.sql.Timestamp;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
 
-@RestController
 public class AllReimbursementsByIdRequest {
 
     private String id;
@@ -30,23 +21,12 @@ public class AllReimbursementsByIdRequest {
     private ReimbursementStatus statusId;
     private ReimbursementType typeId;
 
-    private ReimbursementsRepository reimbursementsRepository;
-
     public AllReimbursementsByIdRequest() {
         super();
     }
 
     public AllReimbursementsByIdRequest(User authorId) {
         this.authorId = authorId;
-    }
-
-    public HashMap<String, Object> ExtractAuthorId(HashMap<String, Object> author_id) {
-        return author_id;
-    }
-
-    @Autowired
-    public AllReimbursementsByIdRequest(ReimbursementsRepository reimbursementsRepository) {
-        this.reimbursementsRepository = reimbursementsRepository;
     }
 
     public String getId() {
@@ -136,17 +116,6 @@ public class AllReimbursementsByIdRequest {
     public void setTypeId(ReimbursementType typeId) {
         this.typeId = typeId;
     }
-    //TODO undoaify
-    /*public Reimbursement extractReimbursement() {
-
-        //ReimbursementsRepository daoToPullUserForRole_Id = new ReimbursementsRepository();
-        Optional<Reimbursement> pulledReimbursement = reimbursementsRepository.findById(this.id);
-
-        ReimbursementStatus aStatus = new ReimbursementStatus(pulledReimbursement.getStatusId().getStatus(), statusId);
-        ReimbursementType aType = new ReimbursementType(pulledReimbursement.getTypeId().getType(), statusId);
-        return new Reimbursement(this.id, this.amount, this.submitted, this.resolved, this.description, this.receipt, this.paymentId, this.authorId, this.resolverId, aStatus, aType);
-    }*/
-
 
     public User extractAuthorId() {
         return this.authorId;

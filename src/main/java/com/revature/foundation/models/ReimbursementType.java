@@ -19,6 +19,10 @@ public class ReimbursementType {
         super();
     }
 
+    public ReimbursementType(String id) {
+        this.id = id;
+    }
+
     public ReimbursementType(String id, String type) {
         this.id = id;
         this.type = type;
@@ -38,6 +42,21 @@ public class ReimbursementType {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+
+    public static ReimbursementType getRoleById(String id) {
+
+        switch (id) {
+            case "0":
+                return new ReimbursementType(id, "LODGING");
+            case "1":
+                return new ReimbursementType(id, "TRAVEL");
+            case "2":
+                return new ReimbursementType(id, "FOOD");
+            default:
+                return new ReimbursementType(id, "OTHER");
+        }
     }
 
     @Override

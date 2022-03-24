@@ -1,6 +1,5 @@
 package com.revature.foundation.services;
 
-import com.revature.foundation.dtos.requests.LoginRequest;
 import com.revature.foundation.dtos.responses.Principal;
 import com.revature.foundation.util.JwtConfig;
 import io.jsonwebtoken.Claims;
@@ -39,7 +38,7 @@ public class TokenService {
                                       .setIssuedAt(new Date(now))
                                       .setExpiration(new Date(now + jwtConfig.getExpiration()))
                                       .setSubject(subject.getUsername())
-                                      .claim("roleId", subject.getRoleId())
+                                      .claim("roleId", subject.getRole())
                                       .signWith(jwtConfig.getSigAlg(), jwtConfig.getSigningKey());
 
         return tokenBuilder.compact();
@@ -58,7 +57,9 @@ public class TokenService {
             Principal principal = new Principal();
             principal.setUserId(claims.getId());
             principal.setUsername(claims.getSubject());
-            principal.setRoleId(claims.get("roleId", String.class));
+            //principal.setRoleId(claims.get("roleId", String.class));
+
+            principal.setRole(claims.get("roleId", String.class));
 //            System.out.println(claims);
             return principal;
 
