@@ -1,57 +1,51 @@
 package com.revature.foundation.controllers;
 
-import com.revature.foundation.dtos.requests.AllReimbursementsByIdRequest;
 import com.revature.foundation.dtos.requests.NewReimbursementRequest;
 import com.revature.foundation.dtos.responses.AppReimbursementResponse;
 import com.revature.foundation.dtos.responses.Principal;
 import com.revature.foundation.dtos.responses.ResourceCreationResponse;
 import com.revature.foundation.models.Reimbursement;
-import com.revature.foundation.models.User;
 import com.revature.foundation.services.ReimbursementService;
 import com.revature.foundation.services.TokenService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-
 import com.revature.foundation.util.exceptions.AuthenticationException;
 import com.revature.foundation.util.exceptions.AuthorizationException;
 import com.revature.foundation.util.exceptions.InvalidRequestException;
 
-//=======
-//        >>>>>>> be7b2a3ab3db84773efc4bd7fbd67a12888eb4c4
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 
-//<<<<<<< HEAD
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
-//=======
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 
 @RestController
 @RequestMapping("/reimbursements")
 public class ReimbursementsController {
+
     private ReimbursementService reimbursementService;
     private TokenService tokenService;
-    private AllReimbursementsByIdRequest allReimbursementsByIdRequest;
 
     @Autowired
-    public ReimbursementsController(ReimbursementService reimbursementService, TokenService tokenService, AllReimbursementsByIdRequest allReimbursementsByIdRequest) {
-        this.tokenService = tokenService;
+    public ReimbursementsController(ReimbursementService reimbursementService, TokenService tokenService) {
         this.reimbursementService = reimbursementService;
-        this.allReimbursementsByIdRequest = allReimbursementsByIdRequest;
+        this.tokenService = tokenService;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = "application/json", consumes = "application/json")
-    public ResourceCreationResponse createReimbursement(@RequestBody NewReimbursementRequest request) {
+    public ResourceCreationResponse createReimbursement(@RequestHeader("Authorization") String token, @RequestBody NewReimbursementRequest request) {
+        Principal requester = tokenService.extractRequesterDetails(token);
+        if (requester == null) {
+            throw new AuthenticationException();
+        }
+
+        if (!requester.getRole().equalsIgnoreCase("EMPLOYEE")) {
+            throw new AuthorizationException();
+        }
+
+        request.setAuthorId(requester.getUserId());
         return reimbursementService.create(request);
     }
 
@@ -60,17 +54,47 @@ public class ReimbursementsController {
         return reimbursementService.findReimbursementsByStatus(status);
     }
 
-    @PostMapping(value = "/reimbursement-view-by-author-id", produces = "application/json", consumes = "application/json")
-    public List<Reimbursement> findReimbursementByAuthor_id(@RequestBody HashMap<String, Object> authorId, HttpServletResponse resp, HttpServletRequest req) {
-        System.out.println(authorId);
-        System.out.println(String.valueOf(new AllReimbursementsByIdRequest(authorId)));
-        System.out.println("Did I make here?");
-        Principal head = tokenService.extractRequesterDetails(String.valueOf(new AllReimbursementsByIdRequest(authorId)));
-        System.out.println(head);
-        resp.setHeader("Authorization", "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzMjE1IiwiaXNzIjoidGVjaG5vbG9neXAiLCJpYXQiOjE2NDczNzc3NzksImV4cCI6MTY0NzM4MTM3OSwic3ViIjoiR21hbmRlcnIiLCJyb2xlSWQiOiJBZG1pbiJ9.NgV8-UrUGXxuuCJKWBpsXkhyIKMhx82liQgPWBh69EM");
-        List<Reimbursement> reimbursements = reimbursementService.findReimbursementByAuthor_id((authorId));
-        System.out.println(reimbursements); //TODO this prints last
-        return reimbursementService.findReimbursementByAuthor_id(authorId);
-
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public HashMap<String, Object> handleInvalidRequests(InvalidRequestException e) {
+        HashMap<String, Object> responseBody = new HashMap<>();
+        responseBody.put("status", 400);
+        responseBody.put("message", e.getMessage());
+        responseBody.put("timestamp", LocalDateTime.now());
+        return responseBody;
     }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public HashMap<String, Object> handleAuthenticationException(AuthenticationException e) {
+        HashMap<String, Object> responseBody = new HashMap<>();
+        responseBody.put("status", 401);
+        responseBody.put("message", e.getMessage());
+        responseBody.put("timestamp", LocalDateTime.now());
+        return responseBody;
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public HashMap<String, Object> handleAuthorizationException(AuthorizationException e) {
+        HashMap<String, Object> responseBody = new HashMap<>();
+        responseBody.put("status", 403);
+        responseBody.put("message", e.getMessage());
+        responseBody.put("timestamp", LocalDateTime.now());
+        return responseBody;
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PatchMapping(produces = "application/json", consumes = "application/json")
+    public void updateReimbursementById(@RequestBody HashMap<String, Object> updatedReimbursement, HttpServletResponse resp) {
+        reimbursementService.findReimbursementByAuthor_id("123");
+    }
+
+    // TODO implement me
+    @GetMapping(produces = "application/json")
+    public List<Reimbursement> findReimbursementByAuthorId(@RequestParam String authorId, @RequestHeader("Authorization") String token) {
+        return null;
+    }
+
 }
+
