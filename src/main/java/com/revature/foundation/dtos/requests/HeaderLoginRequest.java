@@ -1,4 +1,6 @@
-package com.revature.foundation.dtos.requests;
 
-public class HeaderLoginRequest {
-}
+
+//package com.revature.foundation.dtos.requests;
+
+//public class HeaderLoginRequest {
+//}
