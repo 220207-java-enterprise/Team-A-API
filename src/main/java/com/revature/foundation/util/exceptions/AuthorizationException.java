@@ -1,8 +1,7 @@
 package com.revature.foundation.util.exceptions;
 
-public class AuthorizationException {
+public class AuthorizationException extends RuntimeException {
     public AuthorizationException() {
-        // TODO: See what Object class constructor takes
-        //super("The requester does not have access to this endpoint.");
+        super("The requester does not have access to this endpoint.");
     }
 }
