@@ -25,10 +25,8 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private UsersRepository usersRepository;
-    // TODO declare and autowire in a Security component (com.revature.foundation.util.Security)
+    // TODO for Art: declare and autowire in a Security component (com.revature.foundation.util.Security)
 
-    // Constructor injection
-    //If you only have one constructor then you dont really need this autowired tag ebcause its implied
     @Autowired
     public UserService(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
@@ -45,15 +43,6 @@ public class UserService {
 
         return users;
     }
-
-//TODO either uncomment or determine that it is in fact redundant
-
-//    public User updatedUser(UpdatedUserRequest updateRequest) {
-//        User updatedUser = updateRequest.extractUser();
-//
-//        usersRepository.save(updatedUser);
-//        return updatedUser;
-//    }
 
     public ResourceCreationResponse register(NewUserRequest newUserRequest) {
 
@@ -79,7 +68,7 @@ public class UserService {
         newUser.setRole(new UserRole("3", "Employee"));
         newUser.setIsActive(false);
 
-        // TODO encrypt provided password before storing in the database using the autowired Security object
+        // TODO for Art: encrypt provided password before storing in the database using the autowired Security object
 
         usersRepository.save(newUser);
         return new ResourceCreationResponse(newUser.getUserId());
@@ -150,9 +139,9 @@ public class UserService {
             throw new AuthenticationException();
         }
 
-        // TODO using the autowired Security component, validate the provided password to the stored one using Security#validatePassword
+        // TODO for Art: using the autowired Security component, validate the provided password to the stored one using Security#validatePassword
 
-        // TODO if the passwords do not match, throw an AuthenticationException
+        // TODO for Art: if the passwords do not match, throw an AuthenticationException
 
         return authUser;
 

@@ -8,11 +8,11 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 
-// TODO make this class a Spring component
+// TODO for Art: make this class a Spring component
 public class Security {
     // Tested on 03/18/2022
 
-    // TODO this method does not need to be static
+    // TODO for Art: this method does not need to be static
     public static String generateStrongPasswordHash(String password)
             throws NoSuchAlgorithmException, InvalidKeySpecException {
         int iterations = 1000;
@@ -26,7 +26,7 @@ public class Security {
         return iterations + ":" + toHex(salt) + ":" + toHex(hash);
     }
 
-    // TODO this method does not need to be static
+    // TODO for Art: this method does not need to be static
     public static boolean validatePassword(String originalPassword, String storedPassword)
             throws NoSuchAlgorithmException, InvalidKeySpecException {
 
@@ -51,7 +51,7 @@ public class Security {
     }
 
 
-    // TODO this method does not need to be static
+    // TODO for Art: this method does not need to be static
     private static byte[] fromHex(String hex) throws NoSuchAlgorithmException {
         byte[] bytes = new byte[hex.length() / 2];
         for (int i = 0; i < bytes.length; i++) {
@@ -61,7 +61,7 @@ public class Security {
 
     }
 
-    // TODO this method does not need to be static
+    // TODO for Art: this method does not need to be static
     private static byte[] getSalt() throws NoSuchAlgorithmException {
         SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
         byte[] salt = new byte[16];
@@ -69,7 +69,7 @@ public class Security {
         return salt;
     }
 
-    // TODO this method does not need to be static
+    // TODO for Art: this method does not need to be static
     private static String toHex(byte[] array) throws NoSuchAlgorithmException {
         BigInteger bi = new BigInteger(1, array);
         String hex = bi.toString(16);
