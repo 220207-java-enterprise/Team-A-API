@@ -105,13 +105,6 @@ public class UpdatedUserRequest {
         this.role = role;
     }
 
-//OG, prob uncomment eventually
-//    public User extractUser(HashMap<String, Object> credentials) {
-//        User pulledUser = usersRepository.findById(this.userId).orElse(null);
-//        assert pulledUser != null;
-//        UserRole aRole = new UserRole(pulledUser.getRole().getId(), role);
-//        return new User(this.userId, this.username, this.email, this.password, this.givenName, this.surname, this.isActive, aRole);
-//    }
 
     public User extractUser(HashMap<String, Object> credentials) {
        this.userId = (String) credentials.get("userId");
@@ -127,16 +120,8 @@ public class UpdatedUserRequest {
         assert pulledUser != null;
         UserRole aRole = new UserRole(pulledUser.getRole().getId(), role);
         return(new User());
-        //TODO un comment below
-//        return new User(this.userId, this.username, this.email, this.password, this.givenName, this.surname, this.isActive, this.role);
     }
 
-//    public HashMap<String, Object> extractUser() {
-//        User pulledUser = usersRepository.findById(this.userId).orElse(null);
-//        assert pulledUser != null;
-//        UserRole aRole = new UserRole(pulledUser.getRole().getId(), role);
-//        return new User(this.userId, this.username, this.email, this.password, this.givenName, this.surname, this.isActive, aRole);
-//    }
 
     @Override
     public String toString() {
