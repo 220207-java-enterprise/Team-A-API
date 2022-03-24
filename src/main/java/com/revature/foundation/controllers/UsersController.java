@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
@@ -41,7 +43,7 @@ public class UsersController {
     }
 
     @PostMapping(value = "register", produces = "application/json", consumes = "application/json")
-    public void register(@RequestBody HashMap<String, Object> credentials, HttpServletResponse resp) {
+    public void register(@RequestBody HashMap<String, Object> credentials, HttpServletResponse resp) throws NoSuchAlgorithmException, InvalidKeySpecException {
 
         NewUserRequest newUserRequest = new NewUserRequest(credentials);
         userService.register(newUserRequest);

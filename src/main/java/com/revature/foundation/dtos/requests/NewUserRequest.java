@@ -2,7 +2,11 @@ package com.revature.foundation.dtos.requests;
 
 import com.revature.foundation.models.User;
 import com.revature.foundation.models.UserRole;
+import com.revature.foundation.util.Security;
 
+
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.HashMap;
 
 public class NewUserRequest {
@@ -17,19 +21,20 @@ public class NewUserRequest {
         super();
     }
 
-    public NewUserRequest(String givenName, String surname, String email, String username, String password) {
+    public NewUserRequest(String givenName, String surname, String email, String username, String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
         this.givenName = givenName;
         this.surname = surname;
         this.email = email;
         this.username = username;
-        this.password = password;
+        this.password = Security.generateStrongPasswordHash(password);
     }
 
 
-    public NewUserRequest(HashMap<String, Object> credentials) {
+    public NewUserRequest(HashMap<String, Object> credentials) throws NoSuchAlgorithmException, InvalidKeySpecException {
         this.username = (String) credentials.get("username");
         this.email = (String) credentials.get("email");
-        this.password = (String) credentials.get("password");
+        String encryptedPassword = Security.generateStrongPasswordHash((String) credentials.get("password"));
+        this.password = encryptedPassword;
         this.givenName = (String) credentials.get("given_name");
         this.surname = (String) credentials.get("surname");
     }
