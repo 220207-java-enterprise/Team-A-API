@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private UsersRepository usersRepository;
+    // TODO declare and autowire in a Security component (com.revature.foundation.util.Security)
 
     // Constructor injection
     //If you only have one constructor then you dont really need this autowired tag ebcause its implied
@@ -72,19 +73,18 @@ public class UserService {
             throw new ResourceConflictException(msg);
         }
 
-        // TODO encrypt provided password before storing in the database
+
 
         newUser.setUserId(UUID.randomUUID().toString());
-        newUser.setRole(new UserRole("3", "Employee")); // All newly registered users start as BASIC_USER
+        newUser.setRole(new UserRole("3", "Employee"));
         newUser.setIsActive(false);
+
+        // TODO encrypt provided password before storing in the database using the autowired Security object
+
         usersRepository.save(newUser);
-// TODO        return new ResourceCreationResponse(newCustomer.getId());
         return new ResourceCreationResponse(newUser.getUserId());
-//        return newUser;
+
     }
-
-
-
 
     private boolean isUserValid(User appUser) {
 
@@ -143,37 +143,19 @@ public class UserService {
             throw new InvalidRequestException("Invalid credentials provided!");
         }
 
-        // TODO encrypt provided password (assumes password encryption is in place) to see if it matches what is in the DB
-        User authUser = usersRepository.getUserByUsernameandPassword(username, password);
-        System.out.println(authUser);
+        // User with username (to compare passwords)
+        User authUser = usersRepository.findByusername(username);
 
         if (authUser == null) {
-
             throw new AuthenticationException();
         }
+
+        // TODO using the autowired Security component, validate the provided password to the stored one using Security#validatePassword
+
+        // TODO if the passwords do not match, throw an AuthenticationException
 
         return authUser;
 
     }
 
-    public User login(NewUserRequest newUserRequest) {
-        String username = newUserRequest.getUsername();
-        String password = newUserRequest.getPassword();
-
-        if (!isUsernameValid(username) || !isPasswordValid(password)) {
-            throw new InvalidRequestException("Invalid credentials provided!");
-        }
-
-        // TODO encrypt provided password (assumes password encryption is in place) to see if it matches what is in the DB
-        User authUser = usersRepository.getUserByUsernameandPassword(username, password);
-        System.out.println(authUser);
-
-        if (authUser == null) {
-
-            throw new AuthenticationException();
-        }
-
-        return authUser;
-
-    }
 }
