@@ -3,13 +3,10 @@ package com.revature.foundation.models;
 import javax.persistence.*;
 import java.util.Objects;
 
-// POJO = Plain Ol' Java Object
-// Contains NO BUSINESS LOGIC
-// Simple encapsulation of some domain object's states
+
 @Entity
 @Table(name="ers_users")
 public class User {
-//this is a comment
     @Id
     @Column(name = "user_id")
     private String userId;
