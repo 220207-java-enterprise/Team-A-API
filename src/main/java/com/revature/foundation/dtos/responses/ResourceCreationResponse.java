@@ -4,10 +4,6 @@ public class ResourceCreationResponse {
 
         private String id;
 
-        // Jackson still needs a no-args constructor
-    public ResourceCreationResponse() {
-        super();
-    }
 
     public ResourceCreationResponse(String id) {
             this.id = id;
