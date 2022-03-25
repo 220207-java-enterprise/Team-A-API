@@ -1,10 +1,5 @@
 package com.revature.foundation.util;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.math.BigInteger;
@@ -12,12 +7,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 
-@Component
-@Service
 public class Security {
     // Tested on 03/18/2022
 
-    @Autowired
     public static String generateStrongPasswordHash(String password)
             throws NoSuchAlgorithmException, InvalidKeySpecException {
         int iterations = 1000;
@@ -31,10 +23,8 @@ public class Security {
         return iterations + ":" + toHex(salt) + ":" + toHex(hash);
     }
 
-    @Autowired
     public static boolean validatePassword(String originalPassword, String storedPassword)
             throws NoSuchAlgorithmException, InvalidKeySpecException {
-
         String[] parts = storedPassword.split(":");
         int iterations = Integer.parseInt(parts[0]);
 
@@ -47,14 +37,11 @@ public class Security {
         byte[] testHash = skf.generateSecret(spec).getEncoded();
 
         int diff = hash.length ^ testHash.length;
-
         for (int i = 0; i < hash.length && i < testHash.length; i++) {
-
             diff |= hash[i] ^ testHash[i];
         }
         return diff == 0;
     }
-
 
     private static byte[] fromHex(String hex) throws NoSuchAlgorithmException {
         byte[] bytes = new byte[hex.length() / 2];
@@ -62,7 +49,6 @@ public class Security {
             bytes[i] = (byte) Integer.parseInt(hex.substring(2 * i, 2 * i + 2), 16);
         }
         return bytes;
-
     }
 
     private static byte[] getSalt() throws NoSuchAlgorithmException {
@@ -83,6 +69,4 @@ public class Security {
             return hex;
         }
     }
-
 }
-

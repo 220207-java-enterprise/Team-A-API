@@ -152,8 +152,8 @@ public class UserService {
 
 
         User authUser = usersRepository.getUserByUsernameandPassword(username, password);
-        String encryptedPassword = Security.generateStrongPasswordHash(password);
-        authUser.setPassword(encryptedPassword);
+        //String encryptedPassword = Security.generateStrongPasswordHash(password);
+        authUser.setPassword(password);
         System.out.println(authUser);
 
         if (authUser == null) {
@@ -162,7 +162,7 @@ public class UserService {
 
         }
 // TODO for Art: using the autowired Security component, validate the provided password to the stored one using Security#validatePassword
-
+       // if (!Security.validatePassword(authUser.getPassword(), password))
         // TODO for Art: if the passwords do not match, throw an AuthenticationException
 
         return authUser;
