@@ -21,9 +21,6 @@ public class AppReimbursementResponse {
     private ReimbursementStatus statusId;
     private ReimbursementType typeId;
 
-    public AppReimbursementResponse() {
-        super();
-    }
 
     public AppReimbursementResponse(Reimbursement reimbursement) {
         this.reimbId = reimbursement.getId();

@@ -24,20 +24,7 @@ public class AllReimbursementsByIdResponse {
     public AllReimbursementsByIdResponse() {
     }
 
-//    public AllReimbursementsByIdResponse(String authorId) {
-//        Reimbursements reimbursements = new Reimbursements().getAuthorId();
-//        this.reimbId = reimbursements.getReimbId();
-//        this.amount = reimbursements.getAmount();
-//        this.submitted = reimbursements.getSubmitted();
-//        this.resolved = reimbursements.getResolved();
-//        this.description = reimbursements.getDescription();
-//        this.receipt = reimbursements.getReceipt();
-//        this.paymentId = reimbursements.getPaymentId();
-//        this.authorId = reimbursements.getAuthorId();
-//        this.resolverId = reimbursements.getResolverId();
-//        this.statusId = reimbursements.getStatusId().getStatus();
-//        this.typeId = reimbursements.getTypeId().getType();
-//    }
+
 
     public AllReimbursementsByIdResponse(List<Reimbursement> allReimbursementById) {
         for(Reimbursement reimbursement : allReimbursementById) {

@@ -17,7 +17,6 @@ public class Principal {
     public Principal(User user) {
         this.userId = user.getUserId();
         this.username = user.getUsername();
-        //this.roleId = user.getRole().getRoleName();
         this.role = user.getRole().getRoleName();
 
     }
@@ -25,7 +24,6 @@ public class Principal {
     public Principal(Reimbursement reimbursement) {
         this.userId = String.valueOf(reimbursement.getAuthorId());
         this.username = reimbursement.getId();
-        //this.roleId = reimbursement.getTypeId().getType();
         this.role = reimbursement.getTypeId().getType();
     }
 
@@ -45,13 +43,7 @@ public class Principal {
         this.username = username;
     }
 
-//    public String getRoleId() {
-//        return roleId;
-//    }
-//
-//    public void setRoleId(String roleId) {
-//        this.roleId = roleId;
-//    }
+
 public String getRole() {
     return role;
 }
