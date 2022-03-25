@@ -57,10 +57,8 @@ public class TokenService {
             Principal principal = new Principal();
             principal.setUserId(claims.getId());
             principal.setUsername(claims.getSubject());
-            //principal.setRoleId(claims.get("roleId", String.class));
 
             principal.setRole(claims.get("roleId", String.class));
-//            System.out.println(claims);
             return principal;
 
         } catch (Exception e) {
