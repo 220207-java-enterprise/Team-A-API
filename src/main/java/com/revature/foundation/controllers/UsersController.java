@@ -38,7 +38,7 @@ public class UsersController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = "application/json", consumes = "application/json")
-    public ResourceCreationResponse registerUser(@RequestBody NewUserRequest request) {
+    public ResourceCreationResponse registerUser(@RequestBody NewUserRequest request) throws NoSuchAlgorithmException, InvalidKeySpecException {
         return userService.register(request);
     }
 
@@ -53,7 +53,7 @@ public class UsersController {
     }
 
     @PostMapping(value = "login", produces = "application/json", consumes = "application/json")
-    public void login(@RequestBody HashMap<String, Object> credentials, HttpServletResponse resp) {
+    public void login(@RequestBody HashMap<String, Object> credentials, HttpServletResponse resp) throws NoSuchAlgorithmException, InvalidKeySpecException {
 
             LoginRequest loginRequest = new LoginRequest(credentials);
             Principal principal = new Principal(userService.login(loginRequest));

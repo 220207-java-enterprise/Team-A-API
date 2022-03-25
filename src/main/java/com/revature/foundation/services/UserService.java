@@ -1,5 +1,7 @@
 package com.revature.foundation.services;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -14,6 +16,7 @@ import com.revature.foundation.models.UserRole;
 import com.revature.foundation.models.User;
 
 import com.revature.foundation.repository.UsersRepository;
+import com.revature.foundation.util.Security;
 import com.revature.foundation.util.exceptions.AuthenticationException;
 import com.revature.foundation.util.exceptions.InvalidRequestException;
 import com.revature.foundation.util.exceptions.ResourceConflictException;
@@ -56,7 +59,7 @@ public class UserService {
 //        return updatedUser;
 //    }
 
-    public ResourceCreationResponse register(NewUserRequest newUserRequest) {
+    public ResourceCreationResponse register(NewUserRequest newUserRequest) throws NoSuchAlgorithmException, InvalidKeySpecException {
 
         User newUser = newUserRequest.extractUser();
 
@@ -78,8 +81,9 @@ public class UserService {
         newUser.setUserId(UUID.randomUUID().toString());
         newUser.setRole(new UserRole("3", "Employee")); // All newly registered users start as BASIC_USER
         newUser.setIsActive(false);
-// TODO for Art: encrypt provided password before storing in the database using the autowired Security
-
+//
+        String encryptedPassword = Security.generateStrongPasswordHash(newUser.getPassword());
+        newUser.setPassword(encryptedPassword);
         usersRepository.save(newUser);
 // TODO        return new ResourceCreationResponse(newCustomer.getId());
         return new ResourceCreationResponse(newUser.getUserId());
@@ -138,7 +142,7 @@ public class UserService {
         return usersRepository.findByemail(email) == null;
     }
 
-    public User login(LoginRequest loginRequest) {
+    public User login(LoginRequest loginRequest) throws NoSuchAlgorithmException, InvalidKeySpecException {
         String username = loginRequest.getUsername();
         String password = loginRequest.getPassword();
 
@@ -146,8 +150,10 @@ public class UserService {
             throw new InvalidRequestException("Invalid credentials provided!");
         }
 
-        // TODO encrypt provided password (assumes password encryption is in place) to see if it matches what is in the DB
+
         User authUser = usersRepository.getUserByUsernameandPassword(username, password);
+        String encryptedPassword = Security.generateStrongPasswordHash(password);
+        authUser.setPassword(encryptedPassword);
         System.out.println(authUser);
 
         if (authUser == null) {
