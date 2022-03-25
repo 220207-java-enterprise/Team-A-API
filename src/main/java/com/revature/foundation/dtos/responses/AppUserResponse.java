@@ -9,9 +9,7 @@ public class AppUserResponse {
     private String username;
     private String roleId;
 
-    public AppUserResponse() {
-        super();
-    }
+
 
 
     public AppUserResponse(User user) {
