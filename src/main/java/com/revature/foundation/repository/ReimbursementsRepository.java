@@ -22,7 +22,6 @@ public interface ReimbursementsRepository extends CrudRepository<Reimbursement, 
     List<Reimbursement> findReimbursementByAuthor_id(String author_id);
 
 
-//    updateReimbursementById
 
 
 }
