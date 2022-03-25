@@ -18,12 +18,14 @@ import com.revature.foundation.util.exceptions.AuthenticationException;
 import com.revature.foundation.util.exceptions.InvalidRequestException;
 import com.revature.foundation.util.exceptions.ResourceConflictException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
 
 @Service
+@ComponentScan("com.revature.foundation.util.Security")
 public class UserService {
-
+    @Autowired
     private UsersRepository usersRepository;
 
     // Constructor injection
@@ -72,11 +74,12 @@ public class UserService {
             throw new ResourceConflictException(msg);
         }
 
-        // TODO encrypt provided password before storing in the database
 
         newUser.setUserId(UUID.randomUUID().toString());
         newUser.setRole(new UserRole("3", "Employee")); // All newly registered users start as BASIC_USER
         newUser.setIsActive(false);
+// TODO for Art: encrypt provided password before storing in the database using the autowired Security
+
         usersRepository.save(newUser);
 // TODO        return new ResourceCreationResponse(newCustomer.getId());
         return new ResourceCreationResponse(newUser.getUserId());
@@ -150,7 +153,11 @@ public class UserService {
         if (authUser == null) {
 
             throw new AuthenticationException();
+
         }
+// TODO for Art: using the autowired Security component, validate the provided password to the stored one using Security#validatePassword
+
+        // TODO for Art: if the passwords do not match, throw an AuthenticationException
 
         return authUser;
 
