@@ -21,11 +21,6 @@ public class TokenService {
         this.jwtConfig = jwtConfig;
     }
 
-//
-//    @Autowired
-//    public TokenService(JwtConfig jwtConfig) {
-//        this.jwtConfig = jwtConfig;
-//    }
 
     public String generateToken(Principal subject) {
 
