@@ -1,7 +1,9 @@
 package com.revature.foundation.util;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -11,9 +13,11 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 
 @Component
+@Service
 public class Security {
     // Tested on 03/18/2022
 
+    @Autowired
     public static String generateStrongPasswordHash(String password)
             throws NoSuchAlgorithmException, InvalidKeySpecException {
         int iterations = 1000;
@@ -27,6 +31,7 @@ public class Security {
         return iterations + ":" + toHex(salt) + ":" + toHex(hash);
     }
 
+    @Autowired
     public static boolean validatePassword(String originalPassword, String storedPassword)
             throws NoSuchAlgorithmException, InvalidKeySpecException {
 
