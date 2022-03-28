@@ -3,6 +3,7 @@
 ## Project Description
 
 For the technology module of your training you are tasked with building a web-based expense reimbursement system. This system will manage the process of reimbursing employees for expenses incurred while on company time. This system will work closely with the internal PRISM application - which is used for processing payments to employees. All registered employees in the company can login and submit requests for reimbursement and view their past tickets and pending requests. Finance managers can log in and view all reimbursement requests and past history for all employees in the company. Finance managers are authorized to approve and deny requests for expense reimbursement.
+Team-A-UI: https://github.com/220207-java-enterprise/Team-A-UI.git
 
 ### Project Design Specifications and Documents
 
@@ -74,15 +75,6 @@ The PRISM application is another internal system that your expense reimbursement
 - The system's is tested with at least 80% line coverage in all service and utility classes
 - The system's data schema and component design is documented and diagrammed 
 - The system keeps detailed logs on info, error, and fatal events that occur 
-
-### Suggested Bonus Features
-- Authenticated employees are able to upload an receipt image along with their reimbursement request
-- The system notifies the user of changes to their account registration status by email
-- The system notifies the user of changes to their reimbursement request status by email
-- Run your application within a Docker container
-- Automate builds using AWS CodeBuild and CodePipeline
-- API is deployed to AWS EC2 (via Elastic Beanstalk) using a CI/CD pipeline
-- UI is deployed to AWS S3 using a CI/CD pipeline
 
 ## Scoring and Milestones
 
